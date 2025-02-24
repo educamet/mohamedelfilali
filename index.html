@@ -1,0 +1,1231 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Méthodo Prépas</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #1a2a6c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        p.subtitle {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            touch-action: manipulation;
+        }
+        button.sci { background-color: #2a6c1a; }
+        button.com { background-color: #6c1a2a; }
+        button.dissertations { background-color: #1a2a6c; }
+        button.summary { background-color: #5a7d4b; }
+        button.synthesis { background-color: #4b2e5a; }
+        button:hover { opacity: 0.9; }
+        .section {
+            display: none;
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
+        }
+        .section.active { display: block; }
+        .sub-section { display: none; }
+        .sub-section.active { display: block; }
+        .example, .feedback {
+            background-color: #fff3e6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ff8c00;
+        }
+        .section h2 { margin-top: 0; }
+        .section p { margin-bottom: 10px; }
+        .section button {
+            margin: 5px;
+            min-width: 100px;
+            min-height: 50px;
+        }
+        .game-step {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        #step-citations { background-color: #e6f3e6; border-left: 5px solid #2a6c1a; }
+        #step-intro { background-color: #f0e6f3; border-left: 5px solid #4b2e5a; }
+        #step-analysis { background-color: #e6f3ff; border-left: 5px solid #0066cc; }
+        #step-structure { background-color: #e6ecf3; border-left: 5px solid #1a2a6c; }
+        #step-conclusion { background-color: #fff0e6; border-left: 5px solid #cc3300; }
+        #intro-sortable, #sortable, #sortable-plan {
+            list-style-type: none;
+            padding: 0;
+            touch-action: none;
+        }
+        #intro-sortable li, #sortable li, #sortable-plan li {
+            background-color: #f9f9f9;
+            padding: 12px;
+            margin: 5px 0;
+            border: 1px dashed #1a2a6c;
+            border-radius: 5px;
+            cursor: move;
+            transition: background-color 0.3s;
+            min-height: 50px;
+            touch-action: manipulation;
+        }
+        #intro-sortable li:hover, #sortable li:hover, #sortable-plan li:hover { background-color: #e6ecf3; }
+        .works-reference {
+            text-align: center;
+            background-color: #ffeb99;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .action-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin: 10px 5px;
+            min-width: 120px;
+            min-height: 50px;
+        }
+        .verify-button { background-color: #ff4500; }
+        .new-challenge-button { background-color: #00cc00; }
+        .action-button:hover { opacity: 0.85; }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            color: #555;
+        }
+        #summary-text {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+        #summary-word-count {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Méthodo Prépas</h1>
+        <p class="subtitle">Réussir vos épreuves de Français-Philo et de Culture Générale</p>
+    </header>
+    <div class="container">
+        <div id="home" class="section active">
+            <p>Choisissez votre filière :</p>
+            <div class="button-container">
+                <button class="sci" onclick="showSection('sci')">Prépas scientifiques</button>
+                <button class="com" onclick="showSection('com')">Prépas commerciales</button>
+            </div>
+        </div>
+        <div id="sci" class="section">
+            <h2>Prépas scientifiques - Thème : Individu et communauté</h2>
+            <p>Entraînez-vous sur le thème de l’année :</p>
+            <div class="button-container">
+                <button class="dissertations" onclick="showSubSection('sci-diss')">Dissertations</button>
+                <button class="summary" onclick="showSubSection('sci-res')">Résumés</button>
+            </div>
+            <div id="sci-diss" class="sub-section">
+                <h2>Dissertations - Individu et communauté</h2>
+                <div class="works-reference">
+                    Basez-vous sur les œuvres : <em>Eschyle (Les Sept Contre Thèbes, Les Suppliantes)</em>, <em>Spinoza (Traité Théologicopolitique)</em>, <em>Wharton (Le Temps de l'innocence)</em>
+                </div>
+                <div class="game-step" id="step-citations">
+                    <h3>Étape 1 : Maître des citations</h3>
+                    <p>Associez chaque citation à son auteur :</p>
+                    <div id="quote-game">
+                        <div id="quote-container">
+                            <p>1. "Ô peuple d'Argos, entendez notre prière !"</p>
+                            <select id="quote0">
+                                <option value="">Choisissez...</option>
+                                <option value="Eschyle">Eschyle</option>
+                                <option value="Spinoza">Spinoza</option>
+                                <option value="Wharton">Wharton</option>
+                            </select>
+                        </div>
+                        <button class="action-button verify-button" onclick="checkQuotes()">Vérifier</button>
+                        <button class="action-button new-challenge-button" onclick="generateQuoteGame()">Nouveau défi</button>
+                    </div>
+                    <div id="quote_feedback" class="feedback"></div>
+                </div>
+                <div class="game-step" id="step-intro">
+                    <h3>Étape 2 : Forger l’introduction</h3>
+                    <p>Placez ces éléments dans l’ordre correct :</p>
+                    <div id="intro-game">
+                        <ul id="intro-sortable">
+                            <li draggable="true">L’individu et la société coexistent depuis toujours.</li>
+                            <li draggable="true">La communauté soutient-elle ou contraint-elle l’individu ?</li>
+                            <li draggable="true">Soutien, Contrainte, Équilibre possible.</li>
+                        </ul>
+                        <button class="action-button verify-button" onclick="checkIntro()">Vérifier</button>
+                        <button class="action-button new-challenge-button" onclick="generateIntroGame()">Nouveau défi</button>
+                    </div>
+                    <div id="intro_feedback" class="feedback"></div>
+                </div>
+                <div class="game-step" id="step-analysis">
+                    <h3>Étape 3 : Décodeur de sujet</h3>
+                    <p>Décomposez le thème avec des indices :</p>
+                    <div id="analyze-game">
+                        <div id="analysis-container">
+                            <p>1. Mot-clé principal ?</p>
+                            <input type="text" id="analysis0" placeholder="Votre réponse...">
+                            <div id="analysis0_hint" class="example hidden">Terme central du thème.</div>
+                        </div>
+                        <button class="action-button verify-button" onclick="checkAnalysis()">Vérifier</button>
+                        <button class="action-button new-challenge-button" onclick="generateAnalysisGame()">Nouveau défi</button>
+                    </div>
+                    <div id="analysis_feedback" class="feedback"></div>
+                </div>
+                <div class="game-step" id="step-structure">
+                    <h3>Étape 4 : Architecte du plan</h3>
+                    <p>Placez ces parties dans l’ordre correct :</p>
+                    <div id="structure-game">
+                        <ul id="sortable">
+                            <li draggable="true">La communauté protège : Eschyle (*Les Suppliantes*).</li>
+                            <li draggable="true">Elle opprime : Wharton (*Le Temps de l’innocence*).</li>
+                            <li draggable="true">Spinoza : équilibre par le pacte (*Traité*).</li>
+                        </ul>
+                        <button class="action-button verify-button" onclick="checkStructure()">Vérifier</button>
+                        <button class="action-button new-challenge-button" onclick="generateStructureGame()">Nouveau défi</button>
+                    </div>
+                    <div id="structure_feedback" class="feedback"></div>
+                </div>
+                <div class="game-step" id="step-conclusion">
+                    <h3>Étape 5 : Sceller la conclusion</h3>
+                    <p>Choisissez la meilleure ouverture :</p>
+                    <div id="conclusion-game">
+                        <div id="conclusion-container">
+                            <p>Options :</p>
+                            <input type="radio" id="conc0" name="conclusion" value="La société évolue-t-elle avec le temps ?">
+                            <label for="conc0">La société évolue-t-elle avec le temps ?</label><br>
+                            <input type="radio" id="conc1" name="conclusion" value="Une communauté moderne est-elle possible ?">
+                            <label for="conc1">Une communauté moderne est-elle possible ?</label><br>
+                            <input type="radio" id="conc2" name="conclusion" value="Tout repose sur l’effort individuel.">
+                            <label for="conc2">Tout repose sur l’effort individuel.</label><br>
+                            <input type="radio" id="conc3" name="conclusion" value="L’histoire se répète indéfiniment.">
+                            <label for="conc3">L’histoire se répète indéfiniment.</label><br>
+                        </div>
+                        <button class="action-button verify-button" onclick="checkConclusion()">Vérifier</button>
+                        <button class="action-button new-challenge-button" onclick="generateConclusionGame()">Nouveau défi</button>
+                    </div>
+                    <div id="conclusion_feedback" class="feedback"></div>
+                </div>
+            </div>
+            <div id="sci-res" class="sub-section">
+                <h2>Résumés - Individu et communauté</h2>
+                <div class="game-step" id="step-summary">
+                    <h3>Étape : Maître du résumé</h3>
+                    <p>Analysez ce texte de 500 mots et résumez-le en 50 mots :</p>
+                    <div id="summary-text">L’individu et la communauté forment un duo complexe. Depuis toujours, l’homme cherche à s’épanouir tout en appartenant à un groupe. La société offre un cadre rassurant, un refuge face aux incertitudes de la solitude. Elle garantit protection et soutien, comme une famille élargie. Pourtant, cette sécurité a un prix. | Les règles collectives imposent des limites strictes à la liberté individuelle. Les désirs personnels se heurtent souvent aux attentes sociales, créant des tensions. Dans certaines cultures, l’individu doit se soumettre au bien commun, sacrifiant ses aspirations. Ailleurs, la liberté prime, mais au risque de l’isolement. | Cette dualité révèle une question essentielle : peut-on concilier épanouissement personnel et harmonie collective ? Historiquement, des penseurs ont proposé des solutions. Certains prônent un équilibre où l’individu conserve une autonomie raisonnée. D’autres voient la communauté comme un frein inévitable. | Aujourd’hui, la modernité accentue ce dilemme. Les sociétés individualistes valorisent l’autonomie, mais fragilisent les liens. À l’inverse, les communautés soudées préservent l’unité au détriment de l’originalité. Le défi reste de trouver un juste milieu durable. | En somme, individu et communauté oscillent entre coopération et conflit, une danse éternelle sans vainqueur clair.</div>
+                    <h4>1. Quelle est la thèse principale ?</h4>
+                    <textarea id="thesis-input" placeholder="Tapez la thèse ici..." style="height: 60px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkThesis()">Vérifier</button>
+                    <div id="thesis-feedback" class="feedback"></div>
+                    <h4>2. Quels sont les arguments principaux ?</h4>
+                    <textarea id="args-input" placeholder="Listez les arguments ici..." style="height: 80px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkArgs()">Vérifier</button>
+                    <div id="args-feedback" class="feedback"></div>
+                    <h4>3. Quelles sont les parties ou mouvements du texte ?</h4>
+                    <textarea id="parts-input" placeholder="Décrivez les parties ici..." style="height: 80px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkParts()">Vérifier</button>
+                    <div id="parts-feedback" class="feedback"></div>
+                    <h4>4. Proposez un plan structuré</h4>
+                    <textarea id="plan-input" placeholder="Écrivez le plan ici..." style="height: 100px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkPlan()">Vérifier</button>
+                    <div id="plan-feedback" class="feedback"></div>
+                    <h4>5. Rédigez un résumé en 50 mots maximum</h4>
+                    <textarea id="summary-input" placeholder="Tapez votre résumé ici..." maxlength="250" oninput="countSummaryWords(this)" style="height: 60px;"></textarea>
+                    <p id="summary-word-count">Mots : 0/50</p>
+                    <button class="action-button verify-button" onclick="checkSummary()">Vérifier</button>
+                    <div id="summary-feedback" class="feedback"></div>
+                    <button class="action-button new-challenge-button" onclick="generateSummaryGame()">Nouveau défi</button>
+                </div>
+            </div>
+        </div>
+        <div id="com" class="section">
+            <h2>Prépas commerciales - Thème : L'image</h2>
+            <p>Entraînez-vous sur le thème de l’année :</p>
+            <div class="button-container">
+                <button class="dissertations" onclick="showSubSection('com-diss')">Dissertations</button>
+                <button class="summary" onclick="showSubSection('com-res')">Résumés</button>
+                <button class="synthesis" onclick="showSubSection('com-syn')">Synthèses</button>
+            </div>
+            <div id="com-diss" class="sub-section">
+                <h2>Dissertations - L'image</h2>
+                <p>Entraînez-vous à disserter sur le thème de l’année :</p>
+                <div class="game-step" id="step-problem">
+                    <h3>Étape 1 : Forger une problématique</h3>
+                    <p>Associez cette accroche à une problématique pertinente :</p>
+                    <div id="problem-game">
+                        <div id="problem-container">
+                            <p>1. "Les selfies envahissent nos écrans."</p>
+                            <select id="problem0">
+                                <option value="">Choisissez...</option>
+                                <option value="L’image reflète-t-elle ou déforme-t-elle l’identité ?">L’image reflète-t-elle ou déforme-t-elle l’identité ?</option>
+                                <option value="L’image a-t-elle un pouvoir transformateur ?">L’image a-t-elle un pouvoir transformateur ?</option>
+                                <option value="L’image manipule-t-elle la vérité ?">L’image manipule-t-elle la vérité ?</option>
+                                <option value="L’image construit-elle notre imaginaire ?">L’image construit-elle notre imaginaire ?</option>
+                            </select>
+                        </div>
+                        <button class="action-button verify-button" onclick="checkProblem()">Vérifier</button>
+                        <button class="action-button new-challenge-button" onclick="generateProblemGame()">Nouveau défi</button>
+                    </div>
+                    <div id="problem-feedback" class="feedback"></div>
+                </div>
+    <div class="game-step" id="step-analysis">
+    <h3>Étape 2 : Décodeur d’images</h3>
+    <p>Répondez à cette question sur le thème "L'image" :</p>
+    <div id="analysis-game">
+        <div id="challenge-container">
+            <p id="current-question">1. Quel rôle joue l’image dans la publicité ?</p>
+            <input type="text" id="answer-input" placeholder="Votre réponse...">
+            <div id="hint-text" class="example hidden">Pensez à ce qui attire le consommateur.</div>
+        </div>
+        <button class="action-button verify-button" onclick="verifyAnswer()">Vérifier</button>
+        <button class="action-button new-challenge-button" onclick="newChallenge()">Nouveau défi</button>
+    </div>
+    <div id="challenge-feedback" class="feedback"></div>
+</div>
+                <div class="game-step" id="step-structure">
+                    <h3>Étape 3 : Architecte du plan</h3>
+                    <p>Ordonnez ces parties pour un plan cohérent :</p>
+                    <div id="structure-game">
+                        <ul id="sortable-plan">
+                            <li draggable="true">L’image comme reflet du réel.</li>
+                            <li draggable="true">L’image comme outil de pouvoir.</li>
+                            <li draggable="true">L’image comme illusion moderne.</li>
+                        </ul>
+                        <button class="action-button verify-button" onclick="checkStructureCom()">Vérifier</button>
+                        <button class="action-button new-challenge-button" onclick="generateStructureGameCom()">Nouveau défi</button>
+                    </div>
+                    <div id="structure-feedback" class="feedback"></div>
+                </div>
+                <div class="game-step" id="step-writing">
+                    <h3>Étape 4 : Rédiger votre dissertation</h3>
+                    <p>Écrivez une intro ou une conclusion (200 mots max) :</p>
+                    <textarea id="writing-input" placeholder="Tapez ici..." maxlength="1000" style="height: 120px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkWritingCom()">Vérifier</button>
+                    <div id="writing-feedback" class="feedback"></div>
+                </div>
+            </div>
+            <div id="com-res" class="sub-section">
+    <h2>Résumés - L'image</h2>
+    <div class="game-step" id="step-summary">
+        <h3>Maîtrisez le résumé : L'image en 50 mots</h3>
+        <p>Analysez ce texte de 500 mots et résumez-le en 50 mots maximum :</p>
+        <div id="summary-text-com">L’image fascine depuis l’aube de l’humanité. Dans les grottes préhistoriques, elle racontait des chasses épiques, capturant l’instant. Aujourd’hui, elle envahit nos écrans, des selfies aux publicités, reflétant ou déformant nos identités. | Elle manipule aussi la vérité : fake news et retouches brouillent le réel. Pourtant, l’image inspire, du cinéma aux icônes religieuses, touchant nos émotions. | Son pouvoir est double : outil de contrôle dans la propagande, elle façonne les esprits, mais libère aussi l’imaginaire, comme Hollywood le prouve. | À l’ère numérique, Instagram redéfinit la beauté, entre filtres et normes imposées. Les photos figent le temps, souvenirs intimes ou témoignages historiques. | En somme, l’image, miroir ou illusion, oscille entre vérité et fiction, captivant toujours notre regard.</div>
+        
+        <h4>1. Quelle est la thèse principale ?</h4>
+        <textarea id="thesis-input-com" placeholder="Tapez la thèse ici..." style="height: 60px;"></textarea>
+        <button class="action-button verify-button" onclick="checkThesisCom()">Vérifier</button>
+        <div id="thesis-feedback-com" class="feedback"></div>
+
+        <h4>2. Quels sont les arguments principaux ?</h4>
+        <textarea id="args-input-com" placeholder="Listez les arguments ici..." style="height: 80px;"></textarea>
+        <button class="action-button verify-button" onclick="checkArgsCom()">Vérifier</button>
+        <div id="args-feedback-com" class="feedback"></div>
+
+        <h4>3. Quelles sont les parties du texte ?</h4>
+        <textarea id="parts-input-com" placeholder="Décrivez les parties ici..." style="height: 80px;"></textarea>
+        <button class="action-button verify-button" onclick="checkPartsCom()">Vérifier</button>
+        <div id="parts-feedback-com" class="feedback"></div>
+
+        <h4>4. Proposez un plan structuré</h4>
+        <textarea id="plan-input-com" placeholder="Écrivez le plan ici..." style="height: 100px;"></textarea>
+        <button class="action-button verify-button" onclick="checkPlanCom()">Vérifier</button>
+        <div id="plan-feedback-com" class="feedback"></div>
+
+        <h4>5. Rédigez un résumé en 50 mots maximum</h4>
+        <textarea id="summary-input-com" placeholder="Tapez votre résumé ici..." maxlength="250" oninput="countSummaryWordsCom(this)" style="height: 60px;"></textarea>
+        <p id="summary-word-count-com">Mots : 0/50</p>
+        <button class="action-button verify-button" onclick="checkSummaryCom()">Vérifier</button>
+        <div id="summary-feedback-com" class="feedback"></div>
+
+        <button class="action-button new-challenge-button" onclick="generateSummaryGameCom()">Nouveau défi</button>
+    </div>
+</div>
+
+<div id="com-syn" class="sub-section">
+    <h2>Synthèses - L'image</h2>
+    <div class="game-step" id="step-synthesis">
+        <h3>L’art de la synthèse : Construisez une vision d’ensemble</h3>
+        <p>Analysez ce corpus fictif sur "L'image" (3 documents) et rédigez une synthèse en 150 mots max :</p>
+        <div id="corpus-container">
+            <p><strong>Doc 1 : "Selfie Nation" (article, 2023)</strong> - Les selfies dominent les réseaux sociaux, reflétant une quête d’identité mais aussi une superficialité croissante.</p>
+            <p><strong>Doc 2 : "L’objectif vérité" (essai, 2019)</strong> - La photographie, jadis garante de réalité, est désormais suspecte à l’ère des retouches et fake news.</p>
+            <p><strong>Doc 3 : "Hollywood Dreams" (interview, 2022)</strong> - Le cinéma utilise l’image pour nourrir l’imaginaire collectif, mais impose des stéréotypes.</p>
+        </div>
+
+        <h4>1. Identifiez la problématique</h4>
+        <textarea id="problematic-input" placeholder="Quelle question lie ces documents ?" style="height: 60px;"></textarea>
+        <button class="action-button verify-button" onclick="checkProblematic()">Vérifier</button>
+        <div id="problematic-feedback" class="feedback"></div>
+
+        <h4>2. Ordonnez les idées en un plan (2 parties)</h4>
+        <textarea id="plan-input-syn" placeholder="I. ... II. ..." style="height: 80px;"></textarea>
+        <button class="action-button verify-button" onclick="checkPlanSyn()">Vérifier</button>
+        <div id="plan-feedback-syn" class="feedback"></div>
+
+        <h4>3. Rédigez une synthèse (150 mots max)</h4>
+        <textarea id="synthesis-input" placeholder="Rédigez ici..." maxlength="750" oninput="countSynthesisWords(this)" style="height: 120px;"></textarea>
+        <p id="synthesis-word-count">Mots : 0/150</p>
+        <button class="action-button verify-button" onclick="checkSynthesis()">Vérifier</button>
+        <div id="synthesis-feedback" class="feedback"></div>
+
+        <button class="action-button new-challenge-button" onclick="generateSynthesisGame()">Nouveau défi</button>
+    </div>
+</div>
+        </div>
+    </div>
+    <footer>
+        <p>Par EL FILALI MOHAMED</p>
+    </footer>
+    <script>
+        console.log("Script global chargé");
+
+        function showSection(sectionId) {
+            console.log("Affichage de la section:", sectionId);
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                targetSection.querySelectorAll('.sub-section').forEach(sub => sub.classList.remove('active'));
+            } else {
+                console.error("Section non trouvée:", sectionId);
+            }
+        }
+
+        function showSubSection(subSectionId) {
+            console.log("Affichage de la sous-section:", subSectionId);
+            const subSection = document.getElementById(subSectionId);
+            if (subSection) {
+                const mainSection = subSection.closest('.section');
+                mainSection.querySelectorAll('.sub-section').forEach(sub => sub.classList.remove('active'));
+                subSection.classList.add('active');
+            } else {
+                console.error("Sous-section non trouvée:", subSectionId);
+            }
+        }
+
+        function initializeTouchEvents(listId) {
+            console.log("Initialisation des événements tactiles pour", listId);
+            const list = document.getElementById(listId);
+            if (list) {
+                let touchStartY, touchStartX, draggedItem;
+                list.addEventListener("touchstart", (e) => {
+                    e.preventDefault();
+                    draggedItem = e.target.closest("li");
+                    if (!draggedItem) return;
+                    touchStartY = e.touches[0].clientY;
+                    touchStartX = e.touches[0].clientX;
+                    draggedItem.style.opacity = "0.5";
+                });
+                list.addEventListener("touchmove", (e) => {
+                    e.preventDefault();
+                    if (!draggedItem) return;
+                    let touchY = e.touches[0].clientY;
+                    let touchX = e.touches[0].clientX;
+                    draggedItem.style.position = "relative";
+                    draggedItem.style.transform = `translate(${touchX - touchStartX}px, ${touchY - touchStartY}px)`;
+                    let targetItem = Array.from(list.children).find(item => {
+                        if (item === draggedItem) return false;
+                        let rect = item.getBoundingClientRect();
+                        return touchY > rect.top && touchY < rect.bottom && touchX > rect.left && touchX < rect.right;
+                    });
+                    if (targetItem) list.insertBefore(draggedItem, targetItem);
+                });
+                list.addEventListener("touchend", (e) => {
+                    if (!draggedItem) return;
+                    draggedItem.style.opacity = "1";
+                    draggedItem.style.transform = "none";
+                    draggedItem.style.position = "static";
+                    draggedItem = null;
+                });
+                list.addEventListener("dragstart", (e) => {
+                    e.dataTransfer.setData("text", e.target.textContent);
+                });
+                list.addEventListener("dragover", (e) => e.preventDefault());
+                list.addEventListener("drop", (e) => {
+                    e.preventDefault();
+                    let draggedText = e.dataTransfer.getData("text");
+                    let draggedItem = Array.from(list.children).find(li => li.textContent === draggedText);
+                    let targetItem = e.target.closest("li");
+                    if (targetItem) list.insertBefore(draggedItem, targetItem);
+                });
+            } else {
+                console.error(listId + " non trouvé");
+            }
+        }
+
+        // Données pour #sci-diss
+        const quotes = [
+            { text: "Ô peuple d'Argos, entendez notre prière !", author: "Eschyle" },
+            { text: "Chaque homme est maître de son propre entendement.", author: "Spinoza" },
+            { text: "Newland Archer voyait les profondeurs obscures de la société.", author: "Wharton" },
+            { text: "La guerre civile menace la cité de Thèbes.", author: "Eschyle" },
+            { text: "Le souverain doit garantir la liberté de penser.", author: "Spinoza" },
+            { text: "Les convenances sociales étouffent les désirs individuels.", author: "Wharton" },
+            { text: "Les Danaïdes implorent la protection d’Argos.", author: "Eschyle" },
+            { text: "La communauté naît d’un contrat rationnel.", author: "Spinoza" },
+            { text: "Ellen Olenska défie les normes établies.", author: "Wharton" },
+            { text: "Les frères se déchirent pour le pouvoir.", author: "Eschyle" },
+            { text: "La paix est le fruit d’un accord commun.", author: "Spinoza" },
+            { text: "La société new-yorkaise impose ses lois.", author: "Wharton" },
+            { text: "La cité offre refuge aux suppliantes.", author: "Eschyle" }
+        ];
+        const introParts = [
+            ["L’individu et la société coexistent depuis toujours.", "La communauté soutient-elle ou contraint-elle l’individu ?", "Soutien, Contrainte, Équilibre possible."],
+            ["L’homme vit à la fois seul et en groupe.", "L’individu peut-il s’affranchir de la communauté ?", "Dépendance, Autonomie, Tension entre les deux."],
+            ["La tension entre individu et collectif est universelle.", "La cité favorise-t-elle l’individu ou la collectivité ?", "Collectivité, Individu, Conflit inhérent."],
+            ["Les liens sociaux définissent notre existence.", "La société est-elle un refuge ou une prison ?", "Protection, Oppression, Synthèse dialectique."],
+            ["L’histoire humaine oscille entre solitude et union.", "L’individu trouve-t-il sa place dans la communauté ?", "Appartenance, Résistance, Harmonie potentielle."]
+        ];
+        const sciAnalysisChallenges = [
+            { question: "Mot-clé principal ?", answers: ["communauté", "individu"], hint: "Terme central du thème." },
+            { question: "Idée d’Eschyle dans *Les Suppliantes* ?", answers: ["refuge", "protection"], hint: "Que cherchent les Danaïdes ?" },
+            { question: "Idée de Spinoza dans le *Traité* ?", answers: ["liberté", "pacte", "entendement"], hint: "Rôle de la raison ?" },
+            { question: "Idée de Wharton dans *Le Temps* ?", answers: ["normes", "oppression"], hint: "Qu’étouffe la société ?" },
+            { question: "Conflit chez Eschyle (*Les Sept*) ?", answers: ["guerre", "frères"], hint: "Que déchire Thèbes ?" },
+            { question: "But du contrat selon Spinoza ?", answers: ["paix", "sécurité"], hint: "Pourquoi unir les hommes ?" },
+            { question: "Contrainte chez Wharton ?", answers: ["convenances", "règles"], hint: "Qu’emprisonne Archer ?" },
+            { question: "Valeur chez Eschyle ?", answers: ["solidarité", "cité"], hint: "Qu’offre Argos ?" },
+            { question: "Liberté selon Spinoza ?", answers: ["raison", "pensée"], hint: "Qu’est-ce qui reste libre ?" },
+            { question: "Résistance chez Wharton ?", answers: ["défi", "individu"], hint: "Que fait Olenska ?" }
+        ];
+        const structureParts = [
+            ["La communauté protège : Eschyle (*Les Suppliantes*).", "Elle opprime : Wharton (*Le Temps de l’innocence*).", "Spinoza : équilibre par le pacte (*Traité*)."],
+            ["L’individu dépend : Eschyle (*Les Sept*).", "Il résiste : Wharton montre Archer.", "Spinoza : liberté raisonnée (*Traité*)."],
+            ["Soutien collectif : Danaïdes (*Les Suppliantes*).", "Contrainte sociale : Wharton (*Le Temps*).", "Pacte rationnel : Spinoza (*Traité*)."],
+            ["Cité unie : Eschyle (*Les Suppliantes*).", "Désirs brisés : Wharton (*Le Temps*).", "Contrat libre : Spinoza (*Traité*)."],
+            ["Refuge offert : Eschyle (*Les Suppliantes*).", "Normes écrasantes : Wharton (*Le Temps*).", "Paix par la raison : Spinoza (*Traité*)."],
+            ["Conflit interne : Eschyle (*Les Sept*).", "Rebellion individuelle : Wharton montre Olenska.", "Harmonie contractuelle : Spinoza (*Traité*)."]
+        ];
+        const conclusionOptions = [
+            { options: ["La société évolue-t-elle avec le temps ?", "Une communauté moderne est-elle possible ?", "Tout repose sur l’effort individuel.", "L’histoire se répète indéfiniment."], correct: "Une communauté moderne est-elle possible ?" },
+            { options: ["La liberté individuelle est-elle une illusion ?", "Eschyle et Wharton divergent.", "La cité idéale existe-t-elle ?", "Les conflits sont inévitables."], correct: "La cité idéale existe-t-elle ?" },
+            { options: ["L’homme reste prisonnier de ses choix.", "La paix est-elle un rêve irréalisable ?", "L’individu peut-il s’émanciper aujourd’hui ?", "La société stagne toujours."], correct: "L’individu peut-il s’émanciper aujourd’hui ?" },
+            { options: ["La modernité résout-elle ces tensions ?", "Les œuvres montrent des vérités opposées.", "L’équilibre est-il atteignable aujourd’hui ?", "Tout dépend des circonstances historiques."], correct: "L’équilibre est-il atteignable aujourd’hui ?" }
+        ];
+
+        // Données pour #sci-res
+        let sciResCurrentTextIndex = 0;
+        const sciResSummaryTexts = [
+            {
+                text: "L’individu et la communauté forment un duo complexe. Depuis toujours, l’homme cherche à s’épanouir tout en appartenant à un groupe. La société offre un cadre rassurant, un refuge face aux incertitudes de la solitude. Elle garantit protection et soutien, comme une famille élargie. Pourtant, cette sécurité a un prix. | Les règles collectives imposent des limites strictes à la liberté individuelle. Les désirs personnels se heurtent souvent aux attentes sociales, créant des tensions. Dans certaines cultures, l’individu doit se soumettre au bien commun, sacrifiant ses aspirations. Ailleurs, la liberté prime, mais au risque de l’isolement. | Cette dualité révèle une question essentielle : peut-on concilier épanouissement personnel et harmonie collective ? Historiquement, des penseurs ont proposé des solutions. Certains prônent un équilibre où l’individu conserve une autonomie raisonnée. D’autres voient la communauté comme un frein inévitable. | Aujourd’hui, la modernité accentue ce dilemme. Les sociétés individualistes valorisent l’autonomie, mais fragilisent les liens. À l’inverse, les communautés soudées préservent l’unité au détriment de l’originalité. Le défi reste de trouver un juste milieu durable. | En somme, individu et communauté oscillent entre coopération et conflit, une danse éternelle sans vainqueur clair.",
+                thesis: "L’individu et la communauté oscillent entre soutien et contrainte.",
+                args: "Soutien et refuge vs limites et tensions.",
+                parts: "Contexte, tension, solutions, modernité, synthèse.",
+                plan: "Soutien communautaire, limites imposées, quête d’équilibre.",
+                summaryKeywords: ["oscillent", "soutien", "contrainte", "équilibre"]
+            },
+            {
+                text: "La relation entre individu et communauté façonne nos existences. L’homme naît dépendant d’un groupe qui le nourrit et le protège. Cette appartenance forge son identité et lui donne un sens d’unité. Les traditions et les valeurs collectives offrent une stabilité précieuse face au chaos. Mais cette force a des ombres. | L’individu, en grandissant, aspire à affirmer sa singularité. Les normes sociales, souvent rigides, entravent cette quête d’autonomie. Dans les sociétés hiérarchiques, la soumission est une vertu, écrasant les voix dissidentes. Ailleurs, l’individu est célébré, mais risque l’exclusion s’il s’écarte trop. | Ainsi se pose une énigme : l’individu peut-il s’épanouir sans renier son groupe ? Certains imaginent une communauté flexible, adaptée aux différences. D’autres jugent cette tension insoluble, un conflit naturel entre désirs et devoirs. | À l’ère numérique, ce débat s’intensifie. Les réseaux sociaux amplifient l’expression individuelle, mais renforcent aussi les pressions collectives. Les identités se fragmentent, entre appartenances multiples et quête de liberté. | En définitive, individu et communauté sont liés par un fil ténu, oscillant entre fusion et rupture, sans équilibre définitif.",
+                thesis: "Individu et communauté sont en tension permanente.",
+                args: "Identité collective vs quête d’autonomie.",
+                parts: "Dépendance initiale, conflit, solutions, modernité, conclusion.",
+                plan: "Appartenance, opposition, recherche de compromis.",
+                summaryKeywords: ["tension", "identité", "autonomie", "équilibre"]
+            },
+            {
+                text: "L’individu naît dans une communauté qui le précède. Ce lien originel lui offre un ancrage, une sécurité face à l’inconnu. Les groupes humains, par leur coopération, ont survécu aux défis de l’histoire. La solidarité collective soutient l’individu dans ses faiblesses, lui donnant force et appartenance. Mais ce soutien n’est pas gratuit. | Les attentes communautaires pèsent sur chacun, limitant ses choix. La liberté personnelle est souvent sacrifiée pour le bien commun, créant un sentiment d’étouffement. Dans certains cas, l’individu doit se fondre dans le groupe, renonçant à ses rêves. Dans d’autres, il s’isole, perdant tout appui. | Une question émerge : la communauté est-elle libératrice ou oppressive ? Des voix historiques divergent. Certains défendent un pacte équilibré, où l’individu s’émancipe sans rompre les liens. D’autres y voient une prison déguisée, un frein à l’épanouissement. | Aujourd’hui, cette ambivalence persiste. Les sociétés modernes prônent l’indépendance, mais exigent encore des conformités subtiles. Les communautés traditionnelles, elles, résistent au changement, valorisant l’unité sur la diversité. | En somme, individu et communauté cohabitent dans un fragile équilibre, alternant entre soutien mutuel et lutte pour la primauté.",
+                thesis: "La communauté soutient mais limite l’individu.",
+                args: "Soutien collectif vs restriction de liberté.",
+                parts: "Origine, limites, débat, modernité, synthèse.",
+                plan: "Solidarité, sacrifice, équilibre recherché.",
+                summaryKeywords: ["soutient", "limite", "solidarité", "liberté"]
+            },
+            {
+                text: "La vie humaine se joue entre solitude et collectivité. Chaque individu porte en lui un désir d’autonomie, une quête de soi. Pourtant, il dépend du groupe pour survivre et s’élever. La communauté lui offre un refuge, une identité partagée face aux aléas du monde. Ce lien est une force vitale. | Mais ce lien peut devenir une chaîne. Les attentes collectives imposent des normes qui brident l’expression personnelle. L’individu doit souvent choisir : se conformer ou s’exiler. Dans les sociétés rigides, l’unité prévaut, étouffant les différences. Dans les cultures libres, l’isolement guette les audacieux. | Une interrogation subsiste : l’individu peut-il exister sans communauté ? Certains prônent une autonomie guidée par la raison, un compromis viable. D’autres soutiennent que l’individu seul est incomplet, condamné à l’errance. | La modernité complique cette dynamique. La technologie relie les individus, mais disperse les appartenances. Les communautés virtuelles naissent, offrant une liberté inédite, mais parfois illusoire. | Au final, individu et communauté s’entrelacent inexorablement, entre dépendance et aspiration, un duel où chacun cherche sa place sans jamais la fixer.",
+                thesis: "Individu et communauté s’entrelacent dans un duel constant.",
+                args: "Autonomie vs dépendance collective.",
+                parts: "Désir d’autonomie, contraintes, débat, modernité, conclusion.",
+                plan: "Quête individuelle, poids collectif, compromis possible.",
+                summaryKeywords: ["duel", "autonomie", "dépendance", "compromis"]
+            }
+        ];
+
+        // Données pour #com-diss
+        const problemPairs = [
+            { hook: "Les selfies envahissent nos écrans.", problem: "L’image reflète-t-elle ou déforme-t-elle l’identité ?" },
+            { hook: "Un tableau peut changer une vie.", problem: "L’image a-t-elle un pouvoir transformateur ?" },
+            { hook: "Les fake news pullulent en ligne.", problem: "L’image manipule-t-elle la vérité ?" },
+            { hook: "Hollywood façonne nos rêves.", problem: "L’image construit-elle notre imaginaire ?" },
+            { hook: "Une photo peut mentir.", problem: "L’image est-elle un miroir ou une illusion ?" },
+            { hook: "Les icônes religieuses inspirent.", problem: "L’image porte-t-elle une vérité spirituelle ?" },
+            { hook: "Instagram redéfinit la beauté.", problem: "L’image impose-t-elle des normes sociales ?" },
+            { hook: "Le cinéma immortalise le temps.", problem: "L’image fige-t-elle ou transcende-t-elle la réalité ?" }
+        ];
+        // Données pour #com-diss - Étape 2 : Plus de questions
+// Données pour #com-diss - Étape 2 : Décodeur d’images (liste enrichie)
+const imageChallenges = [
+    { question: "Quel rôle joue l’image dans la publicité ?", answers: ["persuasion", "séduction", "attraction"], hint: "Pensez à ce qui attire le consommateur." },
+    { question: "Que symbolisent les images dans l’allégorie de la caverne de Platon ?", answers: ["illusion", "ombres", "apparences"], hint: "Que voit-on sur les murs ?" },
+    { question: "Selon Baudrillard, qu’est-ce que le simulacre ?", answers: ["hyperréalité", "copie", "faux"], hint: "Une réalité qui n’en est pas une." },
+    { question: "Quel est l’impact des images sur les réseaux sociaux ?", answers: ["influence", "apparence", "perception"], hint: "Comment affectent-elles notre vision ?" },
+    { question: "Quel était le but des images dans l’art classique ?", answers: ["beauté", "idéal", "perfection"], hint: "Une quête esthétique." },
+    { question: "Comment Photoshop modifie-t-il notre rapport à la réalité ?", answers: ["manipulation", "altération", "distorsion"], hint: "Que change-t-il aux photos ?" },
+    { question: "Pourquoi les images au cinéma nous émeuvent-elles ?", answers: ["émotion", "immersion", "identification"], hint: "Un lien avec les sentiments." },
+    { question: "Quel rôle joue l’image dans la propagande ?", answers: ["pouvoir", "contrôle", "manipulation"], hint: "Un outil d’influence." },
+    { question: "Un portrait peut-il révéler l’intériorité d’une personne ?", answers: ["expression", "âme", "caractère"], hint: "Que dit-il de l’individu ?" },
+    { question: "Comment les images publicitaires créent-elles du désir ?", answers: ["désir", "envie", "besoin"], hint: "Elles poussent à consommer." },
+    { question: "Quelle est la fonction des images religieuses ?", answers: ["sacré", "symbolique", "spiritualité"], hint: "Un rôle dans la foi." },
+    { question: "Que conserve une photographie dans le temps ?", answers: ["souvenir", "mémoire", "moment"], hint: "Un instant figé." }
+];
+// Fonctions pour #com-diss - Étape 2
+function newChallenge() {
+    console.log("Nouveau défi - Décodeur d’images (#com-diss)");
+    const container = document.getElementById("challenge-container");
+    const feedback = document.getElementById("challenge-feedback");
+    if (container && feedback) {
+        const challenge = imageChallenges[Math.floor(Math.random() * imageChallenges.length)];
+        container.innerHTML = `
+            <p id="current-question">1. ${challenge.question}</p>
+            <input type="text" id="answer-input" placeholder="Votre réponse...">
+            <div id="hint-text" class="example hidden">${challenge.hint}</div>
+        `;
+        feedback.style.display = "none"; // Réinitialise le feedback
+    } else {
+        console.error("challenge-container ou challenge-feedback non trouvé");
+    }
+}
+
+function verifyAnswer() {
+    console.log("Vérification - Décodeur d’images (#com-diss)");
+    const feedback = document.getElementById("challenge-feedback");
+    if (feedback) {
+        feedback.style.display = "block";
+        const input = document.getElementById("answer-input");
+        const question = document.getElementById("current-question").textContent.split(". ")[1];
+        if (input) {
+            const challenge = imageChallenges.find(c => c.question === question);
+            const userAnswer = input.value.trim().toLowerCase();
+            const isCorrect = challenge.answers.some(ans => userAnswer.includes(ans));
+            feedback.innerHTML = isCorrect ? "Analyse correcte ! Bravo !" : `Incorrect. Indice : ${challenge.hint}`;
+            document.getElementById("hint-text").style.display = isCorrect ? "none" : "block";
+        } else {
+            console.error("answer-input non trouvé");
+            feedback.innerHTML = "Erreur : réponse non trouvée.";
+        }
+    } else {
+        console.error("challenge-feedback non trouvé");
+    }
+}        function generateIntroGame() {
+            console.log("Génération du jeu d’introduction");
+            const sortable = document.getElementById("intro-sortable");
+            if (sortable) {
+                sortable.innerHTML = "";
+                const parts = introParts[Math.floor(Math.random() * introParts.length)].sort(() => 0.5 - Math.random());
+                parts.forEach(part => {
+                    sortable.innerHTML += `<li draggable="true">${part}</li>`;
+                });
+                initializeTouchEvents("intro-sortable");
+            } else {
+                console.error("intro-sortable non trouvé");
+            }
+        }
+        function checkIntro() {
+            console.log("Vérification de l’introduction");
+            const feedback = document.getElementById("intro_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const items = document.querySelectorAll("#intro-sortable li");
+                const isCorrect = items.length === 3 &&
+                    (items[0].textContent.includes("coexistent depuis toujours") || items[0].textContent.includes("vit à la fois seul") || items[0].textContent.includes("tension entre individu") || items[0].textContent.includes("liens sociaux définissent") || items[0].textContent.includes("oscille entre solitude")) &&
+                    (items[1].textContent.includes("soutient-elle ou contraint-elle") || items[1].textContent.includes("peut-il s’affranchir") || items[1].textContent.includes("favorise-t-elle") || items[1].textContent.includes("refuge ou une prison") || items[1].textContent.includes("trouve-t-il sa place")) &&
+                    (items[2].textContent.includes("Soutien") || items[2].textContent.includes("Dépendance") || items[2].textContent.includes("Collectivité") || items[2].textContent.includes("Protection") || items[2].textContent.includes("Appartenance"));
+                feedback.innerHTML = isCorrect ? "Parfaite intro ! À l’analyse !" : "L’ordre correct est : 1. Contexte, 2. Question, 3. Plan.";
+            }
+        }
+
+        function generateAnalysisGame() {
+            console.log("Génération du jeu d’analyse");
+            const container = document.getElementById("analysis-container");
+            if (container) {
+                container.innerHTML = "";
+                const challenge = sciAnalysisChallenges[Math.floor(Math.random() * sciAnalysisChallenges.length)];
+                container.innerHTML = `
+                    <p>1. ${challenge.question}</p>
+                    <input type="text" id="analysis0" placeholder="Votre réponse...">
+                    <div id="analysis0_hint" class="example hidden">${challenge.hint}</div>
+                `;
+            } else {
+                console.error("analysis-container non trouvé");
+            }
+        }
+        function checkAnalysis() {
+            console.log("Vérification de l’analyse");
+            const feedback = document.getElementById("analysis_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const input = document.getElementById("analysis0");
+                if (input) {
+                    const question = input.previousElementSibling.textContent.split(". ")[1];
+                    const challenge = sciAnalysisChallenges.find(c => c.question === question);
+                    const isCorrect = challenge.answers.some(ans => input.value.toLowerCase().includes(ans));
+                    feedback.innerHTML = isCorrect ? "Super ! À la structuration !" : `Incorrect. Indice : ${challenge.hint}`;
+                }
+            }
+        }
+
+        function generateStructureGame() {
+            console.log("Génération du jeu de structuration");
+            const sortable = document.getElementById("sortable");
+            if (sortable) {
+                sortable.innerHTML = "";
+                const parts = structureParts[Math.floor(Math.random() * structureParts.length)].sort(() => 0.5 - Math.random());
+                parts.forEach(part => {
+                    sortable.innerHTML += `<li draggable="true">${part}</li>`;
+                });
+                initializeTouchEvents("sortable");
+            } else {
+                console.error("sortable non trouvé");
+            }
+        }
+        function checkStructure() {
+            console.log("Vérification de la structuration");
+            const feedback = document.getElementById("structure_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const items = document.querySelectorAll("#sortable li");
+                const isCorrect = items.length === 3 &&
+                    (items[0].textContent.includes("protège") || items[0].textContent.includes("dépend") || items[0].textContent.includes("Soutien") || items[0].textContent.includes("Cité unie") || items[0].textContent.includes("Refuge") || items[0].textContent.includes("Conflit interne")) &&
+                    (items[1].textContent.includes("opprime") || items[1].textContent.includes("résiste") || items[1].textContent.includes("Contrainte") || items[1].textContent.includes("Désirs") || items[1].textContent.includes("Normes") || items[1].textContent.includes("Rebellion")) &&
+                    (items[2].textContent.includes("équilibre") || items[2].textContent.includes("liberté raisonnée") || items[2].textContent.includes("Pacte") || items[2].textContent.includes("Contrat") || items[2].textContent.includes("Paix") || items[2].textContent.includes("Harmonie"));
+                feedback.innerHTML = isCorrect ? "Plan parfait ! À la conclusion !" : "L’ordre correct suit une progression logique.";
+            }
+        }
+
+        function generateConclusionGame() {
+            console.log("Génération du jeu de conclusion");
+            const container = document.getElementById("conclusion-container");
+            if (container) {
+                container.innerHTML = "";
+                const set = conclusionOptions[Math.floor(Math.random() * conclusionOptions.length)];
+                set.options.sort(() => 0.5 - Math.random());
+                container.innerHTML += `<p>Options :</p>`;
+                set.options.forEach((option, i) => {
+                    container.innerHTML += `
+                        <input type="radio" id="conc${i}" name="conclusion" value="${option}">
+                        <label for="conc${i}">${option}</label><br>
+                    `;
+                });
+            } else {
+                console.error("conclusion-container non trouvé");
+            }
+        }
+        function checkConclusion() {
+            console.log("Vérification de la conclusion");
+            const feedback = document.getElementById("conclusion_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const selected = document.querySelector('input[name="conclusion"]:checked');
+                const set = conclusionOptions.find(opt => opt.options.includes(selected?.value));
+                const correctAnswer = set ? set.correct : null;
+                feedback.innerHTML = selected?.value === correctAnswer ? "Excellente conclusion !" : "Choisissez une ouverture pertinente.";
+            }
+        }
+
+        // Fonctions pour #sci-res
+        function generateSummaryGame() {
+            console.log("Génération d’un nouveau défi de résumé");
+            const textContainer = document.getElementById("summary-text");
+            const inputs = ["thesis-input", "args-input", "parts-input", "plan-input", "summary-input"].map(id => document.getElementById(id));
+            const feedbacks = ["thesis-feedback", "args-feedback", "parts-feedback", "plan-feedback", "summary-feedback"].map(id => document.getElementById(id));
+            if (textContainer && inputs.every(i => i) && feedbacks.every(f => f)) {
+                sciResCurrentTextIndex = Math.floor(Math.random() * 3) + 1; // 1, 2 ou 3
+                const selectedText = sciResSummaryTexts[sciResCurrentTextIndex];
+                const words = selectedText.text.split(" ");
+                let markedText = "";
+                for (let i = 0; i < words.length; i++) {
+                    markedText += words[i] + " ";
+                    if ((i + 1) % 50 === 0) markedText += "| ";
+                }
+                textContainer.innerHTML = markedText.trim();
+                inputs.forEach(input => input.value = "");
+                feedbacks.forEach(feedback => feedback.style.display = "none");
+                countSummaryWords(document.getElementById("summary-input"));
+            } else {
+                console.error("Éléments de résumé non trouvés");
+            }
+        }
+
+        function countSummaryWords(textarea) {
+            const text = textarea.value.trim();
+            const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+            document.getElementById("summary-word-count").textContent = `Mots : ${wordCount}/50`;
+        }
+
+        function checkThesis() {
+            console.log("Vérification de la thèse");
+            const input = document.getElementById("thesis-input");
+            const feedback = document.getElementById("thesis-feedback");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = sciResSummaryTexts[sciResCurrentTextIndex].thesis.toLowerCase();
+                const keywords = correct.split(" ");
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Thèse correcte !" : `Incorrect. Corrigé : "${sciResSummaryTexts[sciResCurrentTextIndex].thesis}"`;
+            }
+        }
+
+        function checkArgs() {
+            console.log("Vérification des arguments");
+            const input = document.getElementById("args-input");
+            const feedback = document.getElementById("args-feedback");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = sciResSummaryTexts[sciResCurrentTextIndex].args.toLowerCase();
+                const keywords = correct.split(" ").concat(correct.split(" vs "));
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Arguments bien identifiés !" : `Incorrect. Corrigé : "${sciResSummaryTexts[sciResCurrentTextIndex].args}"`;
+            }
+        }
+
+        function checkParts() {
+            console.log("Vérification des parties");
+            const input = document.getElementById("parts-input");
+            const feedback = document.getElementById("parts-feedback");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = sciResSummaryTexts[sciResCurrentTextIndex].parts.toLowerCase();
+                const keywords = correct.split(", ");
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Parties bien décrites !" : `Incorrect. Corrigé : "${sciResSummaryTexts[sciResCurrentTextIndex].parts}"`;
+            }
+        }
+
+        function checkPlan() {
+            console.log("Vérification du plan");
+            const input = document.getElementById("plan-input");
+            const feedback = document.getElementById("plan-feedback");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = sciResSummaryTexts[sciResCurrentTextIndex].plan.toLowerCase();
+                const keywords = correct.split(", ");
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Plan correct !" : `Incorrect. Corrigé : "${sciResSummaryTexts[sciResCurrentTextIndex].plan}"`;
+            }
+        }
+
+        function checkSummary() {
+            console.log("Vérification du résumé");
+            const input = document.getElementById("summary-input");
+            const feedback = document.getElementById("summary-feedback");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const text = input.value.trim();
+                const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+                if (wordCount > 50) {
+                    feedback.innerHTML = "Trop long ! Maximum 50 mots.";
+                } else if (wordCount === 0) {
+                    feedback.innerHTML = "Écrivez un résumé !";
+                } else {
+                    const answer = text.toLowerCase();
+                    const keywords = sciResSummaryTexts[sciResCurrentTextIndex].summaryKeywords;
+                    const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                    feedback.innerHTML = isCorrect ? `Résumé correct (${wordCount} mots) !` : `Incorrect (${wordCount} mots). Assurez-vous d’inclure les idées clés : ${keywords.join(", ")}.`;
+                }
+            }
+        }
+
+        // Fonctions pour #com-diss
+        function generateProblemGame() {
+            console.log("Clic sur Nouveau défi - Problématisation");
+            const container = document.getElementById("problem-container");
+            if (container) {
+                const pair = problemPairs[Math.floor(Math.random() * problemPairs.length)];
+                container.innerHTML = `
+                    <p>1. "${pair.hook}"</p>
+                    <select id="problem0">
+                        <option value="">Choisissez...</option>
+                        ${problemPairs.map(p => `<option value="${p.problem}">${p.problem}</option>`).join('')}
+                    </select>
+                `;
+            } else {
+                console.error("problem-container non trouvé");
+            }
+        }
+
+        function checkProblem() {
+            console.log("Clic sur Vérifier - Problématisation");
+            const feedback = document.getElementById("problem-feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const select = document.getElementById("problem0");
+                if (select) {
+                    const hook = select.previousElementSibling.textContent.split('"')[1];
+                    const correctProblem = problemPairs.find(p => p.hook === hook).problem;
+                    feedback.innerHTML = select.value === correctProblem ? "Problématique parfaite !" : `Incorrect. Corrigé : "${correctProblem}"`;
+                } else {
+                    console.error("problem0 non trouvé");
+                }
+            }
+        }
+
+        function generateAnalysisGameCom() {
+            console.log("Clic sur Nouveau défi - Analyse (com-diss)");
+            const container = document.getElementById("analysis-container");
+            if (container) {
+                const challenge = comAnalysisChallenges[Math.floor(Math.random() * comAnalysisChallenges.length)];
+                container.innerHTML = `
+                    <p>1. ${challenge.question}</p>
+                    <input type="text" id="analysis0" placeholder="Votre réponse...">
+                    <div id="analysis0_hint" class="example hidden">${challenge.hint}</div>
+                `;
+            } else {
+                console.error("analysis-container non trouvé dans com-diss");
+            }
+        }
+
+        function checkAnalysisCom() {
+            console.log("Clic sur Vérifier - Analyse (com-diss)");
+            const feedback = document.getElementById("analysis-feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const input = document.getElementById("analysis0");
+                if (input) {
+                    const question = input.previousElementSibling.textContent.split(". ")[1];
+                    const challenge = comAnalysisChallenges.find(c => c.question === question);
+                    const isCorrect = challenge.answers.some(ans => input.value.toLowerCase().includes(ans));
+                    feedback.innerHTML = isCorrect ? "Analyse correcte !" : `Incorrect. Indice : ${challenge.hint}`;
+                } else {
+                    console.error("analysis0 non trouvé dans com-diss");
+                }
+            }
+        }
+
+        function generateStructureGameCom() {
+            console.log("Clic sur Nouveau défi - Structuration (com-diss)");
+            const sortable = document.getElementById("sortable-plan");
+            if (sortable) {
+                sortable.innerHTML = "";
+                const parts = comStructureParts[Math.floor(Math.random() * comStructureParts.length)].sort(() => 0.5 - Math.random());
+                parts.forEach(part => {
+                    sortable.innerHTML += `<li draggable="true">${part}</li>`;
+                });
+                initializeTouchEvents("sortable-plan");
+            } else {
+                console.error("sortable-plan non trouvé");
+            }
+        }
+
+        function checkStructureCom() {
+            console.log("Clic sur Vérifier - Structuration (com-diss)");
+            const feedback = document.getElementById("structure-feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const items = document.querySelectorAll("#sortable-plan li");
+                if (items.length === 3) {
+                    const isCorrect = items[0].textContent.includes("reflet") && 
+                                      items[1].textContent.includes("pouvoir") && 
+                                      items[2].textContent.includes("illusion");
+                    feedback.innerHTML = isCorrect ? "Plan parfait !" : "Ordre incorrect. Essayez : Réel, Pouvoir, Illusion.";
+                } else {
+                    feedback.innerHTML = "Erreur : plan incomplet.";
+                }
+            }
+        }
+
+        function checkWritingCom() {
+            console.log("Clic sur Vérifier - Rédaction (com-diss)");
+            const input = document.getElementById("writing-input");
+            const feedback = document.getElementById("writing-feedback");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const text = input.value.trim();
+                const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+                if (wordCount > 200) {
+                    feedback.innerHTML = "Trop long ! Maximum 200 mots.";
+                } else if (wordCount === 0) {
+                    feedback.innerHTML = "Écrivez quelque chose !";
+                } else {
+                    const keywords = ["image", "réalité", "pouvoir", "illusion", "identité", "société", "imaginaire"];
+                    const lowerText = text.toLowerCase();
+                    const hasRelevantContent = keywords.some(keyword => lowerText.includes(keyword));
+                    feedback.innerHTML = hasRelevantContent && wordCount > 0 ? 
+                        `Texte bien rédigé (${wordCount} mots) !` : 
+                        `Texte hors sujet ou trop vague (${wordCount} mots). Incluez des idées clés comme "image", "réalité", "pouvoir".`;
+                }
+            }
+        }
+// Données pour #com-res
+let comResCurrentTextIndex = 0;
+const comResSummaryTexts = [
+    {
+        text: "L’image fascine depuis l’aube de l’humanité. Dans les grottes préhistoriques, elle racontait des chasses épiques, capturant l’instant. Aujourd’hui, elle envahit nos écrans, des selfies aux publicités, reflétant ou déformant nos identités. | Elle manipule aussi la vérité : fake news et retouches brouillent le réel. Pourtant, l’image inspire, du cinéma aux icônes religieuses, touchant nos émotions. | Son pouvoir est double : outil de contrôle dans la propagande, elle façonne les esprits, mais libère aussi l’imaginaire, comme Hollywood le prouve. | À l’ère numérique, Instagram redéfinit la beauté, entre filtres et normes imposées. Les photos figent le temps, souvenirs intimes ou témoignages historiques. | En somme, l’image, miroir ou illusion, oscille entre vérité et fiction, captivant toujours notre regard.",
+        thesis: "L’image oscille entre reflet de la réalité et illusion manipulatrice.",
+        args: "Manipulation vs inspiration.",
+        parts: "Origines, manipulation, pouvoir, modernité, synthèse.",
+        plan: "Reflet et manipulation, inspiration et normes.",
+        summaryKeywords: ["image", "illusion", "réalité", "pouvoir"]
+    },
+    {
+        text: "L’image a toujours été un langage universel. Les fresques égyptiennes glorifiaient les pharaons, immortalisant leur règne. Aujourd’hui, elle domine les médias, des affiches politiques aux clips viraux, influençant les masses. | Mais elle trompe souvent : retouches et montages altèrent la vérité. Le cinéma, lui, éblouit par sa capacité à créer des mondes, malgré ses stéréotypes. | Dans la propagande, elle impose des visions, comme les affiches de guerre l’ont montré. À l’inverse, elle offre une évasion, un rêve accessible à tous. | Les réseaux sociaux en font un miroir déformant : selfies et filtres flattent l’ego. Les archives visuelles, quant à elles, sauvegardent l’histoire. | Ainsi, l’image, arme ou art, façonne notre perception du réel tout en flirtant avec le fictif.",
+        thesis: "L’image façonne la perception entre réalité et fiction.",
+        args: "Influence vs tromperie.",
+        parts: "Histoire, tromperie, influence, réseaux, conclusion.",
+        plan: "Influence historique, fiction moderne.",
+        summaryKeywords: ["image", "perception", "fiction", "influence"]
+    },
+    {
+        text: "Dès l’Antiquité, l’image sculptait les mythes, des statues grecques aux mosaïques romaines. Aujourd’hui, elle inonde nos vies via écrans et panneaux, reflet ou caricature de nous-mêmes. | Sa force réside dans sa dualité : vérité documentaire ou mensonge savamment orchestré, comme les deepfakes. Elle émeut aussi, des peintures sacrées aux blockbusters. | En politique, elle sert le pouvoir, manipulant les foules avec des slogans visuels. Mais elle libère l’esprit, invitant à l’aventure intérieure. | Sur TikTok, elle impose des idéaux de beauté fugaces. Les albums photo, eux, cristallisent nos vies passées. | En fin de compte, l’image est un outil ambigu, entre authenticité et artifice, toujours au cœur de notre quête de sens.",
+        thesis: "L’image est un outil ambigu entre vérité et artifice.",
+        args: "Vérité vs manipulation.",
+        parts: "Antiquité, dualité, pouvoir, modernité, synthèse.",
+        plan: "Vérité historique, artifice actuel.",
+        summaryKeywords: ["image", "artifice", "vérité", "outil"]
+    }
+];
+
+// Fonctions pour #com-res
+function generateSummaryGameCom() {
+    console.log("Nouveau défi - Résumé (#com-res)");
+    const textContainer = document.getElementById("summary-text-com");
+    const inputs = ["thesis-input-com", "args-input-com", "parts-input-com", "plan-input-com", "summary-input-com"].map(id => document.getElementById(id));
+    const feedbacks = ["thesis-feedback-com", "args-feedback-com", "parts-feedback-com", "plan-feedback-com", "summary-feedback-com"].map(id => document.getElementById(id));
+    if (textContainer && inputs.every(i => i) && feedbacks.every(f => f)) {
+        comResCurrentTextIndex = Math.floor(Math.random() * comResSummaryTexts.length);
+        const selectedText = comResSummaryTexts[comResCurrentTextIndex];
+        const words = selectedText.text.split(" ");
+        let markedText = "";
+        for (let i = 0; i < words.length; i++) {
+            markedText += words[i] + " ";
+            if ((i + 1) % 50 === 0) markedText += "| ";
+        }
+        textContainer.innerHTML = markedText.trim();
+        inputs.forEach(input => input.value = "");
+        feedbacks.forEach(feedback => feedback.style.display = "none");
+        countSummaryWordsCom(document.getElementById("summary-input-com"));
+    }
+}
+
+function countSummaryWordsCom(textarea) {
+    const text = textarea.value.trim();
+    const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+    document.getElementById("summary-word-count-com").textContent = `Mots : ${wordCount}/50`;
+}
+
+function checkThesisCom() {
+    const input = document.getElementById("thesis-input-com");
+    const feedback = document.getElementById("thesis-feedback-com");
+    if (input && feedback) {
+        feedback.style.display = "block";
+        const answer = input.value.trim().toLowerCase();
+        const correct = comResSummaryTexts[comResCurrentTextIndex].thesis.toLowerCase();
+        const keywords = correct.split(" ");
+        const isCorrect = keywords.some(keyword => answer.includes(keyword));
+        feedback.innerHTML = isCorrect ? "Thèse juste ! Bien vu !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].thesis}"`;
+    }
+}
+
+function checkArgsCom() {
+    const input = document.getElementById("args-input-com");
+    const feedback = document.getElementById("args-feedback-com");
+    if (input && feedback) {
+        feedback.style.display = "block";
+        const answer = input.value.trim().toLowerCase();
+        const correct = comResSummaryTexts[comResCurrentTextIndex].args.toLowerCase();
+        const keywords = correct.split(" ").concat(correct.split(" vs "));
+        const isCorrect = keywords.some(keyword => answer.includes(keyword));
+        feedback.innerHTML = isCorrect ? "Arguments captés ! Super !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].args}"`;
+    }
+}
+
+function checkPartsCom() {
+    const input = document.getElementById("parts-input-com");
+    const feedback = document.getElementById("parts-feedback-com");
+    if (input && feedback) {
+        feedback.style.display = "block";
+        const answer = input.value.trim().toLowerCase();
+        const correct = comResSummaryTexts[comResCurrentTextIndex].parts.toLowerCase();
+        const keywords = correct.split(", ");
+        const isCorrect = keywords.some(keyword => answer.includes(keyword));
+        feedback.innerHTML = isCorrect ? "Parties bien découpées !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].parts}"`;
+    }
+}
+
+function checkPlanCom() {
+    const input = document.getElementById("plan-input-com");
+    const feedback = document.getElementById("plan-feedback-com");
+    if (input && feedback) {
+        feedback.style.display = "block";
+        const answer = input.value.trim().toLowerCase();
+        const correct = comResSummaryTexts[comResCurrentTextIndex].plan.toLowerCase();
+        const keywords = correct.split(", ");
+        const isCorrect = keywords.some(keyword => answer.includes(keyword));
+        feedback.innerHTML = isCorrect ? "Plan structuré ! Top !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].plan}"`;
+    }
+}
+
+function checkSummaryCom() {
+    const input = document.getElementById("summary-input-com");
+    const feedback = document.getElementById("summary-feedback-com");
+    if (input && feedback) {
+        feedback.style.display = "block";
+        const text = input.value.trim();
+        const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+        if (wordCount > 50) {
+            feedback.innerHTML = "Trop long ! Max 50 mots.";
+        } else if (wordCount === 0) {
+            feedback.innerHTML = "Rédigez un résumé !";
+        } else {
+            const answer = text.toLowerCase();
+            const keywords = comResSummaryTexts[comResCurrentTextIndex].summaryKeywords;
+            const isCorrect = keywords.some(keyword => answer.includes(keyword));
+            feedback.innerHTML = isCorrect ? `Résumé réussi (${wordCount} mots) !` : `Manque de précision (${wordCount} mots). Incluez : ${keywords.join(", ")}.`;
+        }
+    }
+}
+
+// Données pour #com-syn
+let synthesisCorpusIndex = 0;
+const synthesisCorpora = [
+    {
+        docs: [
+            '<strong>Doc 1 : "Selfie Nation" (article, 2023)</strong> - Les selfies dominent les réseaux sociaux, reflétant une quête d’identité mais aussi une superficialité croissante.',
+            '<strong>Doc 2 : "L’objectif vérité" (essai, 2019)</strong> - La photographie, jadis garante de réalité, est désormais suspecte à l’ère des retouches et fake news.',
+            '<strong>Doc 3 : "Hollywood Dreams" (interview, 2022)</strong> - Le cinéma utilise l’image pour nourrir l’imaginaire collectif, mais impose des stéréotypes.'
+        ],
+        problematic: "Comment l’image oscille-t-elle entre vérité et fiction dans nos sociétés modernes ?",
+        plan: "I. L’image comme reflet altéré II. L’image comme créatrice de rêves",
+        keywords: ["image", "vérité", "fiction", "société"]
+    },
+    {
+        docs: [
+            '<strong>Doc 1 : "Icônes et foi" (essai, 2020)</strong> - Les images religieuses inspirent une vérité spirituelle, reliant l’homme au divin.',
+            '<strong>Doc 2 : "Propagande visuelle" (article, 2021)</strong> - L’image politique manipule les masses, imposant des réalités biaisées.',
+            '<strong>Doc 3 : "Pixels intimes" (témoignage, 2023)</strong> - Les photos personnelles capturent des souvenirs, mais filtres et mises en scène les déforment.'
+        ],
+        problematic: "L’image est-elle un vecteur de vérité ou un outil de manipulation ?",
+        plan: "I. Vérité captée par l’image II. Manipulation par l’image",
+        keywords: ["image", "vérité", "manipulation", "perception"]
+    }
+];
+
+// Fonctions pour #com-syn
+function generateSynthesisGame() {
+    console.log("Nouveau défi - Synthèse (#com-syn)");
+    const container = document.getElementById("corpus-container");
+    const inputs = ["problematic-input", "plan-input-syn", "synthesis-input"].map(id => document.getElementById(id));
+    const feedbacks = ["problematic-feedback", "plan-feedback-syn", "synthesis-feedback"].map(id => document.getElementById(id));
+    if (container && inputs.every(i => i) && feedbacks.every(f => f)) {
+        synthesisCorpusIndex = Math.floor(Math.random() * synthesisCorpora.length);
+        const selectedCorpus = synthesisCorpora[synthesisCorpusIndex];
+        container.innerHTML = selectedCorpus.docs.map(doc => `<p>${doc}</p>`).join('');
+        inputs.forEach(input => input.value = "");
+        feedbacks.forEach(feedback => feedback.style.display = "none");
+        countSynthesisWords(document.getElementById("synthesis-input"));
+    }
+}
+
+function countSynthesisWords(textarea) {
+    const text = textarea.value.trim();
+    const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+    document.getElementById("synthesis-word-count").textContent = `Mots : ${wordCount}/150`;
+}
+
+function checkProblematic() {
+    const input = document.getElementById("problematic-input");
+    const feedback = document.getElementById("problematic-feedback");
+    if (input && feedback) {
+        feedback.style.display = "block";
+        const answer = input.value.trim().toLowerCase();
+        const correct = synthesisCorpora[synthesisCorpusIndex].problematic.toLowerCase();
+        const keywords = correct.split(" ");
+        const isCorrect = keywords.some(keyword => answer.includes(keyword));
+        feedback.innerHTML = isCorrect ? "Problématique pertinente ! Bien joué !" : `Pas tout à fait. Suggestion : "${synthesisCorpora[synthesisCorpusIndex].problematic}"`;
+    }
+}
+
+function checkPlanSyn() {
+    const input = document.getElementById("plan-input-syn");
+    const feedback = document.getElementById("plan-feedback-syn");
+    if (input && feedback) {
+        feedback.style.display = "block";
+        const answer = input.value.trim().toLowerCase();
+        const correct = synthesisCorpora[synthesisCorpusIndex].plan.toLowerCase();
+        const keywords = correct.split(" ").filter(word => word.length > 3); // Mots significatifs
+        const isCorrect = keywords.some(keyword => answer.includes(keyword));
+        feedback.innerHTML = isCorrect ? "Plan cohérent ! Excellent !" : `À revoir. Exemple : "${synthesisCorpora[synthesisCorpusIndex].plan}"`;
+    }
+}
+
+function checkSynthesis() {
+    const input = document.getElementById("synthesis-input");
+    const feedback = document.getElementById("synthesis-feedback");
+    if (input && feedback) {
+        feedback.style.display = "block";
+        const text = input.value.trim();
+        const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+        if (wordCount > 150) {
+            feedback.innerHTML = "Trop long ! Max 150 mots.";
+        } else if (wordCount === 0) {
+            feedback.innerHTML = "Rédigez une synthèse !";
+        } else {
+            const answer = text.toLowerCase();
+            const keywords = synthesisCorpora[synthesisCorpusIndex].keywords;
+            const isCorrect = keywords.some(keyword => answer.includes(keyword));
+            feedback.innerHTML = isCorrect ? `Synthèse réussie (${wordCount} mots) !` : `Manque de précision (${wordCount} mots). Incluez : ${keywords.join(", ")}.`;
+        }
+    }
+}
+        console.log("Page chargée, affichage de home");
+        showSection('home');
+    </script>
+</body>
+</html>
