@@ -43,7 +43,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
             touch-action: manipulation;
         }
         button.sci { background-color: #2a6c1a; }
@@ -51,7 +51,7 @@
         button.dissertations { background-color: #1a2a6c; }
         button.summary { background-color: #5a7d4b; }
         button.synthesis { background-color: #4b2e5a; }
-        button:hover { opacity: 0.9; }
+        button:hover { opacity: 0.9; transform: scale(1.05); }
         .section {
             display: none;
             margin-top: 20px;
@@ -69,6 +69,7 @@
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #ff8c00;
+            transition: opacity 0.5s;
         }
         .section h2 { margin-top: 0; }
         .section p { margin-bottom: 10px; }
@@ -82,7 +83,9 @@
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
         }
+        .game-step:hover { background-color: #f9f9f9; }
         #step-citations { background-color: #e6f3e6; border-left: 5px solid #2a6c1a; }
         #step-intro { background-color: #f0e6f3; border-left: 5px solid #4b2e5a; }
         #step-analysis { background-color: #e6f3ff; border-left: 5px solid #0066cc; }
@@ -100,11 +103,14 @@
             border: 1px dashed #1a2a6c;
             border-radius: 5px;
             cursor: move;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
             min-height: 50px;
-            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
-        #intro-sortable li:hover, #sortable li:hover, #sortable-plan li:hover { background-color: #e6ecf3; }
+        #intro-sortable li:hover, #sortable li:hover, #sortable-plan li:hover { background-color: #e6ecf3; transform: scale(1.02); }
         .works-reference {
             text-align: center;
             background-color: #ffeb99;
@@ -124,7 +130,7 @@
         }
         .verify-button { background-color: #ff4500; }
         .new-challenge-button { background-color: #00cc00; }
-        .action-button:hover { opacity: 0.85; }
+        .action-button:hover { opacity: 0.85; transform: scale(1.05); }
         footer {
             text-align: center;
             padding: 10px;
@@ -133,7 +139,7 @@
             font-size: 14px;
             color: #555;
         }
-        #summary-text {
+        #summary-text, #summary-text-com {
             background-color: #f9f9f9;
             padding: 10px;
             border-radius: 5px;
@@ -149,7 +155,7 @@
             resize: vertical;
             margin-bottom: 10px;
         }
-        #summary-word-count {
+        #summary-word-count, #summary-word-count-com, #synthesis-word-count {
             font-size: 14px;
             color: #555;
             margin-bottom: 10px;
@@ -170,14 +176,14 @@
             </div>
         </div>
         <div id="sci" class="section">
-            <h2>Prépas scientifiques - Thème : Individu et communauté</h2>
+            <h2>Prépas scientifiques - Thème : Individu et Communauté</h2>
             <p>Entraînez-vous sur le thème de l’année :</p>
             <div class="button-container">
                 <button class="dissertations" onclick="showSubSection('sci-diss')">Dissertations</button>
                 <button class="summary" onclick="showSubSection('sci-res')">Résumés</button>
             </div>
             <div id="sci-diss" class="sub-section">
-                <h2>Dissertations - Individu et communauté</h2>
+                <h2>Dissertations - Individu et Communauté</h2>
                 <div class="works-reference">
                     Basez-vous sur les œuvres : <em>Eschyle (Les Sept Contre Thèbes, Les Suppliantes)</em>, <em>Spinoza (Traité Théologicopolitique)</em>, <em>Wharton (Le Temps de l'innocence)</em>
                 </div>
@@ -186,8 +192,22 @@
                     <p>Associez chaque citation à son auteur :</p>
                     <div id="quote-game">
                         <div id="quote-container">
-                            <p>1. "Ô peuple d'Argos, entendez notre prière !"</p>
-                            <select id="quote0">
+                            <p id="quote-0-text">1. "Ô peuple d'Argos, entendez notre prière !"</p>
+                            <select id="quote-0-select">
+                                <option value="">Choisissez...</option>
+                                <option value="Eschyle">Eschyle</option>
+                                <option value="Spinoza">Spinoza</option>
+                                <option value="Wharton">Wharton</option>
+                            </select>
+                            <p id="quote-1-text">2. "Chaque homme est maître de son propre entendement."</p>
+                            <select id="quote-1-select">
+                                <option value="">Choisissez...</option>
+                                <option value="Eschyle">Eschyle</option>
+                                <option value="Spinoza">Spinoza</option>
+                                <option value="Wharton">Wharton</option>
+                            </select>
+                            <p id="quote-2-text">3. "Newland Archer voyait les profondeurs obscures de la société."</p>
+                            <select id="quote-2-select">
                                 <option value="">Choisissez...</option>
                                 <option value="Eschyle">Eschyle</option>
                                 <option value="Spinoza">Spinoza</option>
@@ -263,7 +283,7 @@
                 </div>
             </div>
             <div id="sci-res" class="sub-section">
-                <h2>Résumés - Individu et communauté</h2>
+                <h2>Résumés - Individu et Communauté</h2>
                 <div class="game-step" id="step-summary">
                     <h3>Étape : Maître du résumé</h3>
                     <p>Analysez ce texte de 500 mots et résumez-le en 50 mots :</p>
@@ -323,20 +343,20 @@
                     </div>
                     <div id="problem-feedback" class="feedback"></div>
                 </div>
-    <div class="game-step" id="step-analysis">
-    <h3>Étape 2 : Décodeur d’images</h3>
-    <p>Répondez à cette question sur le thème "L'image" :</p>
-    <div id="analysis-game">
-        <div id="challenge-container">
-            <p id="current-question">1. Quel rôle joue l’image dans la publicité ?</p>
-            <input type="text" id="answer-input" placeholder="Votre réponse...">
-            <div id="hint-text" class="example hidden">Pensez à ce qui attire le consommateur.</div>
-        </div>
-        <button class="action-button verify-button" onclick="verifyAnswer()">Vérifier</button>
-        <button class="action-button new-challenge-button" onclick="newChallenge()">Nouveau défi</button>
-    </div>
-    <div id="challenge-feedback" class="feedback"></div>
-</div>
+                <div class="game-step" id="step-analysis">
+                    <h3>Étape 2 : Décodeur d’images</h3>
+                    <p>Répondez à cette question sur le thème "L'image" :</p>
+                    <div id="analysis-game">
+                        <div id="challenge-container">
+                            <p id="current-question">1. Quel rôle joue l’image dans la publicité ?</p>
+                            <input type="text" id="answer-input" placeholder="Votre réponse...">
+                            <div id="hint-text" class="example hidden">Pensez à ce qui attire le consommateur.</div>
+                        </div>
+                        <button class="action-button verify-button" onclick="verifyAnswer()">Vérifier</button>
+                        <button class="action-button new-challenge-button" onclick="newChallenge()">Nouveau défi</button>
+                    </div>
+                    <div id="challenge-feedback" class="feedback"></div>
+                </div>
                 <div class="game-step" id="step-structure">
                     <h3>Étape 3 : Architecte du plan</h3>
                     <p>Ordonnez ces parties pour un plan cohérent :</p>
@@ -360,79 +380,81 @@
                 </div>
             </div>
             <div id="com-res" class="sub-section">
-    <h2>Résumés - L'image</h2>
-    <div class="game-step" id="step-summary">
-        <h3>Maîtrisez le résumé : L'image en 50 mots</h3>
-        <p>Analysez ce texte de 500 mots et résumez-le en 50 mots maximum :</p>
-        <div id="summary-text-com">L’image fascine depuis l’aube de l’humanité. Dans les grottes préhistoriques, elle racontait des chasses épiques, capturant l’instant. Aujourd’hui, elle envahit nos écrans, des selfies aux publicités, reflétant ou déformant nos identités. | Elle manipule aussi la vérité : fake news et retouches brouillent le réel. Pourtant, l’image inspire, du cinéma aux icônes religieuses, touchant nos émotions. | Son pouvoir est double : outil de contrôle dans la propagande, elle façonne les esprits, mais libère aussi l’imaginaire, comme Hollywood le prouve. | À l’ère numérique, Instagram redéfinit la beauté, entre filtres et normes imposées. Les photos figent le temps, souvenirs intimes ou témoignages historiques. | En somme, l’image, miroir ou illusion, oscille entre vérité et fiction, captivant toujours notre regard.</div>
-        
-        <h4>1. Quelle est la thèse principale ?</h4>
-        <textarea id="thesis-input-com" placeholder="Tapez la thèse ici..." style="height: 60px;"></textarea>
-        <button class="action-button verify-button" onclick="checkThesisCom()">Vérifier</button>
-        <div id="thesis-feedback-com" class="feedback"></div>
-
-        <h4>2. Quels sont les arguments principaux ?</h4>
-        <textarea id="args-input-com" placeholder="Listez les arguments ici..." style="height: 80px;"></textarea>
-        <button class="action-button verify-button" onclick="checkArgsCom()">Vérifier</button>
-        <div id="args-feedback-com" class="feedback"></div>
-
-        <h4>3. Quelles sont les parties du texte ?</h4>
-        <textarea id="parts-input-com" placeholder="Décrivez les parties ici..." style="height: 80px;"></textarea>
-        <button class="action-button verify-button" onclick="checkPartsCom()">Vérifier</button>
-        <div id="parts-feedback-com" class="feedback"></div>
-
-        <h4>4. Proposez un plan structuré</h4>
-        <textarea id="plan-input-com" placeholder="Écrivez le plan ici..." style="height: 100px;"></textarea>
-        <button class="action-button verify-button" onclick="checkPlanCom()">Vérifier</button>
-        <div id="plan-feedback-com" class="feedback"></div>
-
-        <h4>5. Rédigez un résumé en 50 mots maximum</h4>
-        <textarea id="summary-input-com" placeholder="Tapez votre résumé ici..." maxlength="250" oninput="countSummaryWordsCom(this)" style="height: 60px;"></textarea>
-        <p id="summary-word-count-com">Mots : 0/50</p>
-        <button class="action-button verify-button" onclick="checkSummaryCom()">Vérifier</button>
-        <div id="summary-feedback-com" class="feedback"></div>
-
-        <button class="action-button new-challenge-button" onclick="generateSummaryGameCom()">Nouveau défi</button>
-    </div>
-</div>
-
-<div id="com-syn" class="sub-section">
-    <h2>Synthèses - L'image</h2>
-    <div class="game-step" id="step-synthesis">
-        <h3>L’art de la synthèse : Construisez une vision d’ensemble</h3>
-        <p>Analysez ce corpus fictif sur "L'image" (3 documents) et rédigez une synthèse en 150 mots max :</p>
-        <div id="corpus-container">
-            <p><strong>Doc 1 : "Selfie Nation" (article, 2023)</strong> - Les selfies dominent les réseaux sociaux, reflétant une quête d’identité mais aussi une superficialité croissante.</p>
-            <p><strong>Doc 2 : "L’objectif vérité" (essai, 2019)</strong> - La photographie, jadis garante de réalité, est désormais suspecte à l’ère des retouches et fake news.</p>
-            <p><strong>Doc 3 : "Hollywood Dreams" (interview, 2022)</strong> - Le cinéma utilise l’image pour nourrir l’imaginaire collectif, mais impose des stéréotypes.</p>
-        </div>
-
-        <h4>1. Identifiez la problématique</h4>
-        <textarea id="problematic-input" placeholder="Quelle question lie ces documents ?" style="height: 60px;"></textarea>
-        <button class="action-button verify-button" onclick="checkProblematic()">Vérifier</button>
-        <div id="problematic-feedback" class="feedback"></div>
-
-        <h4>2. Ordonnez les idées en un plan (2 parties)</h4>
-        <textarea id="plan-input-syn" placeholder="I. ... II. ..." style="height: 80px;"></textarea>
-        <button class="action-button verify-button" onclick="checkPlanSyn()">Vérifier</button>
-        <div id="plan-feedback-syn" class="feedback"></div>
-
-        <h4>3. Rédigez une synthèse (150 mots max)</h4>
-        <textarea id="synthesis-input" placeholder="Rédigez ici..." maxlength="750" oninput="countSynthesisWords(this)" style="height: 120px;"></textarea>
-        <p id="synthesis-word-count">Mots : 0/150</p>
-        <button class="action-button verify-button" onclick="checkSynthesis()">Vérifier</button>
-        <div id="synthesis-feedback" class="feedback"></div>
-
-        <button class="action-button new-challenge-button" onclick="generateSynthesisGame()">Nouveau défi</button>
-    </div>
-</div>
+                <h2>Résumés - L'image</h2>
+                <div class="game-step" id="step-summary">
+                    <h3>Maîtrisez le résumé : L'image en 50 mots</h3>
+                    <p>Analysez ce texte de 500 mots et résumez-le en 50 mots maximum :</p>
+                    <div id="summary-text-com">L’image fascine depuis l’aube de l’humanité. Dans les grottes préhistoriques, elle racontait des chasses épiques, capturant l’instant. Aujourd’hui, elle envahit nos écrans, des selfies aux publicités, reflétant ou déformant nos identités. | Elle manipule aussi la vérité : fake news et retouches brouillent le réel. Pourtant, l’image inspire, du cinéma aux icônes religieuses, touchant nos émotions. | Son pouvoir est double : outil de contrôle dans la propagande, elle façonne les esprits, mais libère aussi l’imaginaire, comme Hollywood le prouve. | À l’ère numérique, Instagram redéfinit la beauté, entre filtres et normes imposées. Les photos figent le temps, souvenirs intimes ou témoignages historiques. | En somme, l’image, miroir ou illusion, oscille entre vérité et fiction, captivant toujours notre regard.</div>
+                    <h4>1. Quelle est la thèse principale ?</h4>
+                    <textarea id="thesis-input-com" placeholder="Tapez la thèse ici..." style="height: 60px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkThesisCom()">Vérifier</button>
+                    <div id="thesis-feedback-com" class="feedback"></div>
+                    <h4>2. Quels sont les arguments principaux ?</h4>
+                    <textarea id="args-input-com" placeholder="Listez les arguments ici..." style="height: 80px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkArgsCom()">Vérifier</button>
+                    <div id="args-feedback-com" class="feedback"></div>
+                    <h4>3. Quelles sont les parties du texte ?</h4>
+                    <textarea id="parts-input-com" placeholder="Décrivez les parties ici..." style="height: 80px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkPartsCom()">Vérifier</button>
+                    <div id="parts-feedback-com" class="feedback"></div>
+                    <h4>4. Proposez un plan structuré</h4>
+                    <textarea id="plan-input-com" placeholder="Écrivez le plan ici..." style="height: 100px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkPlanCom()">Vérifier</button>
+                    <div id="plan-feedback-com" class="feedback"></div>
+                    <h4>5. Rédigez un résumé en 50 mots maximum</h4>
+                    <textarea id="summary-input-com" placeholder="Tapez votre résumé ici..." maxlength="250" oninput="countSummaryWordsCom(this)" style="height: 60px;"></textarea>
+                    <p id="summary-word-count-com">Mots : 0/50</p>
+                    <button class="action-button verify-button" onclick="checkSummaryCom()">Vérifier</button>
+                    <div id="summary-feedback-com" class="feedback"></div>
+                    <button class="action-button new-challenge-button" onclick="generateSummaryGameCom()">Nouveau défi</button>
+                </div>
+            </div>
+            <div id="com-syn" class="sub-section">
+                <h2>Synthèses - L'image</h2>
+                <div class="game-step" id="step-synthesis">
+                    <h3>L’art de la synthèse : Construisez une vision d’ensemble</h3>
+                    <p>Analysez ce corpus fictif sur "L'image" (3 documents) et rédigez une synthèse en 150 mots max :</p>
+                    <div id="corpus-container">
+                        <p><strong>Doc 1 : "Selfie Nation" (article, 2023)</strong> - Les selfies dominent les réseaux sociaux, reflétant une quête d’identité mais aussi une superficialité croissante.</p>
+                        <p><strong>Doc 2 : "L’objectif vérité" (essai, 2019)</strong> - La photographie, jadis garante de réalité, est désormais suspecte à l’ère des retouches et fake news.</p>
+                        <p><strong>Doc 3 : "Hollywood Dreams" (interview, 2022)</strong> - Le cinéma utilise l’image pour nourrir l’imaginaire collectif, mais impose des stéréotypes.</p>
+                    </div>
+                    <h4>1. Identifiez la problématique</h4>
+                    <textarea id="problematic-input" placeholder="Quelle question lie ces documents ?" style="height: 60px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkProblematic()">Vérifier</button>
+                    <div id="problematic-feedback" class="feedback"></div>
+                    <h4>2. Ordonnez les idées en un plan (2 parties)</h4>
+                    <textarea id="plan-input-syn" placeholder="I. ... II. ..." style="height: 80px;"></textarea>
+                    <button class="action-button verify-button" onclick="checkPlanSyn()">Vérifier</button>
+                    <div id="plan-feedback-syn" class="feedback"></div>
+                    <h4>3. Rédigez une synthèse (150 mots max)</h4>
+                    <textarea id="synthesis-input" placeholder="Rédigez ici..." maxlength="750" oninput="countSynthesisWords(this)" style="height: 120px;"></textarea>
+                    <p id="synthesis-word-count">Mots : 0/150</p>
+                    <button class="action-button verify-button" onclick="checkSynthesis()">Vérifier</button>
+                    <div id="synthesis-feedback" class="feedback"></div>
+                    <button class="action-button new-challenge-button" onclick="generateSynthesisGame()">Nouveau défi</button>
+                </div>
+            </div>
         </div>
     </div>
     <footer>
-        <p>Par EL FILALI MOHAMED</p>
-    </footer>
+    <p>EL FILALI MOHAMED</p>
+    <p>CPGE MOHAMED-V-CASABLANCA</p>
+</footer>
     <script>
         console.log("Script global chargé");
+
+        // Sons pour feedback
+        const successSound = new Audio('https://www.soundjay.com/buttons/beep-01a.mp3');
+        const errorSound = new Audio('https://www.soundjay.com/buttons/beep-02.mp3');
+
+        function playSuccessSound() {
+            successSound.play().catch(e => console.log("Erreur son succès:", e));
+        }
+
+        function playErrorSound() {
+            errorSound.play().catch(e => console.log("Erreur son erreur:", e));
+        }
 
         function showSection(sectionId) {
             console.log("Affichage de la section:", sectionId);
@@ -453,6 +475,10 @@
                 const mainSection = subSection.closest('.section');
                 mainSection.querySelectorAll('.sub-section').forEach(sub => sub.classList.remove('active'));
                 subSection.classList.add('active');
+                if (subSectionId === 'sci-diss') {
+                    generateQuoteGame(); // Initialise les citations au chargement
+                    generateIntroGame(); // Initialise l’introduction au chargement
+                }
             } else {
                 console.error("Sous-section non trouvée:", subSectionId);
             }
@@ -462,46 +488,88 @@
             console.log("Initialisation des événements tactiles pour", listId);
             const list = document.getElementById(listId);
             if (list) {
-                let touchStartY, touchStartX, draggedItem;
+                let draggedItem = null;
+                let startX, startY;
+
+                // Événements tactiles
                 list.addEventListener("touchstart", (e) => {
                     e.preventDefault();
                     draggedItem = e.target.closest("li");
                     if (!draggedItem) return;
-                    touchStartY = e.touches[0].clientY;
-                    touchStartX = e.touches[0].clientX;
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
                     draggedItem.style.opacity = "0.5";
-                });
+                    draggedItem.style.position = "relative";
+                    draggedItem.style.zIndex = "1000";
+                }, { passive: false });
+
                 list.addEventListener("touchmove", (e) => {
                     e.preventDefault();
                     if (!draggedItem) return;
-                    let touchY = e.touches[0].clientY;
-                    let touchX = e.touches[0].clientX;
-                    draggedItem.style.position = "relative";
-                    draggedItem.style.transform = `translate(${touchX - touchStartX}px, ${touchY - touchStartY}px)`;
-                    let targetItem = Array.from(list.children).find(item => {
-                        if (item === draggedItem) return false;
-                        let rect = item.getBoundingClientRect();
-                        return touchY > rect.top && touchY < rect.bottom && touchX > rect.left && touchX < rect.right;
+                    const touchX = e.touches[0].clientX;
+                    const touchY = e.touches[0].clientY;
+                    draggedItem.style.transform = `translate(${touchX - startX}px, ${touchY - startY}px)`;
+
+                    const items = Array.from(list.children);
+                    const draggedRect = draggedItem.getBoundingClientRect();
+                    items.forEach(item => {
+                        if (item !== draggedItem) {
+                            const rect = item.getBoundingClientRect();
+                            if (touchY > rect.top && touchY < rect.bottom) {
+                                if (touchY < draggedRect.top) {
+                                    list.insertBefore(draggedItem, item);
+                                } else if (touchY > draggedRect.bottom) {
+                                    list.insertBefore(item, draggedItem);
+                                }
+                            }
+                        }
                     });
-                    if (targetItem) list.insertBefore(draggedItem, targetItem);
-                });
+                }, { passive: false });
+
                 list.addEventListener("touchend", (e) => {
-                    if (!draggedItem) return;
-                    draggedItem.style.opacity = "1";
-                    draggedItem.style.transform = "none";
-                    draggedItem.style.position = "static";
-                    draggedItem = null;
+                    if (draggedItem) {
+                        draggedItem.style.opacity = "1";
+                        draggedItem.style.transform = "none";
+                        draggedItem.style.position = "static";
+                        draggedItem.style.zIndex = "auto";
+                        draggedItem = null;
+                    }
                 });
+
+                // Événements souris
                 list.addEventListener("dragstart", (e) => {
-                    e.dataTransfer.setData("text", e.target.textContent);
+                    draggedItem = e.target.closest("li");
+                    if (draggedItem) {
+                        e.dataTransfer.setData("text/plain", draggedItem.textContent);
+                        draggedItem.style.opacity = "0.5";
+                    }
                 });
-                list.addEventListener("dragover", (e) => e.preventDefault());
+
+                list.addEventListener("dragover", (e) => {
+                    e.preventDefault();
+                });
+
                 list.addEventListener("drop", (e) => {
                     e.preventDefault();
-                    let draggedText = e.dataTransfer.getData("text");
-                    let draggedItem = Array.from(list.children).find(li => li.textContent === draggedText);
-                    let targetItem = e.target.closest("li");
-                    if (targetItem) list.insertBefore(draggedItem, targetItem);
+                    if (draggedItem) {
+                        const targetItem = e.target.closest("li");
+                        if (targetItem && targetItem !== draggedItem) {
+                            if (e.clientY < targetItem.getBoundingClientRect().top + targetItem.offsetHeight / 2) {
+                                list.insertBefore(draggedItem, targetItem);
+                            } else {
+                                list.insertBefore(targetItem, draggedItem);
+                            }
+                        }
+                        draggedItem.style.opacity = "1";
+                        draggedItem = null;
+                    }
+                });
+
+                list.addEventListener("dragend", () => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = "1";
+                        draggedItem = null;
+                    }
                 });
             } else {
                 console.error(listId + " non trouvé");
@@ -558,6 +626,179 @@
             { options: ["La modernité résout-elle ces tensions ?", "Les œuvres montrent des vérités opposées.", "L’équilibre est-il atteignable aujourd’hui ?", "Tout dépend des circonstances historiques."], correct: "L’équilibre est-il atteignable aujourd’hui ?" }
         ];
 
+        // Fonctions pour #sci-diss
+        function generateQuoteGame() {
+            console.log("Génération du jeu des citations");
+            const container = document.getElementById("quote-container");
+            if (container) {
+                const selectedQuotes = quotes.sort(() => 0.5 - Math.random()).slice(0, 3);
+                container.innerHTML = '';
+                selectedQuotes.forEach((q, i) => {
+                    container.innerHTML += `
+                        <p id="quote-${i}-text">${i + 1}. "${q.text}"</p>
+                        <select id="quote-${i}-select">
+                            <option value="">Choisissez...</option>
+                            <option value="Eschyle">Eschyle</option>
+                            <option value="Spinoza">Spinoza</option>
+                            <option value="Wharton">Wharton</option>
+                        </select>
+                    `;
+                });
+            } else {
+                console.error("quote-container non trouvé");
+            }
+        }
+
+        function checkQuotes() {
+            console.log("Vérification des citations");
+            const feedback = document.getElementById("quote_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                let correct = 0;
+                for (let i = 0; i < 3; i++) {
+                    const select = document.getElementById(`quote-${i}-select`);
+                    const quoteText = document.getElementById(`quote-${i}-text`).textContent.split('"')[1];
+                    const correctAuthor = quotes.find(q => q.text === quoteText).author;
+                    if (select.value === correctAuthor) correct++;
+                }
+                if (correct === 3) {
+                    feedback.innerHTML = "Parfait ! Toutes les citations sont correctes !";
+                    playSuccessSound();
+                } else {
+                    feedback.innerHTML = `Vous avez ${correct}/3 correctes. Réessayez !`;
+                    playErrorSound();
+                }
+            } else {
+                console.error("quote_feedback non trouvé");
+            }
+        }
+
+        function generateIntroGame() {
+            console.log("Génération du jeu d’introduction");
+            const sortable = document.getElementById("intro-sortable");
+            if (sortable) {
+                const parts = introParts[Math.floor(Math.random() * introParts.length)].slice().sort(() => 0.5 - Math.random());
+                sortable.innerHTML = '';
+                parts.forEach(part => {
+                    sortable.innerHTML += `<li draggable="true">${part}</li>`;
+                });
+                initializeTouchEvents("intro-sortable");
+            } else {
+                console.error("intro-sortable non trouvé");
+            }
+        }
+
+        function checkIntro() {
+            console.log("Vérification de l’introduction");
+            const feedback = document.getElementById("intro_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const items = document.querySelectorAll("#intro-sortable li");
+                const isCorrect = items.length === 3 &&
+                    (items[0].textContent.includes("coexistent depuis toujours") || items[0].textContent.includes("vit à la fois seul") || items[0].textContent.includes("tension entre individu") || items[0].textContent.includes("liens sociaux définissent") || items[0].textContent.includes("oscille entre solitude")) &&
+                    (items[1].textContent.includes("soutient-elle ou contraint-elle") || items[1].textContent.includes("peut-il s’affranchir") || items[1].textContent.includes("favorise-t-elle") || items[1].textContent.includes("refuge ou une prison") || items[1].textContent.includes("trouve-t-il sa place")) &&
+                    (items[2].textContent.includes("Soutien") || items[2].textContent.includes("Dépendance") || items[2].textContent.includes("Collectivité") || items[2].textContent.includes("Protection") || items[2].textContent.includes("Appartenance"));
+                if (isCorrect) {
+                    feedback.innerHTML = "Parfaite intro ! À l’analyse !";
+                    playSuccessSound();
+                } else {
+                    feedback.innerHTML = "L’ordre correct est : 1. Contexte, 2. Question, 3. Plan.";
+                    playErrorSound();
+                }
+            }
+        }
+
+        function generateAnalysisGame() {
+            console.log("Génération du jeu d’analyse");
+            const container = document.getElementById("analysis-container");
+            if (container) {
+                container.innerHTML = "";
+                const challenge = sciAnalysisChallenges[Math.floor(Math.random() * sciAnalysisChallenges.length)];
+                container.innerHTML = `
+                    <p>1. ${challenge.question}</p>
+                    <input type="text" id="analysis0" placeholder="Votre réponse...">
+                    <div id="analysis0_hint" class="example hidden">${challenge.hint}</div>
+                `;
+            } else {
+                console.error("analysis-container non trouvé");
+            }
+        }
+
+        function checkAnalysis() {
+            console.log("Vérification de l’analyse");
+            const feedback = document.getElementById("analysis_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const input = document.getElementById("analysis0");
+                if (input) {
+                    const question = input.previousElementSibling.textContent.split(". ")[1];
+                    const challenge = sciAnalysisChallenges.find(c => c.question === question);
+                    const isCorrect = challenge.answers.some(ans => input.value.toLowerCase().includes(ans));
+                    feedback.innerHTML = isCorrect ? "Super ! À la structuration !" : `Incorrect. Indice : ${challenge.hint}`;
+                }
+            }
+        }
+
+        function generateStructureGame() {
+            console.log("Génération du jeu de structuration");
+            const sortable = document.getElementById("sortable");
+            if (sortable) {
+                sortable.innerHTML = "";
+                const parts = structureParts[Math.floor(Math.random() * structureParts.length)].sort(() => 0.5 - Math.random());
+                parts.forEach(part => {
+                    sortable.innerHTML += `<li draggable="true">${part}</li>`;
+                });
+                initializeTouchEvents("sortable");
+            } else {
+                console.error("sortable non trouvé");
+            }
+        }
+
+        function checkStructure() {
+            console.log("Vérification de la structuration");
+            const feedback = document.getElementById("structure_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const items = document.querySelectorAll("#sortable li");
+                const isCorrect = items.length === 3 &&
+                    (items[0].textContent.includes("protège") || items[0].textContent.includes("dépend") || items[0].textContent.includes("Soutien") || items[0].textContent.includes("Cité unie") || items[0].textContent.includes("Refuge") || items[0].textContent.includes("Conflit interne")) &&
+                    (items[1].textContent.includes("opprime") || items[1].textContent.includes("résiste") || items[1].textContent.includes("Contrainte") || items[1].textContent.includes("Désirs") || items[1].textContent.includes("Normes") || items[1].textContent.includes("Rebellion")) &&
+                    (items[2].textContent.includes("équilibre") || items[2].textContent.includes("liberté raisonnée") || items[2].textContent.includes("Pacte") || items[2].textContent.includes("Contrat") || items[2].textContent.includes("Paix") || items[2].textContent.includes("Harmonie"));
+                feedback.innerHTML = isCorrect ? "Plan parfait ! À la conclusion !" : "L’ordre correct suit une progression logique.";
+            }
+        }
+
+        function generateConclusionGame() {
+            console.log("Génération du jeu de conclusion");
+            const container = document.getElementById("conclusion-container");
+            if (container) {
+                container.innerHTML = "";
+                const set = conclusionOptions[Math.floor(Math.random() * conclusionOptions.length)];
+                set.options.sort(() => 0.5 - Math.random());
+                container.innerHTML += `<p>Options :</p>`;
+                set.options.forEach((option, i) => {
+                    container.innerHTML += `
+                        <input type="radio" id="conc${i}" name="conclusion" value="${option}">
+                        <label for="conc${i}">${option}</label><br>
+                    `;
+                });
+            } else {
+                console.error("conclusion-container non trouvé");
+            }
+        }
+
+        function checkConclusion() {
+            console.log("Vérification de la conclusion");
+            const feedback = document.getElementById("conclusion_feedback");
+            if (feedback) {
+                feedback.style.display = "block";
+                const selected = document.querySelector('input[name="conclusion"]:checked');
+                const set = conclusionOptions.find(opt => opt.options.includes(selected?.value));
+                const correctAnswer = set ? set.correct : null;
+                feedback.innerHTML = selected?.value === correctAnswer ? "Excellente conclusion !" : "Choisissez une ouverture pertinente.";
+            }
+        }
+
         // Données pour #sci-res
         let sciResCurrentTextIndex = 0;
         const sciResSummaryTexts = [
@@ -606,175 +847,28 @@
             { hook: "Instagram redéfinit la beauté.", problem: "L’image impose-t-elle des normes sociales ?" },
             { hook: "Le cinéma immortalise le temps.", problem: "L’image fige-t-elle ou transcende-t-elle la réalité ?" }
         ];
-        // Données pour #com-diss - Étape 2 : Plus de questions
-// Données pour #com-diss - Étape 2 : Décodeur d’images (liste enrichie)
-const imageChallenges = [
-    { question: "Quel rôle joue l’image dans la publicité ?", answers: ["persuasion", "séduction", "attraction"], hint: "Pensez à ce qui attire le consommateur." },
-    { question: "Que symbolisent les images dans l’allégorie de la caverne de Platon ?", answers: ["illusion", "ombres", "apparences"], hint: "Que voit-on sur les murs ?" },
-    { question: "Selon Baudrillard, qu’est-ce que le simulacre ?", answers: ["hyperréalité", "copie", "faux"], hint: "Une réalité qui n’en est pas une." },
-    { question: "Quel est l’impact des images sur les réseaux sociaux ?", answers: ["influence", "apparence", "perception"], hint: "Comment affectent-elles notre vision ?" },
-    { question: "Quel était le but des images dans l’art classique ?", answers: ["beauté", "idéal", "perfection"], hint: "Une quête esthétique." },
-    { question: "Comment Photoshop modifie-t-il notre rapport à la réalité ?", answers: ["manipulation", "altération", "distorsion"], hint: "Que change-t-il aux photos ?" },
-    { question: "Pourquoi les images au cinéma nous émeuvent-elles ?", answers: ["émotion", "immersion", "identification"], hint: "Un lien avec les sentiments." },
-    { question: "Quel rôle joue l’image dans la propagande ?", answers: ["pouvoir", "contrôle", "manipulation"], hint: "Un outil d’influence." },
-    { question: "Un portrait peut-il révéler l’intériorité d’une personne ?", answers: ["expression", "âme", "caractère"], hint: "Que dit-il de l’individu ?" },
-    { question: "Comment les images publicitaires créent-elles du désir ?", answers: ["désir", "envie", "besoin"], hint: "Elles poussent à consommer." },
-    { question: "Quelle est la fonction des images religieuses ?", answers: ["sacré", "symbolique", "spiritualité"], hint: "Un rôle dans la foi." },
-    { question: "Que conserve une photographie dans le temps ?", answers: ["souvenir", "mémoire", "moment"], hint: "Un instant figé." }
-];
-// Fonctions pour #com-diss - Étape 2
-function newChallenge() {
-    console.log("Nouveau défi - Décodeur d’images (#com-diss)");
-    const container = document.getElementById("challenge-container");
-    const feedback = document.getElementById("challenge-feedback");
-    if (container && feedback) {
-        const challenge = imageChallenges[Math.floor(Math.random() * imageChallenges.length)];
-        container.innerHTML = `
-            <p id="current-question">1. ${challenge.question}</p>
-            <input type="text" id="answer-input" placeholder="Votre réponse...">
-            <div id="hint-text" class="example hidden">${challenge.hint}</div>
-        `;
-        feedback.style.display = "none"; // Réinitialise le feedback
-    } else {
-        console.error("challenge-container ou challenge-feedback non trouvé");
-    }
-}
 
-function verifyAnswer() {
-    console.log("Vérification - Décodeur d’images (#com-diss)");
-    const feedback = document.getElementById("challenge-feedback");
-    if (feedback) {
-        feedback.style.display = "block";
-        const input = document.getElementById("answer-input");
-        const question = document.getElementById("current-question").textContent.split(". ")[1];
-        if (input) {
-            const challenge = imageChallenges.find(c => c.question === question);
-            const userAnswer = input.value.trim().toLowerCase();
-            const isCorrect = challenge.answers.some(ans => userAnswer.includes(ans));
-            feedback.innerHTML = isCorrect ? "Analyse correcte ! Bravo !" : `Incorrect. Indice : ${challenge.hint}`;
-            document.getElementById("hint-text").style.display = isCorrect ? "none" : "block";
-        } else {
-            console.error("answer-input non trouvé");
-            feedback.innerHTML = "Erreur : réponse non trouvée.";
-        }
-    } else {
-        console.error("challenge-feedback non trouvé");
-    }
-}        function generateIntroGame() {
-            console.log("Génération du jeu d’introduction");
-            const sortable = document.getElementById("intro-sortable");
-            if (sortable) {
-                sortable.innerHTML = "";
-                const parts = introParts[Math.floor(Math.random() * introParts.length)].sort(() => 0.5 - Math.random());
-                parts.forEach(part => {
-                    sortable.innerHTML += `<li draggable="true">${part}</li>`;
-                });
-                initializeTouchEvents("intro-sortable");
-            } else {
-                console.error("intro-sortable non trouvé");
-            }
-        }
-        function checkIntro() {
-            console.log("Vérification de l’introduction");
-            const feedback = document.getElementById("intro_feedback");
-            if (feedback) {
-                feedback.style.display = "block";
-                const items = document.querySelectorAll("#intro-sortable li");
-                const isCorrect = items.length === 3 &&
-                    (items[0].textContent.includes("coexistent depuis toujours") || items[0].textContent.includes("vit à la fois seul") || items[0].textContent.includes("tension entre individu") || items[0].textContent.includes("liens sociaux définissent") || items[0].textContent.includes("oscille entre solitude")) &&
-                    (items[1].textContent.includes("soutient-elle ou contraint-elle") || items[1].textContent.includes("peut-il s’affranchir") || items[1].textContent.includes("favorise-t-elle") || items[1].textContent.includes("refuge ou une prison") || items[1].textContent.includes("trouve-t-il sa place")) &&
-                    (items[2].textContent.includes("Soutien") || items[2].textContent.includes("Dépendance") || items[2].textContent.includes("Collectivité") || items[2].textContent.includes("Protection") || items[2].textContent.includes("Appartenance"));
-                feedback.innerHTML = isCorrect ? "Parfaite intro ! À l’analyse !" : "L’ordre correct est : 1. Contexte, 2. Question, 3. Plan.";
-            }
-        }
+        const imageChallenges = [
+            { question: "Quel rôle joue l’image dans la publicité ?", answers: ["persuasion", "séduction", "attraction"], hint: "Pensez à ce qui attire le consommateur." },
+            { question: "Que symbolisent les images dans l’allégorie de la caverne de Platon ?", answers: ["illusion", "ombres", "apparences"], hint: "Que voit-on sur les murs ?" },
+            { question: "Selon Baudrillard, qu’est-ce que le simulacre ?", answers: ["hyperréalité", "copie", "faux"], hint: "Une réalité qui n’en est pas une." },
+            { question: "Quel est l’impact des images sur les réseaux sociaux ?", answers: ["influence", "apparence", "perception"], hint: "Comment affectent-elles notre vision ?" },
+            { question: "Quel était le but des images dans l’art classique ?", answers: ["beauté", "idéal", "perfection"], hint: "Une quête esthétique." },
+            { question: "Comment Photoshop modifie-t-il notre rapport à la réalité ?", answers: ["manipulation", "altération", "distorsion"], hint: "Que change-t-il aux photos ?" },
+            { question: "Pourquoi les images au cinéma nous émeuvent-elles ?", answers: ["émotion", "immersion", "identification"], hint: "Un lien avec les sentiments." },
+            { question: "Quel rôle joue l’image dans la propagande ?", answers: ["pouvoir", "contrôle", "manipulation"], hint: "Un outil d’influence." },
+            { question: "Un portrait peut-il révéler l’intériorité d’une personne ?", answers: ["expression", "âme", "caractère"], hint: "Que dit-il de l’individu ?" },
+            { question: "Comment les images publicitaires créent-elles du désir ?", answers: ["désir", "envie", "besoin"], hint: "Elles poussent à consommer." },
+            { question: "Quelle est la fonction des images religieuses ?", answers: ["sacré", "symbolique", "spiritualité"], hint: "Un rôle dans la foi." },
+            { question: "Que conserve une photographie dans le temps ?", answers: ["souvenir", "mémoire", "moment"], hint: "Un instant figé." }
+        ];
 
-        function generateAnalysisGame() {
-            console.log("Génération du jeu d’analyse");
-            const container = document.getElementById("analysis-container");
-            if (container) {
-                container.innerHTML = "";
-                const challenge = sciAnalysisChallenges[Math.floor(Math.random() * sciAnalysisChallenges.length)];
-                container.innerHTML = `
-                    <p>1. ${challenge.question}</p>
-                    <input type="text" id="analysis0" placeholder="Votre réponse...">
-                    <div id="analysis0_hint" class="example hidden">${challenge.hint}</div>
-                `;
-            } else {
-                console.error("analysis-container non trouvé");
-            }
-        }
-        function checkAnalysis() {
-            console.log("Vérification de l’analyse");
-            const feedback = document.getElementById("analysis_feedback");
-            if (feedback) {
-                feedback.style.display = "block";
-                const input = document.getElementById("analysis0");
-                if (input) {
-                    const question = input.previousElementSibling.textContent.split(". ")[1];
-                    const challenge = sciAnalysisChallenges.find(c => c.question === question);
-                    const isCorrect = challenge.answers.some(ans => input.value.toLowerCase().includes(ans));
-                    feedback.innerHTML = isCorrect ? "Super ! À la structuration !" : `Incorrect. Indice : ${challenge.hint}`;
-                }
-            }
-        }
-
-        function generateStructureGame() {
-            console.log("Génération du jeu de structuration");
-            const sortable = document.getElementById("sortable");
-            if (sortable) {
-                sortable.innerHTML = "";
-                const parts = structureParts[Math.floor(Math.random() * structureParts.length)].sort(() => 0.5 - Math.random());
-                parts.forEach(part => {
-                    sortable.innerHTML += `<li draggable="true">${part}</li>`;
-                });
-                initializeTouchEvents("sortable");
-            } else {
-                console.error("sortable non trouvé");
-            }
-        }
-        function checkStructure() {
-            console.log("Vérification de la structuration");
-            const feedback = document.getElementById("structure_feedback");
-            if (feedback) {
-                feedback.style.display = "block";
-                const items = document.querySelectorAll("#sortable li");
-                const isCorrect = items.length === 3 &&
-                    (items[0].textContent.includes("protège") || items[0].textContent.includes("dépend") || items[0].textContent.includes("Soutien") || items[0].textContent.includes("Cité unie") || items[0].textContent.includes("Refuge") || items[0].textContent.includes("Conflit interne")) &&
-                    (items[1].textContent.includes("opprime") || items[1].textContent.includes("résiste") || items[1].textContent.includes("Contrainte") || items[1].textContent.includes("Désirs") || items[1].textContent.includes("Normes") || items[1].textContent.includes("Rebellion")) &&
-                    (items[2].textContent.includes("équilibre") || items[2].textContent.includes("liberté raisonnée") || items[2].textContent.includes("Pacte") || items[2].textContent.includes("Contrat") || items[2].textContent.includes("Paix") || items[2].textContent.includes("Harmonie"));
-                feedback.innerHTML = isCorrect ? "Plan parfait ! À la conclusion !" : "L’ordre correct suit une progression logique.";
-            }
-        }
-
-        function generateConclusionGame() {
-            console.log("Génération du jeu de conclusion");
-            const container = document.getElementById("conclusion-container");
-            if (container) {
-                container.innerHTML = "";
-                const set = conclusionOptions[Math.floor(Math.random() * conclusionOptions.length)];
-                set.options.sort(() => 0.5 - Math.random());
-                container.innerHTML += `<p>Options :</p>`;
-                set.options.forEach((option, i) => {
-                    container.innerHTML += `
-                        <input type="radio" id="conc${i}" name="conclusion" value="${option}">
-                        <label for="conc${i}">${option}</label><br>
-                    `;
-                });
-            } else {
-                console.error("conclusion-container non trouvé");
-            }
-        }
-        function checkConclusion() {
-            console.log("Vérification de la conclusion");
-            const feedback = document.getElementById("conclusion_feedback");
-            if (feedback) {
-                feedback.style.display = "block";
-                const selected = document.querySelector('input[name="conclusion"]:checked');
-                const set = conclusionOptions.find(opt => opt.options.includes(selected?.value));
-                const correctAnswer = set ? set.correct : null;
-                feedback.innerHTML = selected?.value === correctAnswer ? "Excellente conclusion !" : "Choisissez une ouverture pertinente.";
-            }
-        }
+        const comStructureParts = [
+            ["L’image comme reflet du réel.", "L’image comme outil de pouvoir.", "L’image comme illusion moderne."],
+            ["L’image dans l’art antique.", "L’image dans la société numérique.", "L’image entre vérité et fiction."],
+            ["L’image comme mémoire.", "L’image comme propagande.", "L’image comme rêve collectif."],
+            ["L’image dans la religion.", "L’image dans les médias.", "L’image dans l’intime."]
+        ];
 
         // Fonctions pour #sci-res
         function generateSummaryGame() {
@@ -783,7 +877,7 @@ function verifyAnswer() {
             const inputs = ["thesis-input", "args-input", "parts-input", "plan-input", "summary-input"].map(id => document.getElementById(id));
             const feedbacks = ["thesis-feedback", "args-feedback", "parts-feedback", "plan-feedback", "summary-feedback"].map(id => document.getElementById(id));
             if (textContainer && inputs.every(i => i) && feedbacks.every(f => f)) {
-                sciResCurrentTextIndex = Math.floor(Math.random() * 3) + 1; // 1, 2 ou 3
+                sciResCurrentTextIndex = Math.floor(Math.random() * 3) + 1;
                 const selectedText = sciResSummaryTexts[sciResCurrentTextIndex];
                 const words = selectedText.text.split(" ");
                 let markedText = "";
@@ -917,35 +1011,42 @@ function verifyAnswer() {
             }
         }
 
-        function generateAnalysisGameCom() {
-            console.log("Clic sur Nouveau défi - Analyse (com-diss)");
-            const container = document.getElementById("analysis-container");
-            if (container) {
-                const challenge = comAnalysisChallenges[Math.floor(Math.random() * comAnalysisChallenges.length)];
+        function newChallenge() {
+            console.log("Nouveau défi - Décodeur d’images (#com-diss)");
+            const container = document.getElementById("challenge-container");
+            const feedback = document.getElementById("challenge-feedback");
+            if (container && feedback) {
+                const challenge = imageChallenges[Math.floor(Math.random() * imageChallenges.length)];
                 container.innerHTML = `
-                    <p>1. ${challenge.question}</p>
-                    <input type="text" id="analysis0" placeholder="Votre réponse...">
-                    <div id="analysis0_hint" class="example hidden">${challenge.hint}</div>
+                    <p id="current-question">1. ${challenge.question}</p>
+                    <input type="text" id="answer-input" placeholder="Votre réponse...">
+                    <div id="hint-text" class="example hidden">${challenge.hint}</div>
                 `;
+                feedback.style.display = "none";
             } else {
-                console.error("analysis-container non trouvé dans com-diss");
+                console.error("challenge-container ou challenge-feedback non trouvé");
             }
         }
 
-        function checkAnalysisCom() {
-            console.log("Clic sur Vérifier - Analyse (com-diss)");
-            const feedback = document.getElementById("analysis-feedback");
+        function verifyAnswer() {
+            console.log("Vérification - Décodeur d’images (#com-diss)");
+            const feedback = document.getElementById("challenge-feedback");
             if (feedback) {
                 feedback.style.display = "block";
-                const input = document.getElementById("analysis0");
+                const input = document.getElementById("answer-input");
+                const question = document.getElementById("current-question").textContent.split(". ")[1];
                 if (input) {
-                    const question = input.previousElementSibling.textContent.split(". ")[1];
-                    const challenge = comAnalysisChallenges.find(c => c.question === question);
-                    const isCorrect = challenge.answers.some(ans => input.value.toLowerCase().includes(ans));
-                    feedback.innerHTML = isCorrect ? "Analyse correcte !" : `Incorrect. Indice : ${challenge.hint}`;
+                    const challenge = imageChallenges.find(c => c.question === question);
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const isCorrect = challenge.answers.some(ans => userAnswer.includes(ans));
+                    feedback.innerHTML = isCorrect ? "Analyse correcte ! Bravo !" : `Incorrect. Indice : ${challenge.hint}`;
+                    document.getElementById("hint-text").style.display = isCorrect ? "none" : "block";
                 } else {
-                    console.error("analysis0 non trouvé dans com-diss");
+                    console.error("answer-input non trouvé");
+                    feedback.innerHTML = "Erreur : réponse non trouvée.";
                 }
+            } else {
+                console.error("challenge-feedback non trouvé");
             }
         }
 
@@ -1003,227 +1104,237 @@ function verifyAnswer() {
                 }
             }
         }
-// Données pour #com-res
-let comResCurrentTextIndex = 0;
-const comResSummaryTexts = [
-    {
-        text: "L’image fascine depuis l’aube de l’humanité. Dans les grottes préhistoriques, elle racontait des chasses épiques, capturant l’instant. Aujourd’hui, elle envahit nos écrans, des selfies aux publicités, reflétant ou déformant nos identités. | Elle manipule aussi la vérité : fake news et retouches brouillent le réel. Pourtant, l’image inspire, du cinéma aux icônes religieuses, touchant nos émotions. | Son pouvoir est double : outil de contrôle dans la propagande, elle façonne les esprits, mais libère aussi l’imaginaire, comme Hollywood le prouve. | À l’ère numérique, Instagram redéfinit la beauté, entre filtres et normes imposées. Les photos figent le temps, souvenirs intimes ou témoignages historiques. | En somme, l’image, miroir ou illusion, oscille entre vérité et fiction, captivant toujours notre regard.",
-        thesis: "L’image oscille entre reflet de la réalité et illusion manipulatrice.",
-        args: "Manipulation vs inspiration.",
-        parts: "Origines, manipulation, pouvoir, modernité, synthèse.",
-        plan: "Reflet et manipulation, inspiration et normes.",
-        summaryKeywords: ["image", "illusion", "réalité", "pouvoir"]
-    },
-    {
-        text: "L’image a toujours été un langage universel. Les fresques égyptiennes glorifiaient les pharaons, immortalisant leur règne. Aujourd’hui, elle domine les médias, des affiches politiques aux clips viraux, influençant les masses. | Mais elle trompe souvent : retouches et montages altèrent la vérité. Le cinéma, lui, éblouit par sa capacité à créer des mondes, malgré ses stéréotypes. | Dans la propagande, elle impose des visions, comme les affiches de guerre l’ont montré. À l’inverse, elle offre une évasion, un rêve accessible à tous. | Les réseaux sociaux en font un miroir déformant : selfies et filtres flattent l’ego. Les archives visuelles, quant à elles, sauvegardent l’histoire. | Ainsi, l’image, arme ou art, façonne notre perception du réel tout en flirtant avec le fictif.",
-        thesis: "L’image façonne la perception entre réalité et fiction.",
-        args: "Influence vs tromperie.",
-        parts: "Histoire, tromperie, influence, réseaux, conclusion.",
-        plan: "Influence historique, fiction moderne.",
-        summaryKeywords: ["image", "perception", "fiction", "influence"]
-    },
-    {
-        text: "Dès l’Antiquité, l’image sculptait les mythes, des statues grecques aux mosaïques romaines. Aujourd’hui, elle inonde nos vies via écrans et panneaux, reflet ou caricature de nous-mêmes. | Sa force réside dans sa dualité : vérité documentaire ou mensonge savamment orchestré, comme les deepfakes. Elle émeut aussi, des peintures sacrées aux blockbusters. | En politique, elle sert le pouvoir, manipulant les foules avec des slogans visuels. Mais elle libère l’esprit, invitant à l’aventure intérieure. | Sur TikTok, elle impose des idéaux de beauté fugaces. Les albums photo, eux, cristallisent nos vies passées. | En fin de compte, l’image est un outil ambigu, entre authenticité et artifice, toujours au cœur de notre quête de sens.",
-        thesis: "L’image est un outil ambigu entre vérité et artifice.",
-        args: "Vérité vs manipulation.",
-        parts: "Antiquité, dualité, pouvoir, modernité, synthèse.",
-        plan: "Vérité historique, artifice actuel.",
-        summaryKeywords: ["image", "artifice", "vérité", "outil"]
-    }
-];
 
-// Fonctions pour #com-res
-function generateSummaryGameCom() {
-    console.log("Nouveau défi - Résumé (#com-res)");
-    const textContainer = document.getElementById("summary-text-com");
-    const inputs = ["thesis-input-com", "args-input-com", "parts-input-com", "plan-input-com", "summary-input-com"].map(id => document.getElementById(id));
-    const feedbacks = ["thesis-feedback-com", "args-feedback-com", "parts-feedback-com", "plan-feedback-com", "summary-feedback-com"].map(id => document.getElementById(id));
-    if (textContainer && inputs.every(i => i) && feedbacks.every(f => f)) {
-        comResCurrentTextIndex = Math.floor(Math.random() * comResSummaryTexts.length);
-        const selectedText = comResSummaryTexts[comResCurrentTextIndex];
-        const words = selectedText.text.split(" ");
-        let markedText = "";
-        for (let i = 0; i < words.length; i++) {
-            markedText += words[i] + " ";
-            if ((i + 1) % 50 === 0) markedText += "| ";
+        // Données pour #com-res
+        let comResCurrentTextIndex = 0;
+        const comResSummaryTexts = [
+            {
+                text: "L’image fascine depuis l’aube de l’humanité. Dans les grottes préhistoriques, elle racontait des chasses épiques, capturant l’instant. Aujourd’hui, elle envahit nos écrans, des selfies aux publicités, reflétant ou déformant nos identités. | Elle manipule aussi la vérité : fake news et retouches brouillent le réel. Pourtant, l’image inspire, du cinéma aux icônes religieuses, touchant nos émotions. | Son pouvoir est double : outil de contrôle dans la propagande, elle façonne les esprits, mais libère aussi l’imaginaire, comme Hollywood le prouve. | À l’ère numérique, Instagram redéfinit la beauté, entre filtres et normes imposées. Les photos figent le temps, souvenirs intimes ou témoignages historiques. | En somme, l’image, miroir ou illusion, oscille entre vérité et fiction, captivant toujours notre regard.",
+                thesis: "L’image oscille entre reflet de la réalité et illusion manipulatrice.",
+                args: "Manipulation vs inspiration.",
+                parts: "Origines, manipulation, pouvoir, modernité, synthèse.",
+                plan: "Reflet et manipulation, inspiration et normes.",
+                summaryKeywords: ["image", "illusion", "réalité", "pouvoir"]
+            },
+            {
+                text: "L’image a toujours été un langage universel. Les fresques égyptiennes glorifiaient les pharaons, immortalisant leur règne. Aujourd’hui, elle domine les médias, des affiches politiques aux clips viraux, influençant les masses. | Mais elle trompe souvent : retouches et montages altèrent la vérité. Le cinéma, lui, éblouit par sa capacité à créer des mondes, malgré ses stéréotypes. | Dans la propagande, elle impose des visions, comme les affiches de guerre l’ont montré. À l’inverse, elle offre une évasion, un rêve accessible à tous. | Les réseaux sociaux en font un miroir déformant : selfies et filtres flattent l’ego. Les archives visuelles, quant à elles, sauvegardent l’histoire. | Ainsi, l’image, arme ou art, façonne notre perception du réel tout en flirtant avec le fictif.",
+                thesis: "L’image façonne la perception entre réalité et fiction.",
+                args: "Influence vs tromperie.",
+                parts: "Histoire, tromperie, influence, réseaux, conclusion.",
+                plan: "Influence historique, fiction moderne.",
+                summaryKeywords: ["image", "perception", "fiction", "influence"]
+            },
+            {
+                text: "Dès l’Antiquité, l’image sculptait les mythes, des statues grecques aux mosaïques romaines. Aujourd’hui, elle inonde nos vies via écrans et panneaux, reflet ou caricature de nous-mêmes. | Sa force réside dans sa dualité : vérité documentaire ou mensonge savamment orchestré, comme les deepfakes. Elle émeut aussi, des peintures sacrées aux blockbusters. | En politique, elle sert le pouvoir, manipulant les foules avec des slogans visuels. Mais elle libère l’esprit, invitant à l’aventure intérieure. | Sur TikTok, elle impose des idéaux de beauté fugaces. Les albums photo, eux, cristallisent nos vies passées. | En fin de compte, l’image est un outil ambigu, entre authenticité et artifice, toujours au cœur de notre quête de sens.",
+                thesis: "L’image est un outil ambigu entre vérité et artifice.",
+                args: "Vérité vs manipulation.",
+                parts: "Antiquité, dualité, pouvoir, modernité, synthèse.",
+                plan: "Vérité historique, artifice actuel.",
+                summaryKeywords: ["image", "artifice", "vérité", "outil"]
+            }
+        ];
+
+        // Fonctions pour #com-res
+        function generateSummaryGameCom() {
+            console.log("Nouveau défi - Résumé (#com-res)");
+            const textContainer = document.getElementById("summary-text-com");
+            const inputs = ["thesis-input-com", "args-input-com", "parts-input-com", "plan-input-com", "summary-input-com"].map(id => document.getElementById(id));
+            const feedbacks = ["thesis-feedback-com", "args-feedback-com", "parts-feedback-com", "plan-feedback-com", "summary-feedback-com"].map(id => document.getElementById(id));
+            if (textContainer && inputs.every(i => i) && feedbacks.every(f => f)) {
+                comResCurrentTextIndex = Math.floor(Math.random() * comResSummaryTexts.length);
+                const selectedText = comResSummaryTexts[comResCurrentTextIndex];
+                const words = selectedText.text.split(" ");
+                let markedText = "";
+                for (let i = 0; i < words.length; i++) {
+                    markedText += words[i] + " ";
+                    if ((i + 1) % 50 === 0) markedText += "| ";
+                }
+                textContainer.innerHTML = markedText.trim();
+                inputs.forEach(input => input.value = "");
+                feedbacks.forEach(feedback => feedback.style.display = "none");
+                countSummaryWordsCom(document.getElementById("summary-input-com"));
+            }
         }
-        textContainer.innerHTML = markedText.trim();
-        inputs.forEach(input => input.value = "");
-        feedbacks.forEach(feedback => feedback.style.display = "none");
-        countSummaryWordsCom(document.getElementById("summary-input-com"));
-    }
-}
 
-function countSummaryWordsCom(textarea) {
-    const text = textarea.value.trim();
-    const wordCount = text === "" ? 0 : text.split(/\s+/).length;
-    document.getElementById("summary-word-count-com").textContent = `Mots : ${wordCount}/50`;
-}
-
-function checkThesisCom() {
-    const input = document.getElementById("thesis-input-com");
-    const feedback = document.getElementById("thesis-feedback-com");
-    if (input && feedback) {
-        feedback.style.display = "block";
-        const answer = input.value.trim().toLowerCase();
-        const correct = comResSummaryTexts[comResCurrentTextIndex].thesis.toLowerCase();
-        const keywords = correct.split(" ");
-        const isCorrect = keywords.some(keyword => answer.includes(keyword));
-        feedback.innerHTML = isCorrect ? "Thèse juste ! Bien vu !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].thesis}"`;
-    }
-}
-
-function checkArgsCom() {
-    const input = document.getElementById("args-input-com");
-    const feedback = document.getElementById("args-feedback-com");
-    if (input && feedback) {
-        feedback.style.display = "block";
-        const answer = input.value.trim().toLowerCase();
-        const correct = comResSummaryTexts[comResCurrentTextIndex].args.toLowerCase();
-        const keywords = correct.split(" ").concat(correct.split(" vs "));
-        const isCorrect = keywords.some(keyword => answer.includes(keyword));
-        feedback.innerHTML = isCorrect ? "Arguments captés ! Super !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].args}"`;
-    }
-}
-
-function checkPartsCom() {
-    const input = document.getElementById("parts-input-com");
-    const feedback = document.getElementById("parts-feedback-com");
-    if (input && feedback) {
-        feedback.style.display = "block";
-        const answer = input.value.trim().toLowerCase();
-        const correct = comResSummaryTexts[comResCurrentTextIndex].parts.toLowerCase();
-        const keywords = correct.split(", ");
-        const isCorrect = keywords.some(keyword => answer.includes(keyword));
-        feedback.innerHTML = isCorrect ? "Parties bien découpées !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].parts}"`;
-    }
-}
-
-function checkPlanCom() {
-    const input = document.getElementById("plan-input-com");
-    const feedback = document.getElementById("plan-feedback-com");
-    if (input && feedback) {
-        feedback.style.display = "block";
-        const answer = input.value.trim().toLowerCase();
-        const correct = comResSummaryTexts[comResCurrentTextIndex].plan.toLowerCase();
-        const keywords = correct.split(", ");
-        const isCorrect = keywords.some(keyword => answer.includes(keyword));
-        feedback.innerHTML = isCorrect ? "Plan structuré ! Top !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].plan}"`;
-    }
-}
-
-function checkSummaryCom() {
-    const input = document.getElementById("summary-input-com");
-    const feedback = document.getElementById("summary-feedback-com");
-    if (input && feedback) {
-        feedback.style.display = "block";
-        const text = input.value.trim();
-        const wordCount = text === "" ? 0 : text.split(/\s+/).length;
-        if (wordCount > 50) {
-            feedback.innerHTML = "Trop long ! Max 50 mots.";
-        } else if (wordCount === 0) {
-            feedback.innerHTML = "Rédigez un résumé !";
-        } else {
-            const answer = text.toLowerCase();
-            const keywords = comResSummaryTexts[comResCurrentTextIndex].summaryKeywords;
-            const isCorrect = keywords.some(keyword => answer.includes(keyword));
-            feedback.innerHTML = isCorrect ? `Résumé réussi (${wordCount} mots) !` : `Manque de précision (${wordCount} mots). Incluez : ${keywords.join(", ")}.`;
+        function countSummaryWordsCom(textarea) {
+            const text = textarea.value.trim();
+            const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+            document.getElementById("summary-word-count-com").textContent = `Mots : ${wordCount}/50`;
         }
-    }
-}
 
-// Données pour #com-syn
-let synthesisCorpusIndex = 0;
-const synthesisCorpora = [
-    {
-        docs: [
-            '<strong>Doc 1 : "Selfie Nation" (article, 2023)</strong> - Les selfies dominent les réseaux sociaux, reflétant une quête d’identité mais aussi une superficialité croissante.',
-            '<strong>Doc 2 : "L’objectif vérité" (essai, 2019)</strong> - La photographie, jadis garante de réalité, est désormais suspecte à l’ère des retouches et fake news.',
-            '<strong>Doc 3 : "Hollywood Dreams" (interview, 2022)</strong> - Le cinéma utilise l’image pour nourrir l’imaginaire collectif, mais impose des stéréotypes.'
-        ],
-        problematic: "Comment l’image oscille-t-elle entre vérité et fiction dans nos sociétés modernes ?",
-        plan: "I. L’image comme reflet altéré II. L’image comme créatrice de rêves",
-        keywords: ["image", "vérité", "fiction", "société"]
-    },
-    {
-        docs: [
-            '<strong>Doc 1 : "Icônes et foi" (essai, 2020)</strong> - Les images religieuses inspirent une vérité spirituelle, reliant l’homme au divin.',
-            '<strong>Doc 2 : "Propagande visuelle" (article, 2021)</strong> - L’image politique manipule les masses, imposant des réalités biaisées.',
-            '<strong>Doc 3 : "Pixels intimes" (témoignage, 2023)</strong> - Les photos personnelles capturent des souvenirs, mais filtres et mises en scène les déforment.'
-        ],
-        problematic: "L’image est-elle un vecteur de vérité ou un outil de manipulation ?",
-        plan: "I. Vérité captée par l’image II. Manipulation par l’image",
-        keywords: ["image", "vérité", "manipulation", "perception"]
-    }
-];
-
-// Fonctions pour #com-syn
-function generateSynthesisGame() {
-    console.log("Nouveau défi - Synthèse (#com-syn)");
-    const container = document.getElementById("corpus-container");
-    const inputs = ["problematic-input", "plan-input-syn", "synthesis-input"].map(id => document.getElementById(id));
-    const feedbacks = ["problematic-feedback", "plan-feedback-syn", "synthesis-feedback"].map(id => document.getElementById(id));
-    if (container && inputs.every(i => i) && feedbacks.every(f => f)) {
-        synthesisCorpusIndex = Math.floor(Math.random() * synthesisCorpora.length);
-        const selectedCorpus = synthesisCorpora[synthesisCorpusIndex];
-        container.innerHTML = selectedCorpus.docs.map(doc => `<p>${doc}</p>`).join('');
-        inputs.forEach(input => input.value = "");
-        feedbacks.forEach(feedback => feedback.style.display = "none");
-        countSynthesisWords(document.getElementById("synthesis-input"));
-    }
-}
-
-function countSynthesisWords(textarea) {
-    const text = textarea.value.trim();
-    const wordCount = text === "" ? 0 : text.split(/\s+/).length;
-    document.getElementById("synthesis-word-count").textContent = `Mots : ${wordCount}/150`;
-}
-
-function checkProblematic() {
-    const input = document.getElementById("problematic-input");
-    const feedback = document.getElementById("problematic-feedback");
-    if (input && feedback) {
-        feedback.style.display = "block";
-        const answer = input.value.trim().toLowerCase();
-        const correct = synthesisCorpora[synthesisCorpusIndex].problematic.toLowerCase();
-        const keywords = correct.split(" ");
-        const isCorrect = keywords.some(keyword => answer.includes(keyword));
-        feedback.innerHTML = isCorrect ? "Problématique pertinente ! Bien joué !" : `Pas tout à fait. Suggestion : "${synthesisCorpora[synthesisCorpusIndex].problematic}"`;
-    }
-}
-
-function checkPlanSyn() {
-    const input = document.getElementById("plan-input-syn");
-    const feedback = document.getElementById("plan-feedback-syn");
-    if (input && feedback) {
-        feedback.style.display = "block";
-        const answer = input.value.trim().toLowerCase();
-        const correct = synthesisCorpora[synthesisCorpusIndex].plan.toLowerCase();
-        const keywords = correct.split(" ").filter(word => word.length > 3); // Mots significatifs
-        const isCorrect = keywords.some(keyword => answer.includes(keyword));
-        feedback.innerHTML = isCorrect ? "Plan cohérent ! Excellent !" : `À revoir. Exemple : "${synthesisCorpora[synthesisCorpusIndex].plan}"`;
-    }
-}
-
-function checkSynthesis() {
-    const input = document.getElementById("synthesis-input");
-    const feedback = document.getElementById("synthesis-feedback");
-    if (input && feedback) {
-        feedback.style.display = "block";
-        const text = input.value.trim();
-        const wordCount = text === "" ? 0 : text.split(/\s+/).length;
-        if (wordCount > 150) {
-            feedback.innerHTML = "Trop long ! Max 150 mots.";
-        } else if (wordCount === 0) {
-            feedback.innerHTML = "Rédigez une synthèse !";
-        } else {
-            const answer = text.toLowerCase();
-            const keywords = synthesisCorpora[synthesisCorpusIndex].keywords;
-            const isCorrect = keywords.some(keyword => answer.includes(keyword));
-            feedback.innerHTML = isCorrect ? `Synthèse réussie (${wordCount} mots) !` : `Manque de précision (${wordCount} mots). Incluez : ${keywords.join(", ")}.`;
+        function checkThesisCom() {
+            console.log("Vérification de la thèse - Résumé (#com-res)");
+            const input = document.getElementById("thesis-input-com");
+            const feedback = document.getElementById("thesis-feedback-com");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = comResSummaryTexts[comResCurrentTextIndex].thesis.toLowerCase();
+                const keywords = correct.split(" ");
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Thèse juste ! Bien vu !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].thesis}"`;
+            }
         }
-    }
-}
+
+        function checkArgsCom() {
+            console.log("Vérification des arguments - Résumé (#com-res)");
+            const input = document.getElementById("args-input-com");
+            const feedback = document.getElementById("args-feedback-com");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = comResSummaryTexts[comResCurrentTextIndex].args.toLowerCase();
+                const keywords = correct.split(" ").concat(correct.split(" vs "));
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Arguments captés ! Super !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].args}"`;
+            }
+        }
+
+        function checkPartsCom() {
+            console.log("Vérification des parties - Résumé (#com-res)");
+            const input = document.getElementById("parts-input-com");
+            const feedback = document.getElementById("parts-feedback-com");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = comResSummaryTexts[comResCurrentTextIndex].parts.toLowerCase();
+                const keywords = correct.split(", ");
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Parties bien découpées !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].parts}"`;
+            }
+        }
+
+        function checkPlanCom() {
+            console.log("Vérification du plan - Résumé (#com-res)");
+            const input = document.getElementById("plan-input-com");
+            const feedback = document.getElementById("plan-feedback-com");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = comResSummaryTexts[comResCurrentTextIndex].plan.toLowerCase();
+                const keywords = correct.split(", ");
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Plan structuré ! Top !" : `Incorrect. Corrigé : "${comResSummaryTexts[comResCurrentTextIndex].plan}"`;
+            }
+        }
+
+        function checkSummaryCom() {
+            console.log("Vérification du résumé - Résumé (#com-res)");
+            const input = document.getElementById("summary-input-com");
+            const feedback = document.getElementById("summary-feedback-com");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const text = input.value.trim();
+                const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+                if (wordCount > 50) {
+                    feedback.innerHTML = "Trop long ! Max 50 mots.";
+                } else if (wordCount === 0) {
+                    feedback.innerHTML = "Rédigez un résumé !";
+                } else {
+                    const answer = text.toLowerCase();
+                    const keywords = comResSummaryTexts[comResCurrentTextIndex].summaryKeywords;
+                    const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                    feedback.innerHTML = isCorrect ? `Résumé réussi (${wordCount} mots) !` : `Manque de précision (${wordCount} mots). Incluez : ${keywords.join(", ")}.`;
+                }
+            }
+        }
+
+        // Données pour #com-syn
+        let synthesisCorpusIndex = 0;
+        const synthesisCorpora = [
+            {
+                docs: [
+                    '<strong>Doc 1 : "Selfie Nation" (article, 2023)</strong> - Les selfies dominent les réseaux sociaux, reflétant une quête d’identité mais aussi une superficialité croissante.',
+                    '<strong>Doc 2 : "L’objectif vérité" (essai, 2019)</strong> - La photographie, jadis garante de réalité, est désormais suspecte à l’ère des retouches et fake news.',
+                    '<strong>Doc 3 : "Hollywood Dreams" (interview, 2022)</strong> - Le cinéma utilise l’image pour nourrir l’imaginaire collectif, mais impose des stéréotypes.'
+                ],
+                problematic: "Comment l’image oscille-t-elle entre vérité et fiction dans nos sociétés modernes ?",
+                plan: "I. L’image comme reflet altéré II. L’image comme créatrice de rêves",
+                keywords: ["image", "vérité", "fiction", "société"]
+            },
+            {
+                docs: [
+                    '<strong>Doc 1 : "Icônes et foi" (essai, 2020)</strong> - Les images religieuses inspirent une vérité spirituelle, reliant l’homme au divin.',
+                    '<strong>Doc 2 : "Propagande visuelle" (article, 2021)</strong> - L’image politique manipule les masses, imposant des réalités biaisées.',
+                    '<strong>Doc 3 : "Pixels intimes" (témoignage, 2023)</strong> - Les photos personnelles capturent des souvenirs, mais filtres et mises en scène les déforment.'
+                ],
+                problematic: "L’image est-elle un vecteur de vérité ou un outil de manipulation ?",
+                plan: "I. Vérité captée par l’image II. Manipulation par l’image",
+                keywords: ["image", "vérité", "manipulation", "perception"]
+            }
+        ];
+
+        // Fonctions pour #com-syn
+        function generateSynthesisGame() {
+            console.log("Nouveau défi - Synthèse (#com-syn)");
+            const container = document.getElementById("corpus-container");
+            const inputs = ["problematic-input", "plan-input-syn", "synthesis-input"].map(id => document.getElementById(id));
+            const feedbacks = ["problematic-feedback", "plan-feedback-syn", "synthesis-feedback"].map(id => document.getElementById(id));
+            if (container && inputs.every(i => i) && feedbacks.every(f => f)) {
+                synthesisCorpusIndex = Math.floor(Math.random() * synthesisCorpora.length);
+                const selectedCorpus = synthesisCorpora[synthesisCorpusIndex];
+                container.innerHTML = selectedCorpus.docs.map(doc => `<p>${doc}</p>`).join('');
+                inputs.forEach(input => input.value = "");
+                feedbacks.forEach(feedback => feedback.style.display = "none");
+                countSynthesisWords(document.getElementById("synthesis-input"));
+            }
+        }
+
+        function countSynthesisWords(textarea) {
+            const text = textarea.value.trim();
+            const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+            document.getElementById("synthesis-word-count").textContent = `Mots : ${wordCount}/150`;
+        }
+
+        function checkProblematic() {
+            console.log("Vérification de la problématique - Synthèse (#com-syn)");
+            const input = document.getElementById("problematic-input");
+            const feedback = document.getElementById("problematic-feedback");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = synthesisCorpora[synthesisCorpusIndex].problematic.toLowerCase();
+                const keywords = correct.split(" ");
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Problématique pertinente ! Bien joué !" : `Pas tout à fait. Suggestion : "${synthesisCorpora[synthesisCorpusIndex].problematic}"`;
+            }
+        }
+
+        function checkPlanSyn() {
+            console.log("Vérification du plan - Synthèse (#com-syn)");
+            const input = document.getElementById("plan-input-syn");
+            const feedback = document.getElementById("plan-feedback-syn");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const answer = input.value.trim().toLowerCase();
+                const correct = synthesisCorpora[synthesisCorpusIndex].plan.toLowerCase();
+                const keywords = correct.split(" ").filter(word => word.length > 3); // Mots significatifs
+                const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                feedback.innerHTML = isCorrect ? "Plan cohérent ! Excellent !" : `À revoir. Exemple : "${synthesisCorpora[synthesisCorpusIndex].plan}"`;
+            }
+        }
+
+        function checkSynthesis() {
+            console.log("Vérification de la synthèse - Synthèse (#com-syn)");
+            const input = document.getElementById("synthesis-input");
+            const feedback = document.getElementById("synthesis-feedback");
+            if (input && feedback) {
+                feedback.style.display = "block";
+                const text = input.value.trim();
+                const wordCount = text === "" ? 0 : text.split(/\s+/).length;
+                if (wordCount > 150) {
+                    feedback.innerHTML = "Trop long ! Max 150 mots.";
+                } else if (wordCount === 0) {
+                    feedback.innerHTML = "Rédigez une synthèse !";
+                } else {
+                    const answer = text.toLowerCase();
+                    const keywords = synthesisCorpora[synthesisCorpusIndex].keywords;
+                    const isCorrect = keywords.some(keyword => answer.includes(keyword));
+                    feedback.innerHTML = isCorrect ? `Synthèse réussie (${wordCount} mots) !` : `Manque de précision (${wordCount} mots). Incluez : ${keywords.join(", ")}.`;
+                }
+            }
+        }
+
         console.log("Page chargée, affichage de home");
         showSection('home');
     </script>
