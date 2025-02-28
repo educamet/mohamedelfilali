@@ -326,7 +326,7 @@
     mainSection.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
     subSection.classList.add('active');
     if (subSectionId === 'sci-diss') {
-        generateQuoteGame();
+        generateQuoteGame(); // Générer les citations immédiatement
         generateAnalysisGame();
         generateProblemGame();
         generatePlanGame();
@@ -335,34 +335,27 @@
         generatePart2Game();
         generatePart3Game();
         generateConclusionGame();
+        // Attacher les événements après génération
+        const verifyButton = document.querySelector('#step-citations .verify-button');
+        if (verifyButton) {
+            verifyButton.removeEventListener('click', checkQuotes); // Supprimer tout ancien écouteur
+            verifyButton.addEventListener('click', checkQuotes);
+            console.log("Événement click attaché au bouton Vérifier dans showSubSection");
+        } else {
+            console.error("Bouton Vérifier non trouvé dans step-citations");
+        }
+        const nextButton = document.querySelector('#step-citations .next-button');
+        if (nextButton) {
+            nextButton.removeEventListener('click', generateQuoteGame);
+            nextButton.addEventListener('click', generateQuoteGame);
+            console.log("Événement click attaché au bouton Nouveau Défi");
+        }
     } else if (subSectionId === 'sci-res') {
         generateThesisGame();
         generateArgsGame();
         generatePartsGame();
         generateCircuitGame();
         generateSummaryGame();
-    } else if (subSectionId === 'com-diss') {
-        generateQuoteGameCom();
-        generateAnalysisGameCom();
-        generateProblemGameCom();
-        generatePlanGameCom();
-        generateIntroGameCom();
-        generatePart1GameCom();
-        generatePart2GameCom();
-        generatePart3GameCom();
-        generateConclusionGameCom();
-    } else if (subSectionId === 'com-res') {
-        generateThesisGameCom();
-        generateArgsGameCom();
-        generatePartsGameCom();
-        generateCircuitGameCom();
-        generateSummaryGameCom();
-    } else if (subSectionId === 'com-syn') {
-        generateThesisGameCom();
-        generateArgsGameCom();
-        generatePartsGameCom();
-        generateCircuitGameCom();
-        generateSummaryGameCom();
     }
 }
 
@@ -897,242 +890,31 @@
     updateGamification();
 </script>
 
-                <!-- Section Prépas Commerciales -->
-<div id="com" class="section">
-    <h2>Prépas Commerciales - L’Image</h2>
-    <p>Forgez vos compétences pour les concours :</p>
-    <div class="button-container">
-        <button class="dissertations" onclick="showSubSection('com-diss')">Dissertations</button>
-        <button class="summary" onclick="showSubSection('com-res')">Résumés</button>
-        <button class="synthesis" onclick="showSubSection('com-syn')">Synthèses</button>
-    </div>
+        <div id="com" class="section">
+            <h2>Prépas Commerciales - L’Image</h2>
+            <p>Préparez-vous aux exigences des concours :</p>
+            <div class="button-container">
+                <button class="dissertations" onclick="showSubSection('com-diss')">Dissertations</button>
+                <button class="summary" onclick="showSubSection('com-res')">Résumés</button>
+                <button class="synthesis" onclick="showSubSection('com-syn')">Synthèse de Documents</button>
+            </div>
 
-    <!-- Sous-section Dissertations -->
-    <div id="com-diss" class="sub-section">
-        <h2>Dissertation : La Quête de l’Image</h2>
-        
-        <!-- Niveau 1 : Maître des Citations -->
-        <div class="game-step" id="step-citations">
-            <h3>Niveau 1 : Maître des Citations</h3>
-            <p>Associez ces arguments des œuvres aux auteurs (10 points) :</p>
-            <div id="quote-container"></div>
-            <button class="verify-button" onclick="checkQuotesCom()">Vérifier</button>
-            <button class="next-button" onclick="generateQuoteGameCom()">Nouveau Défi</button>
-            <div id="quote-feedback" class="feedback"></div>
-        </div>
+            <div id="com-diss" class="sub-section">
+                <h2>Dissertation : À Développer (L’Image)</h2>
+                <p>Cette section sera dédiée à l’entraînement des dissertations sur le thème "L’Image".</p>
+            </div>
 
-        <!-- Niveau 2 : Analyseur de Citations -->
-        <div class="game-step" id="step-analysis">
-            <h3>Niveau 2 : Analyseur de Citations</h3>
-            <p>Analysez cette citation-support hors programme (15 points) :</p>
-            <div id="analysis-container"></div>
-            <button class="verify-button" onclick="checkAnalysisCom()">Vérifier</button>
-            <button class="next-button" onclick="generateAnalysisGameCom()">Nouveau Défi</button>
-            <div id="analysis-feedback" class="feedback"></div>
-        </div>
+            <div id="com-res" class="sub-section">
+                <h2>Résumés : À Développer (L’Image)</h2>
+                <p>Cette section sera dédiée à l’entraînement des résumés sur le thème "L’Image".</p>
+            </div>
 
-        <!-- Niveau 3 : Forger une Problématique -->
-        <div class="game-step" id="step-problem">
-            <h3>Niveau 3 : Forger une Problématique</h3>
-            <p>Rédigez une problématique (20 points) :</p>
-            <div id="problem-container"></div>
-            <textarea id="problem-input" placeholder="Votre problématique..."></textarea>
-            <button class="verify-button" onclick="checkProblemCom()">Vérifier</button>
-            <button class="next-button" onclick="generateProblemGameCom()">Nouveau Défi</button>
-            <div id="problem-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 4 : Architecte du Plan -->
-        <div class="game-step" id="step-plan">
-            <h3>Niveau 4 : Architecte du Plan</h3>
-            <p>Proposez votre plan en 3 parties (25 points) :</p>
-            <div id="plan-container"></div>
-            <textarea id="plan-input" placeholder="Ex. : I. ... II. ... III. ..." maxlength="500"></textarea>
-            <button class="verify-button" onclick="checkPlanCom()">Vérifier</button>
-            <button class="next-button" onclick="generatePlanGameCom()">Nouveau Défi</button>
-            <div id="plan-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 5 : Rédacteur d’Introduction -->
-        <div class="game-step" id="step-intro">
-            <h3>Niveau 5 : Rédacteur d’Introduction</h3>
-            <p>Rédigez une introduction pertinente (30 points) :</p>
-            <div id="intro-container"></div>
-            <textarea id="intro-input" placeholder="Votre introduction..." maxlength="1000"></textarea>
-            <button class="verify-button" onclick="checkIntroCom()">Vérifier</button>
-            <button class="next-button" onclick="generateIntroGameCom()">Nouveau Défi</button>
-            <div id="intro-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 6 : Développeur de la Première Partie -->
-        <div class="game-step" id="step-part1">
-            <h3>Niveau 6 : Développeur de la Première Partie</h3>
-            <p>Rédigez la première partie (40 points) :</p>
-            <div id="part1-container"></div>
-            <textarea id="part1-input" placeholder="Votre première partie..." maxlength="1500"></textarea>
-            <button class="verify-button" onclick="checkPart1Com()">Vérifier</button>
-            <button class="next-button" onclick="generatePart1GameCom()">Nouveau Défi</button>
-            <div id="part1-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 7 : Développeur de la Deuxième Partie -->
-        <div class="game-step" id="step-part2">
-            <h3>Niveau 7 : Développeur de la Deuxième Partie</h3>
-            <p>Rédigez la deuxième partie (45 points) :</p>
-            <div id="part2-container"></div>
-            <textarea id="part2-input" placeholder="Votre deuxième partie..." maxlength="1500"></textarea>
-            <button class="verify-button" onclick="checkPart2Com()">Vérifier</button>
-            <button class="next-button" onclick="generatePart2GameCom()">Nouveau Défi</button>
-            <div id="part2-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 8 : Développeur de la Troisième Partie -->
-        <div class="game-step" id="step-part3">
-            <h3>Niveau 8 : Développeur de la Troisième Partie</h3>
-            <p>Rédigez la troisième partie (50 points) :</p>
-            <div id="part3-container"></div>
-            <textarea id="part3-input" placeholder="Votre troisième partie..." maxlength="1500"></textarea>
-            <button class="verify-button" onclick="checkPart3Com()">Vérifier</button>
-            <button class="next-button" onclick="generatePart3GameCom()">Nouveau Défi</button>
-            <div id="part3-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 9 : Maître de la Conclusion -->
-        <div class="game-step" id="step-conclusion">
-            <h3>Niveau 9 : Maître de la Conclusion</h3>
-            <p>Rédigez la conclusion (60 points) :</p>
-            <div id="conclusion-container"></div>
-            <textarea id="conclusion-input" placeholder="Votre conclusion..." maxlength="1000"></textarea>
-            <button class="verify-button" onclick="checkConclusionCom()">Vérifier</button>
-            <button class="next-button" onclick="generateConclusionGameCom()">Nouveau Défi</button>
-            <div id="conclusion-feedback" class="feedback"></div>
+            <div id="com-syn" class="sub-section">
+                <h2>Synthèse de Documents : À Développer (L’Image)</h2>
+                <p>Cette section sera dédiée à l’entraînement des synthèses sur le thème "L’Image".</p>
+            </div>
         </div>
     </div>
-
-    <!-- Sous-section Résumés -->
-    <div id="com-res" class="sub-section">
-        <h2>Résumés : La Voie de la Concision</h2>
-        <p>Maîtrisez l’art du résumé en analysant et condensant des textes sur l’image (20-60 points) :</p>
-
-        <!-- Niveau 1 : Détective de la Thèse -->
-        <div class="game-step" id="step-thesis">
-            <h3>Niveau 1 : Détective de la Thèse</h3>
-            <p>Trouvez la thèse du texte (20 points) :</p>
-            <div id="thesis-container"></div>
-            <textarea id="thesis-input" placeholder="Écrivez la thèse..." maxlength="200"></textarea>
-            <button class="verify-button" onclick="checkThesisCom()">Vérifier</button>
-            <button class="next-button" onclick="generateThesisGameCom()">Nouveau Défi</button>
-            <div id="thesis-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 2 : Chercheur d’Arguments -->
-        <div class="game-step" id="step-args">
-            <h3>Niveau 2 : Chercheur d’Arguments</h3>
-            <p>Listez les principaux arguments (25 points) :</p>
-            <div id="args-container"></div>
-            <textarea id="args-input" placeholder="Écrivez les arguments..." maxlength="300"></textarea>
-            <button class="verify-button" onclick="checkArgsCom()">Vérifier</button>
-            <button class="next-button" onclick="generateArgsGameCom()">Nouveau Défi</button>
-            <div id="args-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 3 : Architecte des Parties -->
-        <div class="game-step" id="step-parts">
-            <h3>Niveau 3 : Architecte des Parties</h3>
-            <p>Identifiez les parties ou mouvements (30 points) :</p>
-            <div id="parts-container"></div>
-            <textarea id="parts-input" placeholder="Écrivez les parties..." maxlength="300"></textarea>
-            <button class="verify-button" onclick="checkPartsCom()">Vérifier</button>
-            <button class="next-button" onclick="generatePartsGameCom()">Nouveau Défi</button>
-            <div id="parts-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 4 : Décodeur du Circuit -->
-        <div class="game-step" id="step-circuit">
-            <h3>Niveau 4 : Décodeur du Circuit</h3>
-            <p>Analysez le circuit argumentatif (40 points) :</p>
-            <div id="circuit-container"></div>
-            <textarea id="circuit-input" placeholder="Décrivez le circuit (opposition, cause, etc.)..." maxlength="400"></textarea>
-            <button class="verify-button" onclick="checkCircuitCom()">Vérifier</button>
-            <button class="next-button" onclick="generateCircuitGameCom()">Nouveau Défi</button>
-            <div id="circuit-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 5 : Maître du Résumé -->
-        <div class="game-step" id="step-summary">
-            <h3>Niveau 5 : Maître du Résumé</h3>
-            <p>Résumez le texte en 100 mots (60 points) :</p>
-            <div id="summary-container"></div>
-            <textarea id="summary-input" placeholder="Votre résumé (100 mots max)..." maxlength="500" oninput="countWords('summary-input', 'summary-word-count', 100)"></textarea>
-            <p id="summary-word-count">Mots : 0/100</p>
-            <button class="verify-button" onclick="checkSummaryCom()">Vérifier</button>
-            <button class="next-button" onclick="generateSummaryGameCom()">Nouveau Défi</button>
-            <div id="summary-feedback" class="feedback"></div>
-        </div>
-    </div>
-
-    <!-- Sous-section Synthèses -->
-    <div id="com-syn" class="sub-section">
-        <h2>Synthèses : La Voie de la Synthèse</h2>
-        <p>Maîtrisez l’art de la synthèse en combinant plusieurs textes sur l’image (20-60 points) :</p>
-
-        <!-- Niveau 1 : Détective de la Thèse -->
-        <div class="game-step" id="step-thesis">
-            <h3>Niveau 1 : Détective de la Thèse</h3>
-            <p>Trouvez la thèse commune à deux textes (20 points) :</p>
-            <div id="thesis-container"></div>
-            <textarea id="thesis-input" placeholder="Écrivez la thèse..." maxlength="200"></textarea>
-            <button class="verify-button" onclick="checkThesisCom()">Vérifier</button>
-            <button class="next-button" onclick="generateThesisGameCom()">Nouveau Défi</button>
-            <div id="thesis-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 2 : Chercheur d’Arguments -->
-        <div class="game-step" id="step-args">
-            <h3>Niveau 2 : Chercheur d’Arguments</h3>
-            <p>Listez les principaux arguments des deux textes (25 points) :</p>
-            <div id="args-container"></div>
-            <textarea id="args-input" placeholder="Écrivez les arguments..." maxlength="300"></textarea>
-            <button class="verify-button" onclick="checkArgsCom()">Vérifier</button>
-            <button class="next-button" onclick="generateArgsGameCom()">Nouveau Défi</button>
-            <div id="args-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 3 : Architecte des Parties -->
-        <div class="game-step" id="step-parts">
-            <h3>Niveau 3 : Architecte des Parties</h3>
-            <p>Identifiez les parties ou mouvements des deux textes (30 points) :</p>
-            <div id="parts-container"></div>
-            <textarea id="parts-input" placeholder="Écrivez les parties..." maxlength="300"></textarea>
-            <button class="verify-button" onclick="checkPartsCom()">Vérifier</button>
-            <button class="next-button" onclick="generatePartsGameCom()">Nouveau Défi</button>
-            <div id="parts-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 4 : Décodeur du Circuit -->
-        <div class="game-step" id="step-circuit">
-            <h3>Niveau 4 : Décodeur du Circuit</h3>
-            <p>Analysez le circuit argumentatif combiné (40 points) :</p>
-            <div id="circuit-container"></div>
-            <textarea id="circuit-input" placeholder="Décrivez le circuit (opposition, cause, etc.)..." maxlength="400"></textarea>
-            <button class="verify-button" onclick="checkCircuitCom()">Vérifier</button>
-            <button class="next-button" onclick="generateCircuitGameCom()">Nouveau Défi</button>
-            <div id="circuit-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 5 : Maître de la Synthèse -->
-        <div class="game-step" id="step-summary">
-            <h3>Niveau 5 : Maître de la Synthèse</h3>
-            <p>Rédigez une synthèse en 100 mots (60 points) :</p>
-            <div id="summary-container"></div>
-            <textarea id="summary-input" placeholder="Votre synthèse (100 mots max)..." maxlength="500" oninput="countWords('summary-input', 'summary-word-count', 100)"></textarea>
-            <p id="summary-word-count">Mots : 0/100</p>
-            <button class="verify-button" onclick="checkSummaryCom()">Vérifier</button>
-            <button class="next-button" onclick="generateSummaryGameCom()">Nouveau Défi</button>
-            <div id="summary-feedback" class="feedback"></div>
-        </div>
-    </div>
-</div>
 
     <footer>
         <p>&copy; 2025 Méthodo Prépas - Tous droits réservés</p>
@@ -1687,337 +1469,6 @@ function showSubSection(subSectionId) {
                 feedback.innerHTML = "Incluez : sommaire des parties (" + summaryWords.slice(0, 3).join(", ") + " + œuvres), ouverture (" + data.opening.split(" ")[0] + "), et au moins 50 mots.";
             }
         }
-
-    // Données pour COM-DISS (Dissertations)
-    const quotesCom = [
-        { text: "Les images sont des ombres des réalités intelligibles.", author: "Platon", work: "République" },
-        { text: "Le spectacle est le capital à un degré tel qu’il devient image.", author: "Debord", work: "La Société du spectacle" },
-        { text: "L’image précède le réel dans un monde de simulacres.", author: "Baudrillard", work: "Simulacres et Simulation" },
-        { text: "La caverne montre l’illusion des images sensibles.", author: "Platon", work: "République" },
-        { text: "Le spectacle généralisé est l’aliénation ultime.", author: "Debord", work: "La Société du spectacle" },
-        { text: "La réalité s’efface derrière les signes de l’image.", author: "Baudrillard", work: "Simulacres et Simulation" }
-    ];
-
-    const analysisDataCom = [
-        { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", keywords: ["visible", "mystère", "image"], reformulation: "Le visible contient des énigmes profondes." },
-        { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", keywords: ["image", "esprit", "création"], reformulation: "L’image naît de l’imagination." },
-        { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", keywords: ["image", "sens", "raison"], reformulation: "L’image agit sur les émotions." }
-    ];
-
-    const problemDataCom = [
-        { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", problem: "L’image façonne-t-elle notre perception de la réalité ?" },
-        { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", problem: "L’image est-elle donnée ou construite ?" },
-        { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", problem: "L’image est-elle un obstacle à la connaissance ?" }
-    ];
-
-    const planDataCom = [
-        { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", keywords: ["visible", "perception", "réalité"] },
-        { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", keywords: ["création", "esprit", "image"] },
-        { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", keywords: ["sens", "raison", "manipulation"] }
-    ];
-
-    const introDataCom = [
-        { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", problem: "L’image façonne-t-elle notre perception de la réalité ?", planKeywords: ["visible", "perception", "réalité"], works: ["Platon", "Debord", "Baudrillard"] },
-        { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", problem: "L’image est-elle donnée ou construite ?", planKeywords: ["création", "esprit", "image"], works: ["Platon", "Debord", "Baudrillard"] },
-        { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", problem: "L’image est-elle un obstacle à la connaissance ?", planKeywords: ["sens", "raison", "manipulation"], works: ["Platon", "Debord", "Baudrillard"] }
-    ];
-
-    const part1DataCom = [
-        { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", idea: "L’image reflète la réalité", introPartial: "Le visible semble vrai.", subParts: ["Ombre dans la caverne (Platon)", "Spectacle aliénant (Debord)", "Signe du réel (Baudrillard)"], conclusionPartial: "Mais elle trompe." },
-        { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", idea: "L’image est subjective", introPartial: "L’esprit façonne l’image.", subParts: ["Phantasia (Platon)", "Spectacle créé (Debord)", "Simulacre mental (Baudrillard)"], conclusionPartial: "Mais elle s’éloigne du réel." },
-        { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", idea: "L’image séduit", introPartial: "Les sens captent l’image.", subParts: ["Illusion sensible (Platon)", "Pouvoir du spectacle (Debord)", "Hyperréalité (Baudrillard)"], conclusionPartial: "Mais manipule." }
-    ];
-
-    const part2DataCom = [
-        { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", idea: "L’image déforme", introPartial: "Le visible trahit.", subParts: ["Caverne illusoire (Platon)", "Aliénation spectaculaire (Debord)", "Simulacre dominant (Baudrillard)"], conclusionPartial: "Mais révèle aussi." },
-        { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", idea: "L’image est artifice", introPartial: "L’esprit invente.", subParts: ["Copie imparfaite (Platon)", "Spectacle organisé (Debord)", "Simulacre pur (Baudrillard)"], conclusionPartial: "Mais inspire." },
-        { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", idea: "L’image manipule", introPartial: "Les sens dominent.", subParts: ["Erreur sensible (Platon)", "Persuasion spectaculaire (Debord)", "Illusion hyperréelle (Baudrillard)"], conclusionPartial: "Mais éduque parfois." }
-    ];
-
-    const part3DataCom = [
-        { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", idea: "L’image éclaire", introPartial: "Le visible s’explique.", subParts: ["Sortie de la caverne (Platon)", "Critique du spectacle (Debord)", "Analyse des simulacres (Baudrillard)"], conclusionPartial: "Mais reste ambiguë." },
-        { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", idea: "L’image crée", introPartial: "L’esprit libère.", subParts: ["Idées pures (Platon)", "Résistance au spectacle (Debord)", "Art des simulacres (Baudrillard)"], conclusionPartial: "Mais dépend du regard." },
-        { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", idea: "L’image enseigne", introPartial: "Les sens apprennent.", subParts: ["Éducation par l’image (Platon)", "Dévoilement spectaculaire (Debord)", "Lecture des signes (Baudrillard)"], conclusionPartial: "Mais exige critique." }
-    ];
-
-    const conclusionDataCom = [
-        { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", summary: "L’image reflète, déforme, mais éclaire la réalité.", opening: "Comment lire les images aujourd’hui ?" },
-        { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", summary: "L’image est subjective, artificielle, mais créatrice.", opening: "L’imagination domine-t-elle l’image ?" },
-        { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", summary: "L’image séduit, manipule, mais enseigne.", opening: "L’éducation à l’image est-elle suffisante ?" }
-    ];
-
-    // Fonctions pour COM-DISS (Dissertations)
-    function generateQuoteGameCom() {
-        const container = document.getElementById("quote-container");
-        const selected = quotesCom.sort(() => 0.5 - Math.random()).slice(0, 3);
-        container.innerHTML = selected.map((q, i) => `
-            <p>${i + 1}. "${q.text}"</p>
-            <select id="quote-${i}">
-                <option value="">Choisissez...</option>
-                <option value="Platon">Platon</option>
-                <option value="Debord">Debord</option>
-                <option value="Baudrillard">Baudrillard</option>
-            </select>
-        `).join('');
-    }
-
-    function checkQuotesCom() {
-        const feedback = document.getElementById("quote-feedback");
-        let correct = 0;
-        for (let i = 0; i < 3; i++) {
-            const select = document.getElementById(`quote-${i}`);
-            const text = select.previousElementSibling.textContent.split('"')[1];
-            if (select.value === quotesCom.find(q => q.text === text).author) correct++;
-        }
-        feedback.style.display = "block";
-        if (correct === 3) {
-            feedback.innerHTML = "Maîtrise parfaite ! +10 points ! Nouveau défi imminent...";
-            updateGamification(10);
-            setTimeout(generateQuoteGameCom, 2000);
-        } else {
-            feedback.innerHTML = `${correct}/3. Connaissez mieux les œuvres !`;
-        }
-    }
-
-    function generateAnalysisGameCom() {
-        const container = document.getElementById("analysis-container");
-        const data = analysisDataCom[Math.floor(Math.random() * analysisDataCom.length)];
-        container.innerHTML = `
-            <p>Citation : "${data.quote}"</p>
-            <label>Mots-clés :</label><input id="keywords-input" placeholder="ex. visible, mystère...">
-            <label>Reformulation :</label><input id="reform-input" placeholder="Reformulez la citation...">
-        `;
-    }
-
-    function checkAnalysisCom() {
-        const feedback = document.getElementById("analysis-feedback");
-        const quote = document.getElementById("analysis-container").querySelector("p").textContent.split('"')[1];
-        const data = analysisDataCom.find(d => d.quote === quote);
-        const keywords = document.getElementById("keywords-input").value.toLowerCase().split(/,\s*/);
-        const reform = document.getElementById("reform-input").value.toLowerCase();
-        const keywordMatch = data.keywords.every(k => keywords.includes(k));
-        const reformMatch = reform.includes(data.reformulation.toLowerCase().split(" ")[0]);
-        feedback.style.display = "block";
-        if (keywordMatch && reformMatch) {
-            feedback.innerHTML = "Analyse brillante ! +15 points ! Nouveau défi imminent...";
-            updateGamification(15);
-            setTimeout(generateAnalysisGameCom, 2000);
-        } else {
-            feedback.innerHTML = `Pas tout à fait. Mots-clés : ${data.keywords.join(", ")}. Reformulation : "${data.reformulation}"`;
-        }
-    }
-
-    function generateProblemGameCom() {
-        const container = document.getElementById("problem-container");
-        const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-        container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
-    }
-
-    function checkProblemCom() {
-        const feedback = document.getElementById("problem-feedback");
-        const quote = document.getElementById("problem-container").querySelector("p").textContent.split('"')[1];
-        const data = problemDataCom.find(d => d.quote === quote);
-        const input = document.getElementById("problem-input").value.toLowerCase();
-        const isCorrect = input.includes("image") && (input.includes("réalité") || input.includes("connaissance")) && (input.includes("?") || input.includes("peut"));
-        feedback.style.display = "block";
-        if (isCorrect) {
-            feedback.innerHTML = "Problématique pertinente ! +20 points ! Nouveau défi imminent...";
-            updateGamification(20);
-            setTimeout(generateProblemGameCom, 2000);
-        } else {
-            feedback.innerHTML = `Pas assez précis. Exemple : "${data.problem}". Incluez "image" et "réalité" ou "connaissance".`;
-        }
-    }
-
-    function generatePlanGameCom() {
-        const container = document.getElementById("plan-container");
-        const data = planDataCom[Math.floor(Math.random() * planDataCom.length)];
-        container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
-        document.getElementById("plan-input").value = "";
-    }
-
-    function checkPlanCom() {
-        const feedback = document.getElementById("plan-feedback");
-        const quote = document.getElementById("plan-container").querySelector("p").textContent.split('"')[1];
-        const data = planDataCom.find(d => d.quote === quote);
-        const input = document.getElementById("plan-input").value.toLowerCase();
-        const hasThreeParts = input.split(/i{1,3}\./).length - 1 >= 3;
-        const hasKeywords = data.keywords.some(k => input.includes(k));
-        const hasWorks = input.includes("platon") || input.includes("debord") || input.includes("baudrillard");
-        feedback.style.display = "block";
-        if (hasThreeParts && hasKeywords && hasWorks) {
-            feedback.innerHTML = "Plan cohérent et pertinent ! +25 points ! Nouveau défi imminent...";
-            updateGamification(25);
-            setTimeout(generatePlanGameCom, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : 3 parties (I, II, III), mots-clés (" + data.keywords.join(", ") + "), et une œuvre.";
-        }
-    }
-
-    function generateIntroGameCom() {
-        const container = document.getElementById("intro-container");
-        const data = introDataCom[Math.floor(Math.random() * introDataCom.length)];
-        container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
-        document.getElementById("intro-input").value = "";
-    }
-
-    function checkIntroCom() {
-        const feedback = document.getElementById("intro-feedback");
-        const quote = document.getElementById("intro-container").querySelector("p").textContent.split('"')[1];
-        const data = introDataCom.find(d => d.quote === quote);
-        const input = document.getElementById("intro-input").value.toLowerCase();
-        const hasAmorce = input.includes("aujourd’hui") || input.includes("société") || input.includes("image");
-        const hasCitation = input.includes(quote.toLowerCase());
-        const hasProblem = input.includes("image") && (input.includes("réalité") || input.includes("connaissance")) && (input.includes("?") || input.includes("peut"));
-        const hasPlan = data.planKeywords.some(k => input.includes(k));
-        const hasWorks = data.works.some(w => input.includes(w.toLowerCase()));
-        const isLongEnough = input.split(/\s+/).length > 50;
-        feedback.style.display = "block";
-        if (hasAmorce && hasCitation && hasProblem && hasPlan && hasWorks && isLongEnough) {
-            feedback.innerHTML = "Introduction magistrale ! +30 points ! Nouveau défi imminent...";
-            updateGamification(30);
-            setTimeout(generateIntroGameCom, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : amorce (contexte), citation, problématique (image/réalité), plan (" + data.planKeywords.join(", ") + "), œuvres (" + data.works.join(", ") + "), 50 mots min.";
-        }
-    }
-
-    function generatePart1GameCom() {
-        const container = document.getElementById("part1-container");
-        const data = part1DataCom[Math.floor(Math.random() * part1DataCom.length)];
-        const randomArgs = quotesCom.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-        container.innerHTML = `
-            <p>Citation-support : "${data.quote}"</p>
-            <p>Idée : ${data.idea}</p>
-            <p>Intro partielle : ${data.introPartial}</p>
-            <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
-            <p>Conclusion partielle : ${data.conclusionPartial}</p>
-        `;
-        document.getElementById("part1-input").value = "";
-    }
-
-    function checkPart1Com() {
-        const feedback = document.getElementById("part1-feedback");
-        const input = document.getElementById("part1-input").value.toLowerCase();
-        const quote = document.getElementById("part1-container").querySelector("p").textContent.split('"')[1];
-        const data = part1DataCom.find(d => d.quote === quote);
-        const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-        const hasSub1 = input.includes("platon") || quotesCom.some(q => q.author === "Platon" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub2 = input.includes("debord") || quotesCom.some(q => q.author === "Debord" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub3 = input.includes("baudrillard") || quotesCom.some(q => q.author === "Baudrillard" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-        const isLongEnough = input.split(/\s+/).length > 100;
-        feedback.style.display = "block";
-        if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-            feedback.innerHTML = "Partie I épique ! +40 points ! Nouveau défi imminent...";
-            updateGamification(40);
-            setTimeout(generatePart1GameCom, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : intro (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Platon, Debord, Baudrillard), conclusion (" + data.conclusionPartial.split(" ")[0] + "), 100 mots min.";
-        }
-    }
-
-    function generatePart2GameCom() {
-        const container = document.getElementById("part2-container");
-        const data = part2DataCom[Math.floor(Math.random() * part2DataCom.length)];
-        const randomArgs = quotesCom.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-        container.innerHTML = `
-            <p>Citation-support : "${data.quote}"</p>
-            <p>Idée : ${data.idea}</p>
-            <p>Intro partielle : ${data.introPartial}</p>
-            <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
-            <p>Conclusion partielle : ${data.conclusionPartial}</p>
-        `;
-        document.getElementById("part2-input").value = "";
-    }
-
-    function checkPart2Com() {
-        const feedback = document.getElementById("part2-feedback");
-        const input = document.getElementById("part2-input").value.toLowerCase();
-        const quote = document.getElementById("part2-container").querySelector("p").textContent.split('"')[1];
-        const data = part2DataCom.find(d => d.quote === quote);
-        const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-        const hasSub1 = input.includes("platon") || quotesCom.some(q => q.author === "Platon" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub2 = input.includes("debord") || quotesCom.some(q => q.author === "Debord" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub3 = input.includes("baudrillard") || quotesCom.some(q => q.author === "Baudrillard" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-        const isLongEnough = input.split(/\s+/).length > 100;
-        feedback.style.display = "block";
-        if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-            feedback.innerHTML = "Partie II magistrale ! +45 points ! Nouveau défi imminent...";
-            updateGamification(45);
-            setTimeout(generatePart2GameCom, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : intro (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Platon, Debord, Baudrillard), conclusion (" + data.conclusionPartial.split(" ")[0] + "), 100 mots min.";
-        }
-    }
-
-    function generatePart3GameCom() {
-        const container = document.getElementById("part3-container");
-        const data = part3DataCom[Math.floor(Math.random() * part3DataCom.length)];
-        const randomArgs = quotesCom.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-        container.innerHTML = `
-            <p>Citation-support : "${data.quote}"</p>
-            <p>Idée : ${data.idea}</p>
-            <p>Intro partielle : ${data.introPartial}</p>
-            <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
-            <p>Conclusion partielle : ${data.conclusionPartial}</p>
-        `;
-        document.getElementById("part3-input").value = "";
-    }
-
-    function checkPart3Com() {
-        const feedback = document.getElementById("part3-feedback");
-        const input = document.getElementById("part3-input").value.toLowerCase();
-        const quote = document.getElementById("part3-container").querySelector("p").textContent.split('"')[1];
-        const data = part3DataCom.find(d => d.quote === quote);
-        const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-        const hasSub1 = input.includes("platon") || quotesCom.some(q => q.author === "Platon" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub2 = input.includes("debord") || quotesCom.some(q => q.author === "Debord" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub3 = input.includes("baudrillard") || quotesCom.some(q => q.author === "Baudrillard" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-        const isLongEnough = input.split(/\s+/).length > 100;
-        feedback.style.display = "block";
-        if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-            feedback.innerHTML = "Partie III légendaire ! +50 points ! Nouveau défi imminent...";
-            updateGamification(50);
-            setTimeout(generatePart3GameCom, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : intro (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Platon, Debord, Baudrillard), conclusion (" + data.conclusionPartial.split(" ")[0] + "), 100 mots min.";
-        }
-    }
-
-    function generateConclusionGameCom() {
-        const container = document.getElementById("conclusion-container");
-        const data = conclusionDataCom[Math.floor(Math.random() * conclusionDataCom.length)];
-        container.innerHTML = `
-            <p>Citation-support : "${data.quote}"</p>
-            <p>Résumé des parties : ${data.summary}</p>
-            <p>Ouverture suggérée : ${data.opening}</p>
-        `;
-        document.getElementById("conclusion-input").value = "";
-    }
-
-    function checkConclusionCom() {
-        const feedback = document.getElementById("conclusion-feedback");
-        const input = document.getElementById("conclusion-input").value.toLowerCase();
-        const quote = document.getElementById("conclusion-container").querySelector("p").textContent.split('"')[1];
-        const data = conclusionDataCom.find(d => d.quote === quote);
-        const summaryWords = data.summary.toLowerCase().split(" ");
-        const hasSummary = summaryWords.some(w => input.includes(w)) && input.includes("platon") && input.includes("debord") && input.includes("baudrillard");
-        const hasOpening = input.includes(data.opening.toLowerCase().split(" ")[0]);
-        const isLongEnough = input.split(/\s+/).length > 50;
-        feedback.style.display = "block";
-        if (hasSummary && hasOpening && isLongEnough) {
-            feedback.innerHTML = "Conclusion triomphale ! +60 points ! Nouveau défi imminent...";
-            updateGamification(60);
-            setTimeout(generateConclusionGameCom, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : sommaire (" + summaryWords.slice(0, 3).join(", ") + " + œuvres), ouverture (" + data.opening.split(" ")[0] + "), 50 mots min.";
-        }
-    }
-
-        // Données pour COM-SYN (Synthèses)
 
         // Initialisation
         showSection('home');
