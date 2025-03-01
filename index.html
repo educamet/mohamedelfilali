@@ -53,23 +53,22 @@
         .progress { height: 100%; background: linear-gradient(to right, var(--secondary-green), var(--accent-orange)); width: 0; transition: width 0.6s ease; }
         .badge { background: var(--gold); color: var(--text-dark); padding: 6px 14px; border-radius: 20px; font-size: 14px; margin: 5px; display: inline-block; }
 
-        .button-container { display: flex; justify-content: center; gap: 25px; margin: 30px 0; flex-wrap: wrap; }
-        button { padding: 15px 30px; font-size: 16px; font-weight: 600; color: var(--white); border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 2px 5px var(--shadow); }
+        .button-container { display: flex; justify-content: center; gap: 15px; margin: 30px 0; flex-wrap: wrap; }
+        button { padding: 12px 25px; font-size: 16px; font-weight: 600; color: var(--white); border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 2px 5px var(--shadow); }
         button:hover { transform: scale(1.06); opacity: 0.95; }
         button.sci { background: var(--secondary-green); }
         button.com { background: var(--accent-orange); }
         button.dissertations { background: var(--primary-blue); }
         button.summary { background: var(--purple); }
-        button.synthesis { background: var(--pink); }
         button.verify-button { background: var(--accent-orange); }
         button.next-button { background: var(--secondary-green); }
 
-        .section { display: none; background: var(--white); padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px var(--shadow); margin-top: 25px; }
+        .section { display: none; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px var(--shadow); margin-top: 25px; }
         .section.active { display: block; }
         .sub-section { display: none; }
         .sub-section.active { display: block; }
 
-        .game-step { margin: 25px 0; padding: 25px; background: var(--white); border-radius: 10px; box-shadow: 0 4px 10px var(--shadow); transition: transform 0.2s; }
+        .game-step { margin: 20px 0; padding: 20px; background: var(--white); border-radius: 10px; box-shadow: 0 4px 10px var(--shadow); transition: transform 0.2s; }
         .game-step:hover { transform: translateY(-2px); }
         .game-step h3 { color: var(--primary-blue); }
         #step-citations { border-left: 6px solid var(--secondary-green); }
@@ -82,11 +81,20 @@
         #step-part3 { border-left: 6px solid #10b981; }
         #step-conclusion { border-left: 6px solid var(--purple); }
 
-        .feedback { background: #fef3c7; padding: 15px; margin: 10px 0; border-radius: 8px; border: 2px solid var(--gold); font-weight: 500; }
+        .feedback { background: #fef3c7; padding: 15px; margin: 10px 0; border-radius: 8px; border: 2px solid var(--gold); font-weight: 500; display: none; }
         .works-reference { background: #dbeafe; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; margin: 20px 0; border-left: 5px solid var(--primary-blue); }
 
         footer { text-align: center; padding: 25px; background: var(--primary-blue); color: var(--white); font-size: 16px; margin-top: 50px; border-top: 5px solid var(--secondary-green); }
         select, input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            p.subtitle { font-size: 18px; }
+            .button-container { gap: 10px; }
+            button { padding: 10px 20px; font-size: 14px; }
+            .gamification-bar span { font-size: 16px; margin: 0 10px; }
+            .game-step { padding: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -114,822 +122,192 @@
         </div>
 
         <div id="sci" class="section">
-    <h2>Prépas Scientifiques - Individu et Communauté</h2>
-    <p>Forgez vos compétences pour les concours :</p>
-    <div class="button-container">
-        <button class="dissertations" onclick="showSubSection('sci-diss')">Dissertations</button>
-        <button class="summary" onclick="showSubSection('sci-res')">Résumés</button>
-    </div>
+            <h2>Prépas Scientifiques - Individu et Communauté</h2>
+            <p>Forgez vos compétences pour les concours :</p>
+            <div class="button-container">
+                <button class="dissertations" onclick="showSubSection('sci-diss')">Dissertations</button>
+                <button class="summary" onclick="showSubSection('sci-res')">Résumés</button>
+            </div>
 
-    <div id="sci-diss" class="sub-section">
-        <h2>Dissertation : La Quête du Savoir</h2>
-        <div class="works-reference">Œuvres : <em>Eschyle (Les Sept, Les Suppliantes)</em>, <em>Spinoza (Traité Théologicopolitique)</em>, <em>Wharton (Le Temps de l’innocence)</em></div>
+            <div id="sci-diss" class="sub-section">
+                <h2>Dissertation : La Quête du Savoir</h2>
+                <div class="works-reference">Œuvres : <em>Eschyle (Les Sept, Les Suppliantes)</em>, <em>Spinoza (Traité Théologicopolitique)</em>, <em>Wharton (Le Temps de l’innocence)</em></div>
 
-        <!-- Niveau 1 : Maître des Citations -->
-        <div class="game-step" id="step-citations">
-    <h3>Niveau 1 : Maître des Citations</h3>
-    <p>Associez ces arguments des œuvres aux auteurs (10 points) :</p>
-    <div id="quote-container"></div>
-    <button class="verify-button">Vérifier</button>
-    <button class="next-button">Nouveau Défi</button>
-    <div id="quote-feedback" class="feedback"></div>
-</div>
+                <div class="game-step" id="step-citations">
+                    <h3>Niveau 1 : Maître des Citations</h3>
+                    <p>Associez ces arguments aux auteurs (10 points) :</p>
+                    <div id="quote-container"></div>
+                    <button class="verify-button" onclick="checkQuotes()">Vérifier</button>
+                    <button class="next-button" onclick="generateQuoteGame()">Nouveau Défi</button>
+                    <div id="quote-feedback" class="feedback"></div>
+                </div>
 
-        <!-- Niveau 2 : Analyseur de Citations -->
-        <div class="game-step" id="step-analysis">
-            <h3>Niveau 2 : Analyseur de Citations</h3>
-            <p>Analysez cette citation-support hors programme (15 points) :</p>
-            <div id="analysis-container"></div>
-            <button class="verify-button" onclick="checkAnalysis()">Vérifier</button>
-            <button class="next-button" onclick="generateAnalysisGame()">Nouveau Défi</button>
-            <div id="analysis-feedback" class="feedback"></div>
+                <div class="game-step" id="step-analysis">
+                    <h3>Niveau 2 : Analyseur de Citations</h3>
+                    <p>Analysez cette citation (15 points) :</p>
+                    <div id="analysis-container"></div>
+                    <button class="verify-button" onclick="checkAnalysis()">Vérifier</button>
+                    <button class="next-button" onclick="generateAnalysisGame()">Nouveau Défi</button>
+                    <div id="analysis-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-problem">
+                    <h3>Niveau 3 : Forger une Problématique</h3>
+                    <p>Rédigez une problématique (20 points) :</p>
+                    <div id="problem-container"></div>
+                    <textarea id="problem-input" placeholder="Votre problématique..."></textarea>
+                    <button class="verify-button" onclick="checkProblem()">Vérifier</button>
+                    <button class="next-button" onclick="generateProblemGame()">Nouveau Défi</button>
+                    <div id="problem-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-plan">
+                    <h3>Niveau 4 : Architecte du Plan</h3>
+                    <p>Proposez un plan en 3 parties (25 points) :</p>
+                    <div id="plan-container"></div>
+                    <textarea id="plan-input" placeholder="Ex. : I. ... II. ... III. ..." maxlength="500"></textarea>
+                    <button class="verify-button" onclick="checkPlan()">Vérifier</button>
+                    <button class="next-button" onclick="generatePlanGame()">Nouveau Défi</button>
+                    <div id="plan-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-intro">
+                    <h3>Niveau 5 : Rédacteur d’Introduction</h3>
+                    <p>Rédigez une introduction (30 points) :</p>
+                    <div id="intro-container"></div>
+                    <textarea id="intro-input" placeholder="Votre introduction..." maxlength="1000"></textarea>
+                    <button class="verify-button" onclick="checkIntro()">Vérifier</button>
+                    <button class="next-button" onclick="generateIntroGame()">Nouveau Défi</button>
+                    <div id="intro-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-part1">
+                    <h3>Niveau 6 : Développeur de la Première Partie</h3>
+                    <p>Rédigez la première partie (40 points) :</p>
+                    <div id="part1-container"></div>
+                    <textarea id="part1-input" placeholder="Votre première partie..." maxlength="1500"></textarea>
+                    <button class="verify-button" onclick="checkPart1()">Vérifier</button>
+                    <button class="next-button" onclick="generatePart1Game()">Nouveau Défi</button>
+                    <div id="part1-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-part2">
+                    <h3>Niveau 7 : Développeur de la Deuxième Partie</h3>
+                    <p>Rédigez la deuxième partie (45 points) :</p>
+                    <div id="part2-container"></div>
+                    <textarea id="part2-input" placeholder="Votre deuxième partie..." maxlength="1500"></textarea>
+                    <button class="verify-button" onclick="checkPart2()">Vérifier</button>
+                    <button class="next-button" onclick="generatePart2Game()">Nouveau Défi</button>
+                    <div id="part2-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-part3">
+                    <h3>Niveau 8 : Développeur de la Troisième Partie</h3>
+                    <p>Rédigez la troisième partie (50 points) :</p>
+                    <div id="part3-container"></div>
+                    <textarea id="part3-input" placeholder="Votre troisième partie..." maxlength="1500"></textarea>
+                    <button class="verify-button" onclick="checkPart3()">Vérifier</button>
+                    <button class="next-button" onclick="generatePart3Game()">Nouveau Défi</button>
+                    <div id="part3-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-conclusion">
+                    <h3>Niveau 9 : Maître de la Conclusion</h3>
+                    <p>Rédigez la conclusion (60 points) :</p>
+                    <div id="conclusion-container"></div>
+                    <textarea id="conclusion-input" placeholder="Votre conclusion..." maxlength="1000"></textarea>
+                    <button class="verify-button" onclick="checkConclusion()">Vérifier</button>
+                    <button class="next-button" onclick="generateConclusionGame()">Nouveau Défi</button>
+                    <div id="conclusion-feedback" class="feedback"></div>
+                </div>
+            </div>
+
+            <div id="sci-res" class="sub-section">
+                <h2>Résumés : La Voie de la Concision</h2>
+                <p>Maîtrisez l’art du résumé (20-60 points) :</p>
+
+                <div class="game-step" id="step-thesis">
+                    <h3>Niveau 1 : Détective de la Thèse</h3>
+                    <p>Trouvez la thèse (20 points) :</p>
+                    <div id="thesis-container"></div>
+                    <textarea id="thesis-input" placeholder="Écrivez la thèse..." maxlength="200"></textarea>
+                    <button class="verify-button" onclick="checkThesis()">Vérifier</button>
+                    <button class="next-button" onclick="generateThesisGame()">Nouveau Défi</button>
+                    <div id="thesis-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-args">
+                    <h3>Niveau 2 : Chercheur d’Arguments</h3>
+                    <p>Listez les arguments (25 points) :</p>
+                    <div id="args-container"></div>
+                    <textarea id="args-input" placeholder="Écrivez les arguments..." maxlength="300"></textarea>
+                    <button class="verify-button" onclick="checkArgs()">Vérifier</button>
+                    <button class="next-button" onclick="generateArgsGame()">Nouveau Défi</button>
+                    <div id="args-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-parts">
+                    <h3>Niveau 3 : Architecte des Parties</h3>
+                    <p>Identifiez les parties (30 points) :</p>
+                    <div id="parts-container"></div>
+                    <textarea id="parts-input" placeholder="Écrivez les parties..." maxlength="300"></textarea>
+                    <button class="verify-button" onclick="checkParts()">Vérifier</button>
+                    <button class="next-button" onclick="generatePartsGame()">Nouveau Défi</button>
+                    <div id="parts-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-circuit">
+                    <h3>Niveau 4 : Décodeur du Circuit</h3>
+                    <p>Analysez le circuit argumentatif (40 points) :</p>
+                    <div id="circuit-container"></div>
+                    <textarea id="circuit-input" placeholder="Décrivez le circuit..." maxlength="400"></textarea>
+                    <button class="verify-button" onclick="checkCircuit()">Vérifier</button>
+                    <button class="next-button" onclick="generateCircuitGame()">Nouveau Défi</button>
+                    <div id="circuit-feedback" class="feedback"></div>
+                </div>
+
+                <div class="game-step" id="step-summary">
+                    <h3>Niveau 5 : Maître du Résumé</h3>
+                    <p>Résumez en 100 mots (60 points) :</p>
+                    <div id="summary-container"></div>
+                    <textarea id="summary-input" placeholder="Votre résumé (100 mots max)..." maxlength="500" oninput="countWords('summary-input', 'summary-word-count', 100)"></textarea>
+                    <p id="summary-word-count">Mots : 0/100</p>
+                    <button class="verify-button" onclick="checkSummary()">Vérifier</button>
+                    <button class="next-button" onclick="generateSummaryGame()">Nouveau Défi</button>
+                    <div id="summary-feedback" class="feedback"></div>
+                </div>
+            </div>
         </div>
-
-        <!-- Niveau 3 : Problématisation -->
-        <div class="game-step" id="step-problem">
-            <h3>Niveau 3 : Forger une Problématique</h3>
-            <p>Rédigez une problématique (20 points) :</p>
-            <div id="problem-container"></div>
-            <textarea id="problem-input" placeholder="Votre problématique..."></textarea>
-            <button class="verify-button" onclick="checkProblem()">Vérifier</button>
-            <button class="next-button" onclick="generateProblemGame()">Nouveau Défi</button>
-            <div id="problem-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 4 : Architecte du Plan -->
-        <div class="game-step" id="step-plan">
-            <h3>Niveau 4 : Architecte du Plan</h3>
-            <p>Proposez votre plan en 3 parties (25 points) :</p>
-            <div id="plan-container"></div>
-            <textarea id="plan-input" placeholder="Ex. : I. ... II. ... III. ..." maxlength="500"></textarea>
-            <button class="verify-button" onclick="checkPlan()">Vérifier</button>
-            <button class="next-button" onclick="generatePlanGame()">Nouveau Défi</button>
-            <div id="plan-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 5 : Rédaction de l’Introduction -->
-        <div class="game-step" id="step-intro">
-            <h3>Niveau 5 : Rédacteur d’Introduction</h3>
-            <p>Rédigez une introduction pertinente (30 points) :</p>
-            <div id="intro-container"></div>
-            <textarea id="intro-input" placeholder="Votre introduction..." maxlength="1000"></textarea>
-            <button class="verify-button" onclick="checkIntro()">Vérifier</button>
-            <button class="next-button" onclick="generateIntroGame()">Nouveau Défi</button>
-            <div id="intro-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 6 : Première Partie -->
-        <div class="game-step" id="step-part1">
-            <h3>Niveau 6 : Développeur de la Première Partie</h3>
-            <p>Rédigez la première partie (40 points) :</p>
-            <div id="part1-container"></div>
-            <textarea id="part1-input" placeholder="Votre première partie..." maxlength="1500"></textarea>
-            <button class="verify-button" onclick="checkPart1()">Vérifier</button>
-            <button class="next-button" onclick="generatePart1Game()">Nouveau Défi</button>
-            <div id="part1-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 7 : Deuxième Partie -->
-        <div class="game-step" id="step-part2">
-            <h3>Niveau 7 : Développeur de la Deuxième Partie</h3>
-            <p>Rédigez la deuxième partie (45 points) :</p>
-            <div id="part2-container"></div>
-            <textarea id="part2-input" placeholder="Votre deuxième partie..." maxlength="1500"></textarea>
-            <button class="verify-button" onclick="checkPart2()">Vérifier</button>
-            <button class="next-button" onclick="generatePart2Game()">Nouveau Défi</button>
-            <div id="part2-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 8 : Troisième Partie -->
-        <div class="game-step" id="step-part3">
-            <h3>Niveau 8 : Développeur de la Troisième Partie</h3>
-            <p>Rédigez la troisième partie (50 points) :</p>
-            <div id="part3-container"></div>
-            <textarea id="part3-input" placeholder="Votre troisième partie..." maxlength="1500"></textarea>
-            <button class="verify-button" onclick="checkPart3()">Vérifier</button>
-            <button class="next-button" onclick="generatePart3Game()">Nouveau Défi</button>
-            <div id="part3-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 9 : Conclusion Générale -->
-        <div class="game-step" id="step-conclusion">
-            <h3>Niveau 9 : Maître de la Conclusion</h3>
-            <p>Rédigez la conclusion (60 points) :</p>
-            <div id="conclusion-container"></div>
-            <textarea id="conclusion-input" placeholder="Votre conclusion..." maxlength="1000"></textarea>
-            <button class="verify-button" onclick="checkConclusion()">Vérifier</button>
-            <button class="next-button" onclick="generateConclusionGame()">Nouveau Défi</button>
-            <div id="conclusion-feedback" class="feedback"></div>
-        </div>
-    </div>
-
-    <div id="sci-res" class="sub-section">
-        <h2>Résumés : La Voie de la Concision</h2>
-        <p>Maîtrisez l’art du résumé en analysant et condensant des textes argumentatifs (20-60 points) :</p>
-
-        <!-- Niveau 1 : Identifier la Thèse -->
-        <div class="game-step" id="step-thesis">
-            <h3>Niveau 1 : Détective de la Thèse</h3>
-            <p>Trouvez la thèse du texte (20 points) :</p>
-            <div id="thesis-container"></div>
-            <textarea id="thesis-input" placeholder="Écrivez la thèse..." maxlength="200"></textarea>
-            <button class="verify-button" onclick="checkThesis()">Vérifier</button>
-            <button class="next-button" onclick="generateThesisGame()">Nouveau Défi</button>
-            <div id="thesis-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 2 : Repérer les Arguments -->
-        <div class="game-step" id="step-args">
-            <h3>Niveau 2 : Chercheur d’Arguments</h3>
-            <p>Listez les principaux arguments (25 points) :</p>
-            <div id="args-container"></div>
-            <textarea id="args-input" placeholder="Écrivez les arguments..." maxlength="300"></textarea>
-            <button class="verify-button" onclick="checkArgs()">Vérifier</button>
-            <button class="next-button" onclick="generateArgsGame()">Nouveau Défi</button>
-            <div id="args-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 3 : Découper les Parties -->
-        <div class="game-step" id="step-parts">
-            <h3>Niveau 3 : Architecte des Parties</h3>
-            <p>Identifiez les parties ou mouvements (30 points) :</p>
-            <div id="parts-container"></div>
-            <textarea id="parts-input" placeholder="Écrivez les parties..." maxlength="300"></textarea>
-            <button class="verify-button" onclick="checkParts()">Vérifier</button>
-            <button class="next-button" onclick="generatePartsGame()">Nouveau Défi</button>
-            <div id="parts-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 4 : Décrypter le Circuit Argumentatif -->
-        <div class="game-step" id="step-circuit">
-            <h3>Niveau 4 : Décodeur du Circuit</h3>
-            <p>Analysez le circuit argumentatif (40 points) :</p>
-            <div id="circuit-container"></div>
-            <textarea id="circuit-input" placeholder="Décrivez le circuit (opposition, cause, etc.)..." maxlength="400"></textarea>
-            <button class="verify-button" onclick="checkCircuit()">Vérifier</button>
-            <button class="next-button" onclick="generateCircuitGame()">Nouveau Défi</button>
-            <div id="circuit-feedback" class="feedback"></div>
-        </div>
-
-        <!-- Niveau 5 : Rédiger le Résumé -->
-        <div class="game-step" id="step-summary">
-            <h3>Niveau 5 : Maître du Résumé</h3>
-            <p>Résumez le texte en 100 mots (60 points) :</p>
-            <div id="summary-container"></div>
-            <textarea id="summary-input" placeholder="Votre résumé (100 mots max)..." maxlength="500" oninput="countWords('summary-input', 'summary-word-count', 100)"></textarea>
-            <p id="summary-word-count">Mots : 0/100</p>
-            <button class="verify-button" onclick="checkSummary()">Vérifier</button>
-            <button class="next-button" onclick="generateSummaryGame()">Nouveau Défi</button>
-            <div id="summary-feedback" class="feedback"></div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Gamification
-    let playerPoints = 0;
-    let playerLevel = 1;
-    let badges = [];
-    const levelThresholds = [0, 50, 150, 300, 500, 750, 1000, 1300, 1700, 2200]; // 10 niveaux
-
-    function updateGamification(pointsToAdd = 0) {
-        playerPoints += pointsToAdd;
-        const currentThreshold = levelThresholds[playerLevel - 1];
-        const nextThreshold = levelThresholds[playerLevel] || levelThresholds[levelThresholds.length - 1];
-        const progress = ((playerPoints - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
-        document.getElementById("player-points").textContent = `Points : ${playerPoints}`;
-        document.getElementById("player-level").textContent = `Niveau : ${getLevelName(playerLevel)} (${playerLevel})`;
-        document.getElementById("badges").textContent = `Badges : ${badges.length ? badges.join(", ") : "Aucun"}`;
-        document.getElementById("progress").style.width = `${Math.min(progress, 100)}%`;
-
-        if (playerPoints >= nextThreshold && playerLevel < 10) {
-            playerLevel++;
-            badges.push(`${getLevelName(playerLevel)} Niv. ${playerLevel}`);
-            alert(`Triomphe ! Vous êtes ${getLevelName(playerLevel)} (Niveau ${playerLevel}) !`);
-        }
-    }
-
-    function getLevelName(level) {
-        const names = ["Novice", "Apprenant", "Analyseur", "Problématicien", "Planificateur", "Rédacteur", "Développeur I", "Développeur II", "Développeur III", "Légende des Concours"];
-        return names[Math.min(level - 1, names.length - 1)];
-    }
-
-    // Gestion des sections
-    function showSection(sectionId) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
-    }
-
-    function showSubSection(subSectionId) {
-    const subSection = document.getElementById(subSectionId);
-    const mainSection = subSection.closest('.section');
-    mainSection.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
-    subSection.classList.add('active');
-    if (subSectionId === 'sci-diss') {
-        generateQuoteGame(); // Générer les citations immédiatement
-        generateAnalysisGame();
-        generateProblemGame();
-        generatePlanGame();
-        generateIntroGame();
-        generatePart1Game();
-        generatePart2Game();
-        generatePart3Game();
-        generateConclusionGame();
-        // Attacher les événements après génération
-        const verifyButton = document.querySelector('#step-citations .verify-button');
-        if (verifyButton) {
-            verifyButton.removeEventListener('click', checkQuotes); // Supprimer tout ancien écouteur
-            verifyButton.addEventListener('click', checkQuotes);
-            console.log("Événement click attaché au bouton Vérifier dans showSubSection");
-        } else {
-            console.error("Bouton Vérifier non trouvé dans step-citations");
-        }
-        const nextButton = document.querySelector('#step-citations .next-button');
-        if (nextButton) {
-            nextButton.removeEventListener('click', generateQuoteGame);
-            nextButton.addEventListener('click', generateQuoteGame);
-            console.log("Événement click attaché au bouton Nouveau Défi");
-        }
-    } else if (subSectionId === 'sci-res') {
-        generateThesisGame();
-        generateArgsGame();
-        generatePartsGame();
-        generateCircuitGame();
-        generateSummaryGame();
-    }
-}
-
-    // Fonction pour compter les mots
-    function countWords(inputId, countId, max) {
-        const text = document.getElementById(inputId).value.trim();
-        const wordCount = text ? text.split(/\s+/).length : 0;
-        document.getElementById(countId).textContent = `Mots : ${wordCount}/${max}`;
-    }
-
-    // Données pour SCI-DISS (Dissertation)
-        const quotes = [
-            { text: "Pélasgos incarne l'individu au service de sa communauté.", author: "Eschyle", work: "Les Suppliantes" },
-            { text: "Étéocle oscille entre dévouement et tyrannie potentielle.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "La liberté de pensée est essentielle pour la piété.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "Newland est tiraillé entre individu et société.", author: "Wharton", work: "Le Temps de l’innocence" }
-            // Ajouter d'autres citations si nécessaire
-        ];
-
-
-    const analysisData = [
-        { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", keywords: ["conscience", "société", "individu"], reformulation: "La perception de soi diffère entre l’individu et le collectif." },
-        // ... (les 9 autres citations restent inchangées)
-    ];
-
-    const problemData = [
-        { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", problem: "Comment concilier la conscience individuelle et collective ?" },
-        // ... (les 9 autres restent inchangés)
-    ];
-
-    const planData = [
-        { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", keywords: ["conscience", "tension", "harmonie"] },
-        // ... (les 9 autres restent inchangés)
-    ];
-
-    const introData = [
-        { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", problem: "Comment concilier la conscience individuelle et collective ?", planKeywords: ["conscience", "tension", "harmonie"], works: ["Eschyle", "Spinoza", "Wharton"] },
-        // ... (les 9 autres restent inchangés)
-    ];
-
-    const part1Data = [
-        { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "La conscience collective domine", introPartial: "La communauté forge une identité.", subParts: ["Protection dans Les Suppliantes", "Soutien ambigu dans Wharton", "Pacte sécurisant chez Spinoza"], conclusionPartial: "Mais la conscience individuelle résiste." },
-        // ... (les 9 autres restent inchangés)
-    ];
-
-    const part2Data = [
-        { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "La tension persiste", introPartial: "Le décalage crée des conflits.", subParts: ["Oppression dans Wharton", "Conflit chez Eschyle", "Limite chez Spinoza"], conclusionPartial: "La tension appelle une résolution." },
-        // ... (les 9 autres restent inchangés)
-    ];
-
-    const part3Data = [
-        { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "Une harmonie est possible", introPartial: "Un équilibre peut émerger.", subParts: ["Pacte rationnel chez Spinoza", "Résistance chez Wharton", "Solidarité chez Eschyle"], conclusionPartial: "L’harmonie reste précaire." },
-        // ... (les 9 autres restent inchangés)
-    ];
-
-    const conclusionData = [
-        { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", summary: "La conscience collective domine, mais la tension persiste et peut s’harmoniser.", opening: "Comment cette dualité évolue-t-elle aujourd’hui ?" },
-        // ... (les 9 autres restent inchangés)
-    ];
-
-    // Fonctions pour SCI-DISS (Dissertation)
-    function generateQuoteGame() {
-        const container = document.getElementById("quote-container");
-        const selected = quotes.sort(() => 0.5 - Math.random()).slice(0, 3);
-        container.innerHTML = selected.map((q, i) => `
-            <p>${i + 1}. "${q.text}"</p>
-            <select id="quote-${i}">
-                <option value="">Choisissez...</option>
-                <option value="Eschyle">Eschyle</option>
-                <option value="Spinoza">Spinoza</option>
-                <option value="Wharton">Wharton</option>
-            </select>
-        `).join('');
-    }
-
-    function checkQuotes() {
-        const feedback = document.getElementById("quote-feedback");
-        let correct = 0;
-        for (let i = 0; i < 3; i++) {
-            const select = document.getElementById(`quote-${i}`);
-            const text = select.previousElementSibling.textContent.split('"')[1];
-            if (select.value === quotes.find(q => q.text === text).author) correct++;
-        }
-        feedback.style.display = "block";
-        if (correct === 3) {
-            feedback.innerHTML = "Maîtrise parfaite ! +10 points ! Nouveau défi imminent...";
-            updateGamification(10);
-            setTimeout(generateQuoteGame, 2000);
-        } else {
-            feedback.innerHTML = `${correct}/3. Connaissez mieux les œuvres !`;
-        }
-    }
-
-    function generateAnalysisGame() {
-        const container = document.getElementById("analysis-container");
-        const data = analysisData[Math.floor(Math.random() * analysisData.length)];
-        container.innerHTML = `
-            <p>Citation : "${data.quote}"</p>
-            <label>Mots-clés :</label><input id="keywords-input" placeholder="ex. conscience, société...">
-            <label>Reformulation :</label><input id="reform-input" placeholder="Reformulez la citation...">
-        `;
-    }
-
-    function checkAnalysis() {
-        const feedback = document.getElementById("analysis-feedback");
-        const quote = document.getElementById("analysis-container").querySelector("p").textContent.split('"')[1];
-        const data = analysisData.find(d => d.quote === quote);
-        const keywords = document.getElementById("keywords-input").value.toLowerCase().split(/,\s*/);
-        const reform = document.getElementById("reform-input").value.toLowerCase();
-        const keywordMatch = data.keywords.every(k => keywords.includes(k));
-        const reformMatch = reform.includes(data.reformulation.toLowerCase().split(" ")[0]);
-        feedback.style.display = "block";
-        if (keywordMatch && reformMatch) {
-            feedback.innerHTML = "Analyse brillante ! +15 points ! Nouveau défi imminent...";
-            updateGamification(15);
-            setTimeout(generateAnalysisGame, 2000);
-        } else {
-            feedback.innerHTML = `Pas tout à fait. Mots-clés : ${data.keywords.join(", ")}. Reformulation : "${data.reformulation}"`;
-        }
-    }
-
-    function generateProblemGame() {
-        const container = document.getElementById("problem-container");
-        const data = problemData[Math.floor(Math.random() * problemData.length)];
-        container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
-    }
-
-    function checkProblem() {
-        const feedback = document.getElementById("problem-feedback");
-        const quote = document.getElementById("problem-container").querySelector("p").textContent.split('"')[1];
-        const data = problemData.find(d => d.quote === quote);
-        const input = document.getElementById("problem-input").value.toLowerCase();
-        const isCorrect = input.includes("individu") && input.includes("communauté") && (input.includes("?") || input.includes("peut"));
-        feedback.style.display = "block";
-        if (isCorrect) {
-            feedback.innerHTML = "Problématique pertinente ! +20 points ! Nouveau défi imminent...";
-            updateGamification(20);
-            setTimeout(generateProblemGame, 2000);
-        } else {
-            feedback.innerHTML = `Pas assez précis. Exemple : "${data.problem}". Incluez "individu" et "communauté".`;
-        }
-    }
-
-    function generatePlanGame() {
-        const container = document.getElementById("plan-container");
-        const data = planData[Math.floor(Math.random() * planData.length)];
-        container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
-        document.getElementById("plan-input").value = "";
-    }
-
-    function checkPlan() {
-        const feedback = document.getElementById("plan-feedback");
-        const quote = document.getElementById("plan-container").querySelector("p").textContent.split('"')[1];
-        const data = planData.find(d => d.quote === quote);
-        const input = document.getElementById("plan-input").value.toLowerCase();
-        const hasThreeParts = input.split(/i{1,3}\./).length - 1 >= 3;
-        const hasKeywords = data.keywords.some(k => input.includes(k));
-        const hasWorks = input.includes("eschyle") || input.includes("spinoza") || input.includes("wharton");
-        feedback.style.display = "block";
-        if (hasThreeParts && hasKeywords && hasWorks) {
-            feedback.innerHTML = "Plan cohérent et pertinent ! +25 points ! Nouveau défi imminent...";
-            updateGamification(25);
-            setTimeout(generatePlanGame, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : 3 parties distinctes (I, II, III), des mots-clés pertinents (" + data.keywords.join(", ") + "), et au moins une œuvre.";
-        }
-    }
-
-    function generateIntroGame() {
-        const container = document.getElementById("intro-container");
-        const data = introData[Math.floor(Math.random() * introData.length)];
-        container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
-        document.getElementById("intro-input").value = "";
-    }
-
-    function checkIntro() {
-        const feedback = document.getElementById("intro-feedback");
-        const quote = document.getElementById("intro-container").querySelector("p").textContent.split('"')[1];
-        const data = introData.find(d => d.quote === quote);
-        const input = document.getElementById("intro-input").value.toLowerCase();
-        const hasAmorce = input.includes("depuis") || input.includes("histoire") || input.includes("société");
-        const hasCitation = input.includes(quote.toLowerCase());
-        const hasProblem = input.includes("individu") && input.includes("communauté") && (input.includes("?") || input.includes("peut"));
-        const hasPlan = data.planKeywords.some(k => input.includes(k));
-        const hasWorks = data.works.some(w => input.includes(w.toLowerCase()));
-        const isLongEnough = input.split(/\s+/).length > 50;
-        feedback.style.display = "block";
-        if (hasAmorce && hasCitation && hasProblem && hasPlan && hasWorks && isLongEnough) {
-            feedback.innerHTML = "Introduction magistrale ! +30 points ! Nouveau défi imminent...";
-            updateGamification(30);
-            setTimeout(generateIntroGame, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : amorce (contexte), citation exacte, problématique (individu/communauté), plan (" + data.planKeywords.join(", ") + "), œuvres (" + data.works.join(", ") + "), et au moins 50 mots.";
-        }
-    }
-
-    function generatePart1Game() {
-        const container = document.getElementById("part1-container");
-        const data = part1Data[Math.floor(Math.random() * part1Data.length)];
-        const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-        container.innerHTML = `
-            <p>Citation-support : "${data.quote}"</p>
-            <p>Idée : ${data.idea}</p>
-            <p>Intro partielle : ${data.introPartial}</p>
-            <p>Sous-parties suggérées (arguments des œuvres) : ${randomArgs.join(", ")}</p>
-            <p>Conclusion partielle : ${data.conclusionPartial}</p>
-        `;
-        document.getElementById("part1-input").value = "";
-    }
-
-    function checkPart1() {
-        const feedback = document.getElementById("part1-feedback");
-        const input = document.getElementById("part1-input").value.toLowerCase();
-        const quote = document.getElementById("part1-container").querySelector("p").textContent.split('"')[1];
-        const data = part1Data.find(d => d.quote === quote);
-        const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-        const hasSub1 = input.includes("eschyle") || quotes.some(q => q.author === "Eschyle" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub2 = input.includes("spinoza") || quotes.some(q => q.author === "Spinoza" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub3 = input.includes("wharton") || quotes.some(q => q.author === "Wharton" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-        const isLongEnough = input.split(/\s+/).length > 100;
-        feedback.style.display = "block";
-        if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-            feedback.innerHTML = "Partie I épique ! +40 points ! Nouveau défi imminent...";
-            updateGamification(40);
-            setTimeout(generatePart1Game, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : intro partielle (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Eschyle, Spinoza, Wharton), conclusion (" + data.conclusionPartial.split(" ")[0] + "), et au moins 100 mots.";
-        }
-    }
-
-    function generatePart2Game() {
-        const container = document.getElementById("part2-container");
-        const data = part2Data[Math.floor(Math.random() * part2Data.length)];
-        const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-        container.innerHTML = `
-            <p>Citation-support : "${data.quote}"</p>
-            <p>Idée : ${data.idea}</p>
-            <p>Intro partielle : ${data.introPartial}</p>
-            <p>Sous-parties suggérées (arguments des œuvres) : ${randomArgs.join(", ")}</p>
-            <p>Conclusion partielle : ${data.conclusionPartial}</p>
-        `;
-        document.getElementById("part2-input").value = "";
-    }
-
-    function checkPart2() {
-        const feedback = document.getElementById("part2-feedback");
-        const input = document.getElementById("part2-input").value.toLowerCase();
-        const quote = document.getElementById("part2-container").querySelector("p").textContent.split('"')[1];
-        const data = part2Data.find(d => d.quote === quote);
-        const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-        const hasSub1 = input.includes("eschyle") || quotes.some(q => q.author === "Eschyle" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub2 = input.includes("spinoza") || quotes.some(q => q.author === "Spinoza" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub3 = input.includes("wharton") || quotes.some(q => q.author === "Wharton" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-        const isLongEnough = input.split(/\s+/).length > 100;
-        feedback.style.display = "block";
-        if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-            feedback.innerHTML = "Partie II magistrale ! +45 points ! Nouveau défi imminent...";
-            updateGamification(45);
-            setTimeout(generatePart2Game, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : intro partielle (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Eschyle, Spinoza, Wharton), conclusion (" + data.conclusionPartial.split(" ")[0] + "), et au moins 100 mots.";
-        }
-    }
-
-    function generatePart3Game() {
-        const container = document.getElementById("part3-container");
-        const data = part3Data[Math.floor(Math.random() * part3Data.length)];
-        const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-        container.innerHTML = `
-            <p>Citation-support : "${data.quote}"</p>
-            <p>Idée : ${data.idea}</p>
-            <p>Intro partielle : ${data.introPartial}</p>
-            <p>Sous-parties suggérées (arguments des œuvres) : ${randomArgs.join(", ")}</p>
-            <p>Conclusion partielle : ${data.conclusionPartial}</p>
-        `;
-        document.getElementById("part3-input").value = "";
-    }
-
-    function checkPart3() {
-        const feedback = document.getElementById("part3-feedback");
-        const input = document.getElementById("part3-input").value.toLowerCase();
-        const quote = document.getElementById("part3-container").querySelector("p").textContent.split('"')[1];
-        const data = part3Data.find(d => d.quote === quote);
-        const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-        const hasSub1 = input.includes("eschyle") || quotes.some(q => q.author === "Eschyle" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub2 = input.includes("spinoza") || quotes.some(q => q.author === "Spinoza" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasSub3 = input.includes("wharton") || quotes.some(q => q.author === "Wharton" && input.includes(q.text.toLowerCase().split(" ")[0]));
-        const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-        const isLongEnough = input.split(/\s+/).length > 100;
-        feedback.style.display = "block";
-        if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-            feedback.innerHTML = "Partie III légendaire ! +50 points ! Nouveau défi imminent...";
-            updateGamification(50);
-            setTimeout(generatePart3Game, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : intro partielle (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Eschyle, Spinoza, Wharton), conclusion (" + data.conclusionPartial.split(" ")[0] + "), et au moins 100 mots.";
-        }
-    }
-
-    function generateConclusionGame() {
-        const container = document.getElementById("conclusion-container");
-        const data = conclusionData[Math.floor(Math.random() * conclusionData.length)];
-        container.innerHTML = `
-            <p>Citation-support : "${data.quote}"</p>
-            <p>Résumé des parties : ${data.summary}</p>
-            <p>Ouverture suggérée : ${data.opening}</p>
-        `;
-        document.getElementById("conclusion-input").value = "";
-    }
-
-    function checkConclusion() {
-        const feedback = document.getElementById("conclusion-feedback");
-        const input = document.getElementById("conclusion-input").value.toLowerCase();
-        const quote = document.getElementById("conclusion-container").querySelector("p").textContent.split('"')[1];
-        const data = conclusionData.find(d => d.quote === quote);
-        const summaryWords = data.summary.toLowerCase().split(" ");
-        const hasSummary = summaryWords.some(w => input.includes(w)) && input.includes("eschyle") && input.includes("spinoza") && input.includes("wharton");
-        const hasOpening = input.includes(data.opening.toLowerCase().split(" ")[0]);
-        const isLongEnough = input.split(/\s+/).length > 50;
-        feedback.style.display = "block";
-        if (hasSummary && hasOpening && isLongEnough) {
-            feedback.innerHTML = "Conclusion triomphale ! +60 points ! Nouveau défi imminent...";
-            updateGamification(60);
-            setTimeout(generateConclusionGame, 2000);
-        } else {
-            feedback.innerHTML = "Incluez : sommaire des parties (" + summaryWords.slice(0, 3).join(", ") + " + œuvres), ouverture (" + data.opening.split(" ")[0] + "), et au moins 50 mots.";
-        }
-    }
-
-    // Données pour SCI-RES (Résumés)
-    const summaryTexts = [
-        {
-            text: "Depuis l’aube de l’humanité, l’individu a cherché dans la communauté un refuge face aux aléas de l’existence. Les premières sociétés humaines, des chasseurs-cueilleurs aux cités antiques, ont survécu grâce à une solidarité implacable : un individu seul ne pouvait affronter les bêtes sauvages ou les famines. Cette entraide a forgé des liens puissants, visibles dans les rites collectifs ou les travaux communs, où chacun trouvait sa place au sein d’un tout protecteur. Historiquement, la communauté a été un rempart contre l’incertitude, offrant sécurité physique et affective là où la solitude menait à la perdition. Les récits mythiques, comme ceux des cités grecques, exaltent cette union sacrée face au chaos extérieur. Cependant, cette force collective a un revers : elle impose des normes qui brident l’individu. Dès qu’une communauté s’organise, elle établit des règles, des hiérarchies, des attentes qui écrasent souvent les désirs personnels. Dans les sociétés traditionnelles, le bien commun prime sur l’aspiration individuelle, transformant l’appartenance en une prison dorée. Aujourd’hui, les réseaux sociaux amplifient ce phénomène : l’individu, sous pression pour se conformer à des standards de beauté ou d’opinion, perd une part de son authenticité. Les codes sociaux, bien que protecteurs, deviennent des chaînes invisibles, limitant la liberté de penser ou d’agir hors des sentiers battus. Cette tension révèle une vérité : la communauté, pour exister, exige parfois le sacrifice de l’unicité. Ainsi, la quête d’un équilibre devient essentielle. Si la communauté offre un cadre vital, elle ne doit pas étouffer l’individu sous son poids. L’histoire montre des tentatives pour concilier ces pôles : des révoltes individuelles aux pactes sociaux rationnels, l’humanité oscille entre union et autonomie. Une société idéale serait celle où l’individu conserve une marge de liberté tout en bénéficiant de la force collective. Cela implique une redéfinition des liens sociaux, où la communauté soutient sans asservir, laissant à chacun la possibilité de s’épanouir. En somme, individu et communauté ne sont pas condamnés à s’opposer, mais à coexister dans une harmonie fragile, où chacun trouve sa juste place.",
-            thesis: "La communauté offre un refuge mais limite la liberté individuelle.",
-            args: ["Protection historique", "Normes restrictives", "Équilibre nécessaire"],
-            parts: ["Refuge communautaire", "Contrainte sociale", "Quête d’équilibre"],
-            circuit: ["Cause (protection)", "Opposition (contrainte)", "Concession (équilibre)"]
-        },
-        {
-            text: "La communauté a souvent été célébrée comme un idéal unificateur, une promesse de cohésion face à la dispersion individuelle. Depuis les sociétés primitives, elle incarne une aspiration à l’unité, où les individus se fondent dans un projet commun, comme les cités grecques défendues par leurs héros. Cet idéal a inspiré des récits épiques et des systèmes sociaux où le groupe transcende les égoïsmes, offrant un sens d’appartenance et une force collective. Les utopies, des phalanstères aux kibboutz, témoignent de ce rêve d’une vie harmonieuse où l’individu s’épanouit dans le tout. Ces expériences historiques exaltent la communauté comme un rempart contre la solitude et un vecteur d’identité partagée, où chacun contribue à un bien supérieur. Pourtant, la réalité dément cet idéal avec une violence implacable. Les communautés, dès qu’elles s’organisent, se fissurent sous le poids des conflits internes : luttes de pouvoir, divergences d’intérêts, exclusions des marginaux. Les guerres fratricides, les ostracismes ou les schismes religieux montrent que l’unité reste une illusion, brisée par la diversité humaine. Même dans les sociétés modernes, les tentatives de cohésion – nationalismes ou réseaux sociaux – engendrent autant de divisions que d’unions, révélant la fragilité du collectif face aux passions individuelles. Face à cette désillusion, la communauté apparaît comme une fiction nécessaire, un mythe mobilisateur. Si elle ne peut atteindre une harmonie parfaite, elle reste un horizon vers lequel tendre, un récit qui donne sens à la coexistence malgré les fractures. Les individus, tiraillés entre égoïsme et besoin d’appartenance, s’accrochent à cette idée pour surmonter leurs différends, comme un idéal qui transcende la réalité. En somme, la communauté est un paradoxe : une illusion séduisante mais irréalisable, pourtant essentielle pour structurer la vie sociale et donner à l’individu un cadre où exister.",
-            thesis: "La communauté est une fiction séduisante mais irréalisable.",
-            args: ["Idéal historique", "Conflits réels", "Fiction nécessaire"],
-            parts: ["Idéal communautaire", "Réalité conflictuelle", "Fiction mobilisatrice"],
-            circuit: ["Cause (idéal)", "Opposition (réalité)", "Synthèse (fiction)"]
-        },
-        {
-            text: "L’idée que l’individu doive se sacrifier pour la communauté a traversé les âges, portée par des visions héroïques et des impératifs collectifs. Dans les cités antiques, comme Sparte ou Athènes, le citoyen était prêt à mourir pour défendre la polis, incarnation d’un devoir sacré. Ce sacrifice, exalté dans les épopées, forgeait la grandeur des nations : un individu offrait sa vie pour la survie du groupe, assurant la pérennité des valeurs communes. Cette logique trouve écho dans les guerres modernes, où les soldats tombent pour la patrie, symbolisant une transcendance de l’égoïsme au profit du bien commun. La communauté, en retour, glorifie ces héros, leur offrant une reconnaissance qui dépasse leur existence éphémère. Cependant, ce sacrifice a un coût humain dévastateur. L’individu, en s’effaçant pour la collectivité, perd sa liberté, ses rêves, parfois sa vie. Les récits de guerre montrent des destins brisés, des familles endeuillées, des consciences écrasées par un devoir imposé. Dans les sociétés autoritaires, ce principe devient une arme : l’individu est réduit à un pion, sa valeur intrinsèque niée au nom d’un collectif oppressif. Même dans des contextes moins extrêmes, le conformisme social peut exiger des renoncements silencieux, étouffant les aspirations personnelles sous le poids des attentes. Ainsi, la question éthique surgit : le sacrifice individuel est-il toujours justifié ? Si la communauté bénéficie de ces actes, elle doit aussi préserver la dignité de chacun. L’histoire montre des résistances, des individus réclamant leur droit à exister face à l’absolutisme collectif. Une société équilibrée pourrait honorer le sacrifice sans l’exiger aveuglément, reconnaissant que l’individu n’est pas qu’un moyen, mais une fin en soi. En définitive, le sacrifice renforce la communauté, mais au prix d’une perte qui interroge sa légitimité.",
-            thesis: "Le sacrifice individuel renforce la communauté mais le détruit.",
-            args: ["Devoir héroïque", "Perte personnelle", "Réflexion éthique"],
-            parts: ["Sacrifice pour la cité", "Coût humain", "Questionnement moral"],
-            circuit: ["Cause (devoir)", "Conséquence (perte)", "Questionnement (éthique)"]
-        },
-        {
-            text: "L’individu naît dans un état de dépendance absolue, incapable de survivre sans le soutien d’une communauté. Dès ses premiers jours, il est nourri, protégé, éduqué par un groupe – famille, tribu, société – qui lui offre les moyens de grandir. Cette dépendance originelle est une évidence biologique : sans les autres, l’enfant périt. Historiquement, les sociétés humaines ont prospéré grâce à cette entraide : des villages agricoles aux cités industrielles, la coopération a permis de surmonter famine, guerre et maladie. La communauté devient ainsi une force vitale, transformant la faiblesse individuelle en puissance collective, comme une main invisible qui soutient chaque membre. Pourtant, cette dépendance évolue avec le temps. À mesure que l’individu grandit, il acquiert des compétences, des savoirs, une capacité à agir seul. Les progrès technologiques amplifient cette autonomie : l’homme moderne cultive, construit, communique sans toujours needing des autres. Cette émancipation, visible dans les sociétés individualistes, semble réduire la communauté à un simple tremplin, un outil dépassé une fois l’individu formé. Cependant, une autonomie complète reste illusoire. Même indépendant, l’individu dépend des infrastructures, des lois, des échanges sociaux pour vivre. Les crises – guerres, pandémies – révèlent cette interdépendance : seul, il s’effondre là où le groupe résiste. L’autonomie s’épanouit donc dans une dépendance raisonnée, où la communauté n’est ni une entrave ni une béquille, mais un partenaire. En somme, l’individu gagne en liberté grâce à la communauté, qui lui offre les bases pour s’élever tout en restant un socle incontournable.",
-            thesis: "L’individu gagne en autonomie grâce à la communauté.",
-            args: ["Dépendance initiale", "Force collective", "Autonomie raisonnée"],
-            parts: ["Dépendance originelle", "Émancipation individuelle", "Interdépendance persistante"],
-            circuit: ["Cause (dépendance)", "Effet (force)", "Concession (autonomie)"]
-        },
-        {
-            text: "La communauté repose sur une tension entre l’intimité et l’utilité, deux forces qui la définissent depuis ses origines. Historiquement, elle naît de la proximité affective : familles, clans, villages s’unissent par des liens de sang ou d’amitié, créant une solidarité spontanée. Cette intimité, visible dans les rites ou les traditions, forge un sentiment d’appartenance où l’individu se sent chez lui, protégé par une chaleur humaine. Les sociétés primitives vivaient cette communion, où chaque membre partageait joies et peines dans une proximité physique et émotionnelle. Cette dimension affective donne à la communauté sa puissance unificatrice, un refuge face à l’isolement. Pourtant, l’utilité s’impose rapidement comme un moteur essentiel. Dès que les groupes grandissent, la coopération devient stratégique : chasser ensemble, cultiver la terre, bâtir des cités exigent une organisation rationnelle. Dans les sociétés modernes, cette logique domine : les communautés – États, entreprises – se forment pour répondre à des besoins pratiques, reléguant l’intimité au second plan. Cette froideur utilitaire, accentuée par la bureaucratie ou la technologie, éloigne les individus, transformant le lien en contrat. Alors, intimité ou utilité ? La réponse réside dans leur coexistence. Une communauté purement intime stagne, incapable de s’adapter ; une communauté purement utile devient inhumaine, vidée de sens. Les sociétés équilibrées, comme certaines démocraties participatives, mêlent les deux : l’utilité structure, l’intimité motive. En définitive, la communauté oscille entre cœur et raison, définie par une intimité qui la fonde et une utilité qui la soutient.",
-            thesis: "La communauté est définie par l’intimité et l’utilité.",
-            args: ["Lien affectif", "Coopération pratique", "Équilibre des deux"],
-            parts: ["Intimité originelle", "Utilité croissante", "Coexistence nécessaire"],
-            circuit: ["Cause (intimité)", "Opposition (utilité)", "Synthèse (équilibre)"]
-        },
-        {
-            text: "Depuis toujours, la communauté semble renforcer l’individu en lui offrant un cadre où prospérer. Les sociétés humaines ont survécu grâce à la force collective : dans les tribus, l’individu chassait mieux en groupe ; dans les cités, il trouvait sécurité derrière les murailles. Cette puissance partagée, qu’elle prenne la forme d’une armée ou d’un savoir commun, élève chacun au-delà de ses limites naturelles. Les révolutions industrielles ou numériques montrent cette amplification : seul, l’individu n’aurait ni machines ni réseaux, mais la communauté les lui donne, décuplant ses capacités. Ainsi, l’union devient une source de progrès, un levier pour transcender la faiblesse solitaire. Cependant, cette force a un prix : elle limite autant qu’elle libère. En intégrant la communauté, l’individu doit se plier à ses règles, sacrifier une part de sa liberté pour le bien commun. Les sociétés totalitaires illustrent cette oppression : l’individu devient un rouage, écrasé par un collectif qui nie son unicité. Même dans les démocraties, le conformisme social ou les lois restreignent les choix personnels, rappelant que la force communautaire exige l’alignement. Dès lors, un équilibre s’impose. La communauté doit renforcer sans étouffer, offrant des outils sans imposer des chaînes. Les modèles participatifs, où l’individu contribue librement, suggèrent une voie : une force collective qui respecte l’autonomie. En somme, la communauté renforce l’individu mais le limite, un paradoxe résolu par une harmonie entre union et liberté.",
-            thesis: "La communauté renforce l’individu mais le limite.",
-            args: ["Puissance collective", "Conformité imposée", "Équilibre requis"],
-            parts: ["Renforcement par le groupe", "Limitation par les normes", "Harmonie possible"],
-            circuit: ["Cause (force)", "Opposition (limite)", "Concession (équilibre)"]
-        },
-        {
-            text: "L’appartenance à une communauté façonne l’individu dès sa naissance, le définissant par des liens indéfectibles. Dans les sociétés traditionnelles, l’enfant hérite d’un nom, d’une langue, d’un rôle qui l’inscrivent dans un tout : famille, tribu, nation. Cette appartenance lui donne une identité, une place dans le monde, comme un arbre enraciné dans un sol fertile. Les rites de passage – baptêmes, mariages – célèbrent cette fusion, où l’individu n’existe qu’à travers le groupe, porté par ses valeurs et ses mémoires. Cette définition communautaire est une force, offrant un sens là où le vide menacerait. Pourtant, cette appartenance peut devenir une cage. Les attentes collectives – obéir, se conformer – écrasent souvent les désirs personnels, transformant l’individu en reflet du groupe. Dans les sociétés rigides, toute déviation est punie, et l’unicité s’efface sous la pression des normes. Même dans les contextes modernes, l’individu lutte pour se démarquer, prisonnier d’un héritage qu’il n’a pas choisi. Dès lors, une fiction émerge : l’appartenance totale est un mythe. L’individu, même lié, garde une part de lui-même, un espace de pensée ou de révolte qui échappe au collectif. Les artistes, les rebelles montrent cette brèche, prouvant que l’appartenance ne dissout pas entièrement l’être. En somme, la communauté définit l’individu mais le réduit à une fiction, laissant toujours une marge d’existence propre.",
-            thesis: "L’individu est défini par sa communauté mais pas entièrement.",
-            args: ["Identité héritée", "Pression collective", "Fiction dépassée"],
-            parts: ["Définition par le groupe", "Limite de l’appartenance", "Marge individuelle"],
-            circuit: ["Cause (définition)", "Opposition (pression)", "Synthèse (fiction)"]
-        },
-        {
-            text: "La communauté se distingue par une chaleur humaine qui contraste avec la froideur de la société, une dualité ancrée dans l’histoire. Dans les villages anciens, les liens affectifs – voisinage, famille – tissaient un réseau où chacun se soutenait dans l’adversité. Cette intimité, faite de partage et de confiance, donnait à la communauté une âme, un sentiment d’appartenance qui réchauffait les cœurs face à l’isolement. Les fêtes, les contes autour du feu illustraient cette proximité, où l’individu trouvait refuge dans une humanité tangible. À l’inverse, la société, née de l’urbanisation et de l’économie, s’est refroidie. Les grandes cités, les institutions impersonnelles privilégient l’intérêt : contrats, lois, profits remplacent les liens spontanés. Cette rationalité, si elle organise efficacement, éloigne les individus, réduisant les relations à des échanges utilitaires. Les foules anonymes des métropoles modernes incarnent ce froid, où l’individu se perd dans une mécanique sans cœur. Pourtant, la communauté n’est pas toujours plus humaine. Sous son apparente chaleur, elle peut cacher exclusions, jugements, pressions qui blessent autant que la froideur sociale. Une société bien conçue, avec ses droits et sa justice, peut offrir une humanité plus équitable. En définitive, la communauté séduit par sa chaleur, la société par sa structure, mais leur humanité dépend de leur capacité à équilibrer cœur et raison.",
-            thesis: "La communauté est plus humaine par sa chaleur, la société par sa structure.",
-            args: ["Chaleur intime", "Froideur utilitaire", "Humanité équilibrée"],
-            parts: ["Chaleur communautaire", "Froideur sociale", "Équilibre des deux"],
-            circuit: ["Cause (chaleur)", "Opposition (froideur)", "Concession (équilibre)"]
-        },
-        {
-            text: "L’idée du sacrifice individuel pour la communauté traverse l’histoire comme un devoir sacré. Dans les sociétés guerrières, comme Sparte, l’individu donnait sa vie pour la cité, un acte glorifié par les chants et les monuments. Ce sacrifice assurait la survie du groupe, protégeant femmes, enfants, valeurs face aux envahisseurs. Les héros, de Léonidas à ceux des guerres modernes, incarnent cette noblesse : leur mort devenait le ciment d’une identité collective, une offrande pour un bien supérieur. Ce don de soi, s’il détruit l’individu, élève la communauté à une grandeur immortelle. Pourtant, ce devoir soulève une injustice criante. Pourquoi l’individu doit-il payer un tel prix ? Les champs de bataille laissent des orphelins, des vies brisées, tandis que la communauté célèbre sans toujours reconnaître la perte. Dans les régimes totalitaires, ce sacrifice est perverti : l’individu n’est plus un héros, mais une victime d’un système qui l’écrase sans égard. Même dans les démocraties, le collectif peut exiger trop, oubliant la valeur de chaque vie. Dès lors, une réflexion s’impose : le sacrifice doit-il être un choix, non une obligation. Une communauté forte soutient ses membres sans les immoler, trouvant sa grandeur dans la vie, non la mort. En somme, le sacrifice individuel peut servir la communauté, mais son coût interroge sa moralité.",
-            thesis: "L’individu doit-il se sacrifier pour la communauté ?",
-            args: ["Devoir sacré", "Injustice humaine", "Choix éthique"],
-            parts: ["Sacrifice glorifié", "Coût personnel", "Réflexion morale"],
-            circuit: ["Cause (devoir)", "Conséquence (injustice)", "Questionnement (choix)"]
-        },
-        {
-            text: "La communauté agit comme un pharmakon, à la fois remède et poison pour l’individu, une ambivalence inscrite dans son essence. Depuis les premières tribus, elle guérit l’isolement : en s’unissant, les individus surmontent la peur, la faim, la solitude. Les récits de solidarité – secours mutuel, partage des ressources – montrent ce pouvoir curatif, où le groupe devient une force de vie, un baume contre les blessures de l’existence. Dans les crises, comme les catastrophes naturelles, cette union sauve des vies, offrant un soutien que l’individu seul ne peut trouver. Pourtant, ce remède contient un poison insidieux. La communauté, en protégeant, peut intoxiquer : ses normes étouffent, ses jugements excluent, ses attentes écrasent. Les sociétés closes bannissent les dissidents, les collectifs rigides brisent les esprits libres, transformant l’abri en prison. Aujourd’hui, les pressions sociales – conformisme, surveillance – empoisonnent l’individu, le rendant dépendant d’un groupe qui le dévore. Ainsi, une dualité s’impose : la communauté est un Janus bifrons, bienfait et maléfice. Elle doit soigner sans nuire, un défi que seules les sociétés ouvertes relèvent, en offrant soutien sans oppression. L’individu y trouve une force sans perdre son âme, un remède purifié de son poison. En somme, la communauté oscille entre salut et péril, son effet dépendant de son équilibre entre aide et liberté.",
-            thesis: "La communauté est un remède et un poison pour l’individu.",
-            args: ["Soutien vital", "Oppression cachée", "Dualité équilibrée"],
-            parts: ["Remède communautaire", "Poison social", "Équilibre possible"],
-            circuit: ["Cause (remède)", "Opposition (poison)", "Synthèse (équilibre)"]
-        }
-    ];
-
-    // Niveau 1 : Thèse (Résumés)
-    function generateThesisGame() {
-        const container = document.getElementById("thesis-container");
-        const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-        container.innerHTML = `<p>${data.text}</p>`;
-        document.getElementById("thesis-input").value = "";
-    }
-
-    function checkThesis() {
-        const feedback = document.getElementById("thesis-feedback");
-        const input = document.getElementById("thesis-input").value.toLowerCase();
-        const text = document.getElementById("thesis-container").textContent;
-        const data = summaryTexts.find(t => t.text === text);
-        const hasThesis = data.thesis.toLowerCase().split(" ").some(w => input.includes(w));
-        feedback.style.display = "block";
-        if (hasThesis) {
-            feedback.innerHTML = "Thèse bien identifiée ! +20 points ! Nouveau défi imminent...";
-            updateGamification(20);
-            setTimeout(generateThesisGame, 2000);
-        } else {
-            feedback.innerHTML = `Pas tout à fait. Exemple : "${data.thesis}". Incluez les idées clés.`;
-        }
-    }
-
-    // Niveau 2 : Arguments
-    function generateArgsGame() {
-        const container = document.getElementById("args-container");
-        const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-        container.innerHTML = `<p>${data.text}</p>`;
-        document.getElementById("args-input").value = "";
-    }
-
-    function checkArgs() {
-        const feedback = document.getElementById("args-feedback");
-        const input = document.getElementById("args-input").value.toLowerCase();
-        const text = document.getElementById("args-container").textContent;
-        const data = summaryTexts.find(t => t.text === text);
-        const hasArgs = data.args.every(arg => input.includes(arg.toLowerCase().split(" ")[0]));
-        feedback.style.display = "block";
-        if (hasArgs) {
-            feedback.innerHTML = "Arguments bien repérés ! +25 points ! Nouveau défi imminent...";
-            updateGamification(25);
-            setTimeout(generateArgsGame, 2000);
-        } else {
-            feedback.innerHTML = `Pas complet. Arguments : ${data.args.join(", ")}. Incluez les idées principales.`;
-        }
-    }
-
-    // Niveau 3 : Parties
-    function generatePartsGame() {
-        const container = document.getElementById("parts-container");
-        const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-        container.innerHTML = `<p>${data.text}</p>`;
-        document.getElementById("parts-input").value = "";
-    }
-
-    function checkParts() {
-        const feedback = document.getElementById("parts-feedback");
-        const input = document.getElementById("parts-input").value.toLowerCase();
-        const text = document.getElementById("parts-container").textContent;
-        const data = summaryTexts.find(t => t.text === text);
-        const hasParts = data.parts.every(part => input.includes(part.toLowerCase().split(" ")[0]));
-        feedback.style.display = "block";
-        if (hasParts) {
-            feedback.innerHTML = "Parties bien découpées ! +30 points ! Nouveau défi imminent...";
-            updateGamification(30);
-            setTimeout(generatePartsGame, 2000);
-        } else {
-            feedback.innerHTML = `Pas exact. Parties : ${data.parts.join(", ")}. Identifiez les mouvements.`;
-        }
-    }
-
-    // Niveau 4 : Circuit Argumentatif
-    function generateCircuitGame() {
-        const container = document.getElementById("circuit-container");
-        const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-        container.innerHTML = `<p>${data.text}</p>`;
-        document.getElementById("circuit-input").value = "";
-    }
-
-    function checkCircuit() {
-        const feedback = document.getElementById("circuit-feedback");
-        const input = document.getElementById("circuit-input").value.toLowerCase();
-        const text = document.getElementById("circuit-container").textContent;
-        const data = summaryTexts.find(t => t.text === text);
-        const hasCircuit = data.circuit.every(link => input.includes(link.toLowerCase().split(" ")[0]));
-        feedback.style.display = "block";
-        if (hasCircuit) {
-            feedback.innerHTML = "Circuit bien décrypté ! +40 points ! Nouveau défi imminent...";
-            updateGamification(40);
-            setTimeout(generateCircuitGame, 2000);
-        } else {
-            feedback.innerHTML = `Pas précis. Circuit : ${data.circuit.join(", ")}. Décrivez les liens logiques.`;
-        }
-    }
-
-    // Niveau 5 : Résumé
-    function generateSummaryGame() {
-        const container = document.getElementById("summary-container");
-        const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-        container.innerHTML = `<p>${data.text}</p>`;
-        document.getElementById("summary-input").value = "";
-        countWords("summary-input", "summary-word-count", 100);
-    }
-
-    function checkSummary() {
-        const feedback = document.getElementById("summary-feedback");
-        const input = document.getElementById("summary-input").value.toLowerCase();
-        const text = document.getElementById("summary-container").textContent;
-        const data = summaryTexts.find(t => t.text === text);
-        const wordCount = input.split(/\s+/).length;
-        const hasThesis = data.thesis.toLowerCase().split(" ").some(w => input.includes(w));
-        const hasArgs = data.args.some(arg => input.includes(arg.toLowerCase().split(" ")[0]));
-        const isCorrectLength = wordCount <= 100 && wordCount >= 80;
-        feedback.style.display = "block";
-        if (hasThesis && hasArgs && isCorrectLength) {
-            feedback.innerHTML = `Résumé maîtrisé ! +60 points (${wordCount} mots) ! Nouveau défi imminent...`;
-            updateGamification(60);
-            setTimeout(generateSummaryGame, 2000);
-        } else {
-            feedback.innerHTML = `À revoir (${wordCount} mots). Incluez la thèse (${data.thesis}), des arguments (${data.args.join(", ")}), et visez 80-100 mots.`;
-        }
-    }
-
-    // Initialisation
-    showSection('home');
-    updateGamification();
-</script>
 
         <div id="com" class="section">
-            <h2>Prépas Commerciales - L’Image</h2>
-            <p>Préparez-vous aux exigences des concours :</p>
-            <div class="button-container">
-                <button class="dissertations" onclick="showSubSection('com-diss')">Dissertations</button>
-                <button class="summary" onclick="showSubSection('com-res')">Résumés</button>
-                <button class="synthesis" onclick="showSubSection('com-syn')">Synthèse de Documents</button>
-            </div>
-
-            <div id="com-diss" class="sub-section">
-                <h2>Dissertation : À Développer (L’Image)</h2>
-                <p>Cette section sera dédiée à l’entraînement des dissertations sur le thème "L’Image".</p>
-            </div>
-
-            <div id="com-res" class="sub-section">
-                <h2>Résumés : À Développer (L’Image)</h2>
-                <p>Cette section sera dédiée à l’entraînement des résumés sur le thème "L’Image".</p>
-            </div>
-
-            <div id="com-syn" class="sub-section">
-                <h2>Synthèse de Documents : À Développer (L’Image)</h2>
-                <p>Cette section sera dédiée à l’entraînement des synthèses sur le thème "L’Image".</p>
-            </div>
+            <h2>Prépas Commerciales</h2>
+            <p>Cette section est en cours de développement. Revenez bientôt !</p>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2025 Méthodo Prépas - Tous droits réservés</p>
+        <p>© 2025 Méthodo Prépas - Propulsé par xAI</p>
     </footer>
 
-
     <script>
-        // Gamification
         let playerPoints = 0;
         let playerLevel = 1;
         let badges = [];
-        const levelThresholds = [0, 50, 150, 300, 500, 750, 1000, 1300, 1700, 2200]; // 10 niveaux
+        const levelThresholds = [0, 50, 150, 300, 500, 750, 1000, 1300, 1700, 2200];
+        let errorCount = {};
 
-        function updateGamification(pointsToAdd = 0) {
-            playerPoints += pointsToAdd;
+        function updateGamification(pointsToAdd, stepId) {
+            if (pointsToAdd < 0) {
+                errorCount[stepId] = (errorCount[stepId] || 0) + 1;
+                if (errorCount[stepId] >= 3) {
+                    playerPoints = Math.max(0, playerPoints - 5);
+                    alert("Trop d’erreurs consécutives ! -5 points.");
+                    errorCount[stepId] = 0;
+                }
+            } else {
+                errorCount[stepId] = 0;
+                playerPoints += pointsToAdd;
+            }
             const currentThreshold = levelThresholds[playerLevel - 1];
             const nextThreshold = levelThresholds[playerLevel] || levelThresholds[levelThresholds.length - 1];
             const progress = ((playerPoints - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
@@ -946,14 +324,10 @@
         }
 
         function getLevelName(level) {
-            const names = [
-                "Novice", "Apprenant", "Analyseur", "Problématicien", "Planificateur",
-                "Rédacteur", "Développeur I", "Développeur II", "Développeur III", "Légende des Concours"
-            ];
+            const names = ["Novice", "Apprenant", "Analyseur", "Problématicien", "Planificateur", "Rédacteur", "Développeur I", "Développeur II", "Développeur III", "Légende des Concours"];
             return names[Math.min(level - 1, names.length - 1)];
         }
 
-        // Gestion des sections
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
@@ -974,263 +348,124 @@
                 generatePart2Game();
                 generatePart3Game();
                 generateConclusionGame();
+            } else if (subSectionId === 'sci-res') {
+                generateThesisGame();
+                generateArgsGame();
+                generatePartsGame();
+                generateCircuitGame();
+                generateSummaryGame();
             }
         }
 
+        function countWords(inputId, countId, max) {
+            const text = document.getElementById(inputId).value.trim();
+            const wordCount = text ? text.split(/\s+/).length : 0;
+            document.getElementById(countId).textContent = `Mots : ${wordCount}/${max}`;
+        }
+
+        function hideFeedback(feedbackId) {
+            setTimeout(() => {
+                document.getElementById(feedbackId).style.display = "none";
+            }, 5000);
+        }
+
         // Données pour SCI-DISS
-        const quotes = [ // 50 arguments des œuvres sous forme de citations
+        const quotes = [
             { text: "Pélasgos incarne l'individu au service de sa communauté.", author: "Eschyle", work: "Les Suppliantes" },
             { text: "Étéocle oscille entre dévouement et tyrannie potentielle.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "Le chœur des Danaïdes exprime une identité collective forte.", author: "Eschyle", work: "Les Suppliantes" },
-            { text: "Les Danaïdes revendiquent leur ascendance grecque pour s'intégrer.", author: "Eschyle", work: "Les Suppliantes" },
-            { text: "Pélasgos consulte le peuple avant d’accueillir les Danaïdes.", author: "Eschyle", work: "Les Suppliantes" },
-            { text: "Étéocle choisit les guerriers pour défendre Thèbes.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "Le messager décrit les chefs, soulignant leur individualité.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "Le chœur des Thébaines incarne les émotions collectives.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "Antigone défend des valeurs individuelles contre la cité.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "Les guerriers de Thèbes sont individualisés dans leur rôle.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "Les chefs de guerre se fondent dans des ensembles collectifs.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "Danaos insiste sur la prudence des Danaïdes dans le groupe.", author: "Eschyle", work: "Les Suppliantes" },
-            { text: "L’hubris met en péril la communauté.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "La catharsis vise l’équilibre de la communauté.", author: "Eschyle", work: "Les Sept contre Thèbes" },
-            { text: "La tension entre politique et religion est mise en scène.", author: "Eschyle", work: "Les Suppliantes" },
             { text: "La liberté de pensée est essentielle pour la piété.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "L’individu peut résister à l’État.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "La communauté augmente la puissance d’agir de l’individu.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "La critique des lois renforce la communauté.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "L’union des corps et des esprits fait la force.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "L’imagination influence les relations sociales.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "Individu et communauté sont complémentaires.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "La communauté politique s’inspire des modèles religieux.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "L’individu a le droit de se rebeller.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "L’équilibre entre individu et communauté est essentiel.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "L’obéissance au souverain nécessite le consentement.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "Le souverain doit tolérer les opinions divergentes.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "Le pacte social garantit sécurité et bien-être.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "L’État des Hébreux illustre religion et politique.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "Amsterdam valorise la liberté de pensée.", author: "Spinoza", work: "Traité Théologicopolitique" },
-            { text: "Newland est tiraillé entre individu et société.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "Archer hésite entre Olenska et son devoir.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "La société new-yorkaise est fragmentée en strates.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "Le bon ton contraint l’expression individuelle.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "Olenska remet en question les normes sociales.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "Wharton dénonce la vanité des gardiens sociaux.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "L’ironie met en lumière les hypocrisies.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "L’individu cherche sa voie face au conformisme.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "La communauté sécurise mais étouffe.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "Les règles sociales sont absurdes mais puissantes.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "L’identité sociale définit l’être.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "Les personnages sont liés à des groupes sociaux.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "Les marginaux cherchent l’intégration.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "La vieille société ignore les problèmes généraux.", author: "Wharton", work: "Le Temps de l’innocence" },
-            { text: "Archer ressent une vie monotone.", author: "Wharton", work: "Le Temps de l’innocence" }
+            { text: "Newland est tiraillé entre individu et société.", author: "Wharton", work: "Le Temps de l’innocence" }
         ];
 
-        const analysisData = [ // 10 citations-support hors programme
+        const analysisData = [
             { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", keywords: ["conscience", "société", "individu"], reformulation: "La perception de soi diffère entre l’individu et le collectif." },
-            { quote: "La seule issue paraît être de produire une acception du terme de peuple qui permette l’existence du collectif comme sujet de droit sans pour autant assujettir l’individu (Jean-Fabien Spitz)", keywords: ["peuple", "collectif", "individu"], reformulation: "Le collectif doit exister sans écraser l’individu." },
-            { quote: "La société est avant tout un ensemble d’idées, de croyances, de sentiments qui se réalisent par les individus (Émile Durkheim)", keywords: ["société", "idées", "individus"], reformulation: "La société repose sur des concepts incarnés par les individus." },
-            { quote: "Je suis mon corps, mon pays, mon éducation familiale et ma religion", keywords: ["corps", "pays", "éducation"], reformulation: "L’identité individuelle est façonnée par des éléments collectifs." },
-            { quote: "Tout type de coexistence sociale se manifestant comme vie commune familière est une communauté (Ferdinand Tönnies)", keywords: ["coexistence", "communauté", "familière"], reformulation: "La vie commune intime définit la communauté." },
-            { quote: "L’individu est plus fort en communauté, car la communauté augmente sa puissance d’agir", keywords: ["individu", "communauté", "puissance"], reformulation: "La communauté renforce l’individu par sa force collective." },
-            { quote: "L’individu appartient-il par toutes les fibres de son être à sa communauté ?", keywords: ["individu", "appartient", "communauté"], reformulation: "L’individu est-il entièrement défini par sa communauté ?" },
-            { quote: "La communauté, c’est chaud comme du « peau à peau » ; la société, c’est froid comme l’intérêt", keywords: ["communauté", "société", "intérêt"], reformulation: "La communauté est intime, la société utilitaire." },
-            { quote: "L’individu est pour la cité, et doit au besoin se sacrifier pour elle (Platon)", keywords: ["individu", "cité", "sacrifice"], reformulation: "L’individu sert la cité, parfois au prix de lui-même." },
-            { quote: "La communauté est un pharmakon : un remède et un poison", keywords: ["communauté", "remède", "poison"], reformulation: "La communauté guérit et nuit à l’individu." }
+            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", keywords: ["lien", "force", "entrave"], reformulation: "Les relations sociales soutiennent mais limitent." },
+            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", keywords: ["individu", "regard", "autres"], reformulation: "L’identité dépend du collectif." }
         ];
 
         const problemData = [
             { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", problem: "Comment concilier la conscience individuelle et collective ?" },
-            { quote: "La seule issue paraît être de produire une acception du terme de peuple qui permette l’existence du collectif comme sujet de droit sans pour autant assujettir l’individu (Jean-Fabien Spitz)", problem: "Le collectif peut-il exister sans asservir l’individu ?" },
-            { quote: "La société est avant tout un ensemble d’idées, de croyances, de sentiments qui se réalisent par les individus (Émile Durkheim)", problem: "La société est-elle plus que la somme des individus ?" },
-            { quote: "Je suis mon corps, mon pays, mon éducation familiale et ma religion", problem: "L’individu peut-il se détacher de son appartenance communautaire ?" },
-            { quote: "Tout type de coexistence sociale se manifestant comme vie commune familière est une communauté (Ferdinand Tönnies)", problem: "La communauté est-elle définie par l’intimité ou l’utilité ?" },
-            { quote: "L’individu est plus fort en communauté, car la communauté augmente sa puissance d’agir", problem: "La communauté renforce-t-elle ou limite-t-elle l’individu ?" },
-            { quote: "L’individu appartient-il par toutes les fibres de son être à sa communauté ?", problem: "L’individu est-il entièrement défini par sa communauté ?" },
-            { quote: "La communauté, c’est chaud comme du « peau à peau » ; la société, c’est froid comme l’intérêt", problem: "La communauté est-elle plus humaine que la société ?" },
-            { quote: "L’individu est pour la cité, et doit au besoin se sacrifier pour elle (Platon)", problem: "L’individu doit-il se sacrifier pour la communauté ?" },
-            { quote: "La communauté est un pharmakon : un remède et un poison", problem: "La communauté est-elle un bien ou un mal pour l’individu ?" }
+            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", problem: "Dans quelle mesure le lien social libère-t-il ou enferme-t-il l’individu ?" },
+            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", problem: "L’individu peut-il se définir hors du regard collectif ?" }
         ];
 
         const planData = [
             { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", keywords: ["conscience", "tension", "harmonie"] },
-            { quote: "La seule issue paraît être de produire une acception du terme de peuple qui permette l’existence du collectif comme sujet de droit sans pour autant assujettir l’individu (Jean-Fabien Spitz)", keywords: ["collectif", "droit", "liberté"] },
-            { quote: "La société est avant tout un ensemble d’idées, de croyances, de sentiments qui se réalisent par les individus (Émile Durkheim)", keywords: ["idées", "croyances", "individus"] },
-            { quote: "Je suis mon corps, mon pays, mon éducation familiale et ma religion", keywords: ["identité", "appartenance", "autonomie"] },
-            { quote: "Tout type de coexistence sociale se manifestant comme vie commune familière est une communauté (Ferdinand Tönnies)", keywords: ["coexistence", "intimité", "public"] },
-            { quote: "L’individu est plus fort en communauté, car la communauté augmente sa puissance d’agir", keywords: ["force", "limite", "puissance"] },
-            { quote: "L’individu appartient-il par toutes les fibres de son être à sa communauté ?", keywords: ["appartenance", "individu", "fiction"] },
-            { quote: "La communauté, c’est chaud comme du « peau à peau » ; la société, c’est froid comme l’intérêt", keywords: ["chaleur", "intérêt", "distance"] },
-            { quote: "L’individu est pour la cité, et doit au besoin se sacrifier pour elle (Platon)", keywords: ["sacrifice", "cité", "personne"] },
-            { quote: "La communauté est un pharmakon : un remède et un poison", keywords: ["remède", "poison", "dualité"] }
+            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", keywords: ["lien", "force", "limite"] },
+            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", keywords: ["identité", "autrui", "autonomie"] }
         ];
 
         const introData = [
             { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", problem: "Comment concilier la conscience individuelle et collective ?", planKeywords: ["conscience", "tension", "harmonie"], works: ["Eschyle", "Spinoza", "Wharton"] },
-            { quote: "La seule issue paraît être de produire une acception du terme de peuple qui permette l’existence du collectif comme sujet de droit sans pour autant assujettir l’individu (Jean-Fabien Spitz)", problem: "Le collectif peut-il exister sans asservir l’individu ?", planKeywords: ["collectif", "droit", "liberté"], works: ["Spinoza", "Eschyle", "Wharton"] },
-            { quote: "La société est avant tout un ensemble d’idées, de croyances, de sentiments qui se réalisent par les individus (Émile Durkheim)", problem: "La société est-elle plus que la somme des individus ?", planKeywords: ["idées", "croyances", "individus"], works: ["Wharton", "Spinoza", "Eschyle"] },
-            { quote: "Je suis mon corps, mon pays, mon éducation familiale et ma religion", problem: "L’individu peut-il se détacher de son appartenance communautaire ?", planKeywords: ["identité", "appartenance", "autonomie"], works: ["Eschyle", "Wharton", "Spinoza"] },
-            { quote: "Tout type de coexistence sociale se manifestant comme vie commune familière est une communauté (Ferdinand Tönnies)", problem: "La communauté est-elle définie par l’intimité ou l’utilité ?", planKeywords: ["coexistence", "intimité", "public"], works: ["Spinoza", "Eschyle", "Wharton"] },
-            { quote: "L’individu est plus fort en communauté, car la communauté augmente sa puissance d’agir", problem: "La communauté renforce-t-elle ou limite-t-elle l’individu ?", planKeywords: ["force", "limite", "puissance"], works: ["Wharton", "Spinoza", "Eschyle"] },
-            { quote: "L’individu appartient-il par toutes les fibres de son être à sa communauté ?", problem: "L’individu est-il entièrement défini par sa communauté ?", planKeywords: ["appartenance", "individu", "fiction"], works: ["Eschyle", "Wharton", "Spinoza"] },
-            { quote: "La communauté, c’est chaud comme du « peau à peau » ; la société, c’est froid comme l’intérêt", problem: "La communauté est-elle plus humaine que la société ?", planKeywords: ["chaleur", "intérêt", "distance"], works: ["Spinoza", "Eschyle", "Wharton"] },
-            { quote: "L’individu est pour la cité, et doit au besoin se sacrifier pour elle (Platon)", problem: "L’individu doit-il se sacrifier pour la communauté ?", planKeywords: ["sacrifice", "cité", "personne"], works: ["Wharton", "Spinoza", "Eschyle"] },
-            { quote: "La communauté est un pharmakon : un remède et un poison", problem: "La communauté est-elle un bien ou un mal pour l’individu ?", planKeywords: ["remède", "poison", "dualité"], works: ["Eschyle", "Wharton", "Spinoza"] }
+            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", problem: "Dans quelle mesure le lien social libère-t-il ou enferme-t-il l’individu ?", planKeywords: ["lien", "force", "limite"], works: ["Eschyle", "Spinoza", "Wharton"] },
+            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", problem: "L’individu peut-il se définir hors du regard collectif ?", planKeywords: ["identité", "autrui", "autonomie"], works: ["Eschyle", "Spinoza", "Wharton"] }
         ];
 
         const part1Data = [
             { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "La conscience collective domine", introPartial: "La communauté forge une identité.", subParts: ["Protection dans Les Suppliantes", "Soutien ambigu dans Wharton", "Pacte sécurisant chez Spinoza"], conclusionPartial: "Mais la conscience individuelle résiste." },
-            { quote: "La seule issue paraît être de produire une acception du terme de peuple qui permette l’existence du collectif comme sujet de droit sans pour autant assujettir l’individu (Jean-Fabien Spitz)", idea: "Le collectif offre un cadre", introPartial: "La communauté protège par des lois.", subParts: ["Pélasgos consulte le peuple", "L’union fait la force chez Spinoza", "Bon ton chez Wharton"], conclusionPartial: "Mais l’individu reste contraint." },
-            { quote: "La société est avant tout un ensemble d’idées, de croyances, de sentiments qui se réalisent par les individus (Émile Durkheim)", idea: "La société vit par l’individu", introPartial: "Les croyances collectives prédominent.", subParts: ["Chœur des Danaïdes collectif", "Imagination sociale chez Spinoza", "Identité sociale chez Wharton"], conclusionPartial: "Mais l’individu les façonne." },
-            { quote: "Je suis mon corps, mon pays, mon éducation familiale et ma religion", idea: "L’appartenance définit l’individu", introPartial: "La communauté marque l’identité.", subParts: ["Danaïdes et ascendance grecque", "Obéissance chez Spinoza", "Archer lié à son milieu"], conclusionPartial: "Mais l’autonomie persiste." },
-            { quote: "Tout type de coexistence sociale se manifestant comme vie commune familière est une communauté (Ferdinand Tönnies)", idea: "L’intimité unit la communauté", introPartial: "La familiarité crée des liens.", subParts: ["Solidarité chez Eschyle", "Consentement chez Spinoza", "Olenska cherche l’intégration"], conclusionPartial: "Mais l’intérêt refroidit." },
-            { quote: "L’individu est plus fort en communauté, car la communauté augmente sa puissance d’agir", idea: "La force vient du collectif", introPartial: "La communauté renforce.", subParts: ["Étéocle choisit ses guerriers", "Puissance d’agir chez Spinoza", "Archer soutenu par la société"], conclusionPartial: "Mais limite l’individu." },
-            { quote: "L’individu appartient-il par toutes les fibres de son être à sa communauté ?", idea: "L’appartenance est totale", introPartial: "L’individu fusionne avec le groupe.", subParts: ["Chœur des Thébaines", "Pacte social chez Spinoza", "Identité sociale chez Wharton"], conclusionPartial: "Mais reste une fiction." },
-            { quote: "La communauté, c’est chaud comme du « peau à peau » ; la société, c’est froid comme l’intérêt", idea: "La chaleur communautaire", introPartial: "L’intimité lie les individus.", subParts: ["Danaos et prudence", "Union chez Spinoza", "Olenska et chaleur"], conclusionPartial: "Mais la société éloigne." },
-            { quote: "L’individu est pour la cité, et doit au besoin se sacrifier pour elle (Platon)", idea: "Le sacrifice individuel", introPartial: "La cité exige tout.", subParts: ["Guerriers de Thèbes", "Obéissance chez Spinoza", "Devoir d’Archer"], conclusionPartial: "Mais pour quel bien ?" },
-            { quote: "La communauté est un pharmakon : un remède et un poison", idea: "La communauté guérit", introPartial: "Le groupe soigne.", subParts: ["Refuge des Danaïdes", "Sécurité chez Spinoza", "Soutien chez Wharton"], conclusionPartial: "Mais peut nuire." }
+            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", idea: "La force du collectif", introPartial: "Le lien unit les individus.", subParts: ["Solidarité chez Eschyle", "Règles chez Spinoza", "Normes chez Wharton"], conclusionPartial: "Mais il impose des contraintes." },
+            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", idea: "L’identité par autrui", introPartial: "Le regard collectif façonne.", subParts: ["Devoir chez Eschyle", "Jugement chez Wharton", "Raison chez Spinoza"], conclusionPartial: "Mais l’individu cherche à s’émanciper." }
         ];
 
         const part2Data = [
             { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "La tension persiste", introPartial: "Le décalage crée des conflits.", subParts: ["Oppression dans Wharton", "Conflit chez Eschyle", "Limite chez Spinoza"], conclusionPartial: "La tension appelle une résolution." },
-            { quote: "La seule issue paraît être de produire une acception du terme de peuple qui permette l’existence du collectif comme sujet de droit sans pour autant assujettir l’individu (Jean-Fabien Spitz)", idea: "Le droit contraint", introPartial: "Les lois enferment l’individu.", subParts: ["Hubris chez Eschyle", "Critique chez Spinoza", "Bon ton chez Wharton"], conclusionPartial: "Mais offre une issue." },
-            { quote: "La société est avant tout un ensemble d’idées, de croyances, de sentiments qui se réalisent par les individus (Émile Durkheim)", idea: "Les croyances divisent", introPartial: "Les idées séparent.", subParts: ["Chœur des Thébaines", "Imagination chez Spinoza", "Hypocrisie chez Wharton"], conclusionPartial: "Mais unissent aussi." },
-            { quote: "Je suis mon corps, mon pays, mon éducation familiale et ma religion", idea: "L’appartenance limite", introPartial: "Les liens emprisonnent.", subParts: ["Antigone contre la cité", "Obéissance chez Spinoza", "Archer et normes"], conclusionPartial: "Mais libèrent parfois." },
-            { quote: "Tout type de coexistence sociale se manifestant comme vie commune familière est une communauté (Ferdinand Tönnies)", idea: "L’intimité éloigne", introPartial: "La familiarité exclut.", subParts: ["Marginaux chez Wharton", "Religion chez Spinoza", "Danaïdes prudentes"], conclusionPartial: "Mais rapproche aussi." },
-            { quote: "L’individu est plus fort en communauté, car la communauté augmente sa puissance d’agir", idea: "La force opprime", introPartial: "Le collectif domine.", subParts: ["Guerriers fondus dans Thèbes", "Limite chez Spinoza", "Conformisme chez Wharton"], conclusionPartial: "Mais soulève des résistances." },
-            { quote: "L’individu appartient-il par toutes les fibres de son être à sa communauté ?", idea: "La définition enferme", introPartial: "L’appartenance étouffe.", subParts: ["Conflit chez Eschyle", "Rebellion chez Spinoza", "Olenska contre normes"], conclusionPartial: "Mais ouvre des brèches." },
-            { quote: "La communauté, c’est chaud comme du « peau à peau » ; la société, c’est froid comme l’intérêt", idea: "Le froid social", introPartial: "L’intérêt divise.", subParts: ["Vanité chez Wharton", "Politique chez Spinoza", "Hubris chez Eschyle"], conclusionPartial: "Mais la chaleur persiste." },
-            { quote: "L’individu est pour la cité, et doit au besoin se sacrifier pour elle (Platon)", idea: "Le sacrifice divise", introPartial: "Le devoir sépare.", subParts: ["Antigone chez Eschyle", "Tolérance chez Spinoza", "Devoir chez Wharton"], conclusionPartial: "Mais questionne le bien." },
-            { quote: "La communauté est un pharmakon : un remède et un poison", idea: "Le poison divise", introPartial: "Le groupe nuit.", subParts: ["Conflit chez Eschyle", "Critique chez Spinoza", "Hypocrisie chez Wharton"], conclusionPartial: "Mais soigne aussi." }
+            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", idea: "Les limites du lien", introPartial: "Les règles étouffent.", subParts: ["Tyrannie chez Eschyle", "Conformité chez Wharton", "Contrôle chez Spinoza"], conclusionPartial: "Mais l’individu résiste." },
+            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", idea: "Conflit intérieur", introPartial: "Le regard oppresse.", subParts: ["Poids chez Wharton", "Devoir chez Eschyle", "Critique chez Spinoza"], conclusionPartial: "L’autonomie reste fragile." }
         ];
 
         const part3Data = [
             { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "Une harmonie est possible", introPartial: "Un équilibre peut émerger.", subParts: ["Pacte rationnel chez Spinoza", "Résistance chez Wharton", "Solidarité chez Eschyle"], conclusionPartial: "L’harmonie reste précaire." },
-            { quote: "La seule issue paraît être de produire une acception du terme de peuple qui permette l’existence du collectif comme sujet de droit sans pour autant assujettir l’individu (Jean-Fabien Spitz)", idea: "La liberté s’équilibre", introPartial: "Un droit équilibré naît.", subParts: ["Union chez Spinoza", "Olenska chez Wharton", "Catharsis chez Eschyle"], conclusionPartial: "Mais reste fragile." },
-            { quote: "La société est avant tout un ensemble d’idées, de croyances, de sentiments qui se réalisent par les individus (Émile Durkheim)", idea: "Les idées s’harmonisent", introPartial: "Les croyances s’accordent.", subParts: ["Solidarité chez Eschyle", "Raison chez Spinoza", "Archer chez Wharton"], conclusionPartial: "Mais divergent encore." },
-            { quote: "Je suis mon corps, mon pays, mon éducation familiale et ma religion", idea: "L’autonomie émerge", introPartial: "L’individu se libère.", subParts: ["Rebellion chez Spinoza", "Olenska chez Wharton", "Antigone chez Eschyle"], conclusionPartial: "Mais reste lié." },
-            { quote: "Tout type de coexistence sociale se manifestant comme vie commune familière est une communauté (Ferdinand Tönnies)", idea: "L’intimité s’équilibre", introPartial: "La familiarité harmonise.", subParts: ["Pacte chez Spinoza", "Intégration chez Wharton", "Danaïdes chez Eschyle"], conclusionPartial: "Mais sépare aussi." },
-            { quote: "L’individu est plus fort en communauté, car la communauté augmente sa puissance d’agir", idea: "La puissance s’harmonise", introPartial: "La force collective équilibre.", subParts: ["Puissance chez Spinoza", "Résistance chez Wharton", "Guerriers chez Eschyle"], conclusionPartial: "Mais limite encore." },
-            { quote: "L’individu appartient-il par toutes les fibres de son être à sa communauté ?", idea: "La fiction s’apaise", introPartial: "L’appartenance s’adoucit.", subParts: ["Tolérance chez Spinoza", "Olenska chez Wharton", "Solidarité chez Eschyle"], conclusionPartial: "Mais questionne toujours." },
-            { quote: "La communauté, c’est chaud comme du « peau à peau » ; la société, c’est froid comme l’intérêt", idea: "La chaleur s’équilibre", introPartial: "L’intimité trouve sa place.", subParts: ["Union chez Spinoza", "Olenska chez Wharton", "Prudence chez Eschyle"], conclusionPartial: "Mais le froid persiste." },
-            { quote: "L’individu est pour la cité, et doit au besoin se sacrifier pour elle (Platon)", idea: "Le bien s’harmonise", introPartial: "Le sacrifice s’équilibre.", subParts: ["Pacte chez Spinoza", "Devoir chez Wharton", "Catharsis chez Eschyle"], conclusionPartial: "Mais reste ambigu." },
-            { quote: "La communauté est un pharmakon : un remède et un poison", idea: "La dualité s’apaise", introPartial: "Le remède l’emporte.", subParts: ["Solidarité chez Eschyle", "Raison chez Spinoza", "Résistance chez Wharton"], conclusionPartial: "Mais le poison demeure." }
+            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", idea: "Vers un équilibre", introPartial: "La coopération s’ajuste.", subParts: ["Raison chez Spinoza", "Adaptation chez Wharton", "Unité chez Eschyle"], conclusionPartial: "Mais les tensions subsistent." },
+            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", idea: "Autonomie partielle", introPartial: "L’individu s’affirme.", subParts: ["Liberté chez Spinoza", "Rejet chez Wharton", "Courage chez Eschyle"], conclusionPartial: "Le regard reste influent." }
         ];
 
         const conclusionData = [
             { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", summary: "La conscience collective domine, mais la tension persiste et peut s’harmoniser.", opening: "Comment cette dualité évolue-t-elle aujourd’hui ?" },
-            { quote: "La seule issue paraît être de produire une acception du terme de peuple qui permette l’existence du collectif comme sujet de droit sans pour autant assujettir l’individu (Jean-Fabien Spitz)", summary: "Le collectif protège, contraint, mais la liberté s’équilibre.", opening: "Quel droit pour l’individu moderne ?" },
-            { quote: "La société est avant tout un ensemble d’idées, de croyances, de sentiments qui se réalisent par les individus (Émile Durkheim)", summary: "Les idées unissent, divisent, mais s’harmonisent.", opening: "Les croyances d’aujourd’hui unissent-elles encore ?" },
-            { quote: "Je suis mon corps, mon pays, mon éducation familiale et ma religion", summary: "L’appartenance marque, limite, mais l’autonomie émerge.", opening: "L’individu peut-il se réinventer ?" },
-            { quote: "Tout type de coexistence sociale se manifestant comme vie commune familière est une communauté (Ferdinand Tönnies)", summary: "L’intimité unit, éloigne, mais s’équilibre.", opening: "L’intimité communautaire existe-t-elle encore ?" },
-            { quote: "L’individu est plus fort en communauté, car la communauté augmente sa puissance d’agir", summary: "La force renforce, opprime, mais s’harmonise.", opening: "La puissance collective sert-elle l’individu ?" },
-            { quote: "L’individu appartient-il par toutes les fibres de son être à sa communauté ?", summary: "L’appartenance définit, enferme, mais s’apaise.", opening: "L’appartenance est-elle une fiction moderne ?" },
-            { quote: "La communauté, c’est chaud comme du « peau à peau » ; la société, c’est froid comme l’intérêt", summary: "La chaleur lie, le froid divise, mais s’équilibre.", opening: "La société peut-elle redevenir chaleureuse ?" },
-            { quote: "L’individu est pour la cité, et doit au besoin se sacrifier pour elle (Platon)", summary: "Le sacrifice sert, divise, mais le bien s’harmonise.", opening: "Le sacrifice a-t-il encore un sens ?" },
-            { quote: "La communauté est un pharmakon : un remède et un poison", summary: "La communauté guérit, nuit, mais s’apaise.", opening: "Quel remède pour l’individu d’aujourd’hui ?" }
+            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", summary: "Le lien soutient mais limite, un équilibre émerge.", opening: "Quel lien social pour demain ?" },
+            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", summary: "L’identité dépend d’autrui mais cherche l’autonomie.", opening: "L’individu peut-il s’affranchir ?" }
         ];
 
-        // Niveau 1 : Citations (Arguments des œuvres)
-// Niveau 1 : Citations (Arguments des œuvres)
-function generateQuoteGame() {
-    function generateQuoteGame() {
-    console.log("Génération d'un nouveau jeu de citations");
-    const container = document.getElementById("quote-container");
-    if (!container) {
-        console.error("Conteneur quote-container non trouvé");
-        return;
-    }
-    const selected = quotes.sort(() => 0.5 - Math.random()).slice(0, 3);
-    container.innerHTML = selected.map((q, i) => `
-        <p>${i + 1}. "${q.text}"</p>
-        <select id="quote-${i}">
-            <option value="">Choisissez...</option>
-            <option value="Eschyle">Eschyle</option>
-            <option value="Spinoza">Spinoza</option>
-            <option value="Wharton">Wharton</option>
-        </select>
-    `).join('');
-    console.log("Citations générées :", selected);
-}
+        // Fonctions SCI-DISS
+        function generateQuoteGame() {
+            const container = document.getElementById("quote-container");
+            const selected = quotes.sort(() => 0.5 - Math.random()).slice(0, 3);
+            container.innerHTML = selected.map((q, i) => `
+                <p>${i + 1}. "${q.text}"</p>
+                <select id="quote-${i}">
+                    <option value="">Choisissez...</option>
+                    <option value="Eschyle">Eschyle</option>
+                    <option value="Spinoza">Spinoza</option>
+                    <option value="Wharton">Wharton</option>
+                </select>
+            `).join('');
+        }
 
-function checkQuotes() {
-    console.log("Fonction checkQuotes appelée");
-    const feedback = document.getElementById("quote-feedback");
-    if (!feedback) {
-        console.error("Élément quote-feedback non trouvé");
-        return;
-    }
-    let correct = 0;
-    for (let i = 0; i < 3; i++) {
-        const select = document.getElementById(`quote-${i}`);
-        if (!select) {
-            console.error(`Select quote-${i} non trouvé`);
-            continue;
+        function checkQuotes() {
+            const feedback = document.getElementById("quote-feedback");
+            let correct = 0;
+            for (let i = 0; i < 3; i++) {
+                const select = document.getElementById(`quote-${i}`);
+                const text = select.previousElementSibling.textContent.split('"')[1];
+                if (select.value === quotes.find(q => q.text === text).author) correct++;
+            }
+            feedback.style.display = "block";
+            if (correct === 3) {
+                feedback.innerHTML = "Parfait ! Toutes les citations sont correctes. +10 points.";
+                updateGamification(10, "step-citations");
+                setTimeout(() => generateQuoteGame(), 2000);
+            } else {
+                feedback.innerHTML = `${correct}/3 correctes. Étudiez mieux les auteurs !`;
+                updateGamification(0, "step-citations");
+            }
+            hideFeedback("quote-feedback");
         }
-        const textElement = select.previousElementSibling;
-        if (!textElement) {
-            console.error(`Texte pour quote-${i} non trouvé`);
-            continue;
-        }
-        const text = textElement.textContent.split('"')[1];
-        const selectedAuthor = select.value;
-        const correctAuthor = quotes.find(q => q.text === text)?.author;
-        console.log(`Citation ${i + 1}: Texte="${text}", Choix="${selectedAuthor}", Correct="${correctAuthor}"`);
-        if (selectedAuthor && selectedAuthor === correctAuthor) {
-            correct++;
-        }
-    }
-    feedback.style.display = "block";
-    feedback.innerHTML = correct === 3 
-        ? "Maîtrise parfaite ! +10 points ! Nouveau défi imminent..." 
-        : `${correct}/3. Connaissez mieux les œuvres !`;
-    if (correct === 3) {
-        updateGamification(10);
-        setTimeout(() => {
-            console.log("Lancement d'un nouveau défi");
-            generateQuoteGame();
-        }, 2000);
-    }
-}
 
-
-// Redéfinir showSubSection pour inclure l'initialisation
-function showSubSection(subSectionId) {
-    const subSection = document.getElementById(subSectionId);
-    const mainSection = subSection.closest('.section');
-    mainSection.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
-    subSection.classList.add('active');
-    if (subSectionId === 'sci-diss') {
-        generateQuoteGame(); // Générer les citations immédiatement
-        generateAnalysisGame();
-        generateProblemGame();
-        generatePlanGame();
-        generateIntroGame();
-        generatePart1Game();
-        generatePart2Game();
-        generatePart3Game();
-        generateConclusionGame();
-        // Ré-attacher l'événement au bouton après génération
-        const verifyButton = document.querySelector('#step-citations .verify-button');
-        if (verifyButton) {
-            verifyButton.onclick = checkQuotes;
-            console.log("Événement ré-attaché après génération");
-        }
-    } else if (subSectionId === 'sci-res') {
-        generateThesisGame();
-        generateArgsGame();
-        generatePartsGame();
-        generateCircuitGame();
-        generateSummaryGame();
-    }
-}
-        // Niveau 2 : Analyse (Citations-support hors programme)
         function generateAnalysisGame() {
             const container = document.getElementById("analysis-container");
             const data = analysisData[Math.floor(Math.random() * analysisData.length)];
             container.innerHTML = `
                 <p>Citation : "${data.quote}"</p>
-                <label>Mots-clés :</label><input id="keywords-input" placeholder="ex. conscience, société...">
+                <label>Mots-clés (exactement ${data.keywords.length}) :</label><input id="keywords-input" placeholder="ex. conscience, société...">
                 <label>Reformulation :</label><input id="reform-input" placeholder="Reformulez la citation...">
             `;
         }
@@ -1239,48 +474,51 @@ function showSubSection(subSectionId) {
             const feedback = document.getElementById("analysis-feedback");
             const quote = document.getElementById("analysis-container").querySelector("p").textContent.split('"')[1];
             const data = analysisData.find(d => d.quote === quote);
-            const keywords = document.getElementById("keywords-input").value.toLowerCase().split(/,\s*/);
-            const reform = document.getElementById("reform-input").value.toLowerCase();
-            const keywordMatch = data.keywords.every(k => keywords.includes(k));
-            const reformMatch = reform.includes(data.reformulation.toLowerCase().split(" ")[0]);
+            const keywords = document.getElementById("keywords-input").value.toLowerCase().split(/,\s*/).filter(k => k);
+            const reform = document.getElementById("reform-input").value.toLowerCase().trim();
+            const keywordMatch = data.keywords.length === keywords.length && data.keywords.every(k => keywords.includes(k));
+            const reformMatch = reform.split(/\s+/).length >= 5 && data.reformulation.toLowerCase().split(" ").every(w => reform.includes(w));
             feedback.style.display = "block";
             if (keywordMatch && reformMatch) {
-                feedback.innerHTML = "Analyse brillante ! +15 points ! Nouveau défi imminent...";
-                updateGamification(15);
-                setTimeout(generateAnalysisGame, 2000); // Boucle infinie
+                feedback.innerHTML = "Analyse précise ! +15 points.";
+                updateGamification(15, "step-analysis");
+                setTimeout(() => generateAnalysisGame(), 2000);
             } else {
-                feedback.innerHTML = `Pas tout à fait. Mots-clés : ${data.keywords.join(", ")}. Reformulation : "${data.reformulation}"`;
+                feedback.innerHTML = `Incorrect. Mots-clés attendus : ${data.keywords.join(", ")}. Reformulation : "${data.reformulation}". Soyez exact !`;
+                updateGamification(0, "step-analysis");
             }
+            hideFeedback("analysis-feedback");
         }
 
-        // Niveau 3 : Problématisation
         function generateProblemGame() {
             const container = document.getElementById("problem-container");
             const data = problemData[Math.floor(Math.random() * problemData.length)];
-            container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
+            container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
+            document.getElementById("problem-input").value = "";
         }
 
         function checkProblem() {
             const feedback = document.getElementById("problem-feedback");
             const quote = document.getElementById("problem-container").querySelector("p").textContent.split('"')[1];
             const data = problemData.find(d => d.quote === quote);
-            const input = document.getElementById("problem-input").value.toLowerCase();
-            const isCorrect = input.includes("individu") && input.includes("communauté") && (input.includes("?") || input.includes("peut"));
+            const input = document.getElementById("problem-input").value.toLowerCase().trim();
+            const isCorrect = input.includes("individu") && input.includes("communauté") && input.endsWith("?") && input.split(/\s+/).length >= 8 && data.problem.toLowerCase().split(" ").every(w => input.includes(w));
             feedback.style.display = "block";
             if (isCorrect) {
-                feedback.innerHTML = "Problématique pertinente ! +20 points ! Nouveau défi imminent...";
-                updateGamification(20);
-                setTimeout(generateProblemGame, 2000); // Boucle infinie
+                feedback.innerHTML = "Problématique rigoureuse ! +20 points.";
+                updateGamification(20, "step-problem");
+                setTimeout(() => generateProblemGame(), 2000);
             } else {
-                feedback.innerHTML = `Pas assez précis. Exemple : "${data.problem}". Incluez "individu" et "communauté".`;
+                feedback.innerHTML = `Insuffisant. Exemple : "${data.problem}". Doit inclure "individu", "communauté", finir par "?" et refléter la citation (8+ mots).`;
+                updateGamification(0, "step-problem");
             }
+            hideFeedback("problem-feedback");
         }
 
-        // Niveau 4 : Plan
         function generatePlanGame() {
             const container = document.getElementById("plan-container");
             const data = planData[Math.floor(Math.random() * planData.length)];
-            container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
+            container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
             document.getElementById("plan-input").value = "";
         }
 
@@ -1288,25 +526,27 @@ function showSubSection(subSectionId) {
             const feedback = document.getElementById("plan-feedback");
             const quote = document.getElementById("plan-container").querySelector("p").textContent.split('"')[1];
             const data = planData.find(d => d.quote === quote);
-            const input = document.getElementById("plan-input").value.toLowerCase();
-            const hasThreeParts = input.split(/i{1,3}\./).length - 1 >= 3;
-            const hasKeywords = data.keywords.some(k => input.includes(k));
-            const hasWorks = input.includes("eschyle") || input.includes("spinoza") || input.includes("wharton");
+            const input = document.getElementById("plan-input").value.toLowerCase().trim();
+            const parts = input.split(/i{1,3}\.\s/).filter(p => p);
+            const hasThreeParts = parts.length === 3 && parts.every(p => p.split(/\s+/).length >= 5);
+            const hasKeywords = data.keywords.every(k => input.includes(k));
+            const hasWorks = ["eschyle", "spinoza", "wharton"].some(w => input.includes(w));
             feedback.style.display = "block";
             if (hasThreeParts && hasKeywords && hasWorks) {
-                feedback.innerHTML = "Plan cohérent et pertinent ! +25 points ! Nouveau défi imminent...";
-                updateGamification(25);
-                setTimeout(generatePlanGame, 2000); // Boucle infinie
+                feedback.innerHTML = "Plan structuré et pertinent ! +25 points.";
+                updateGamification(25, "step-plan");
+                setTimeout(() => generatePlanGame(), 2000);
             } else {
-                feedback.innerHTML = "Incluez : 3 parties distinctes (I, II, III), des mots-clés pertinents (" + data.keywords.join(", ") + "), et au moins une œuvre.";
+                feedback.innerHTML = `Incomplet. Besoin de : 3 parties (I., II., III., 5+ mots chacune), mots-clés (${data.keywords.join(", ")}), et une œuvre (Eschyle, Spinoza, Wharton).`;
+                updateGamification(0, "step-plan");
             }
+            hideFeedback("plan-feedback");
         }
 
-        // Niveau 5 : Introduction
         function generateIntroGame() {
             const container = document.getElementById("intro-container");
             const data = introData[Math.floor(Math.random() * introData.length)];
-            container.innerHTML = `<p>Citation-support : "${data.quote}"</p>`;
+            container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
             document.getElementById("intro-input").value = "";
         }
 
@@ -1314,33 +554,34 @@ function showSubSection(subSectionId) {
             const feedback = document.getElementById("intro-feedback");
             const quote = document.getElementById("intro-container").querySelector("p").textContent.split('"')[1];
             const data = introData.find(d => d.quote === quote);
-            const input = document.getElementById("intro-input").value.toLowerCase();
-            const hasAmorce = input.includes("depuis") || input.includes("histoire") || input.includes("société");
-            const hasCitation = input.includes(quote.toLowerCase());
-            const hasProblem = input.includes("individu") && input.includes("communauté") && (input.includes("?") || input.includes("peut"));
-            const hasPlan = data.planKeywords.some(k => input.includes(k));
-            const hasWorks = data.works.some(w => input.includes(w.toLowerCase()));
-            const isLongEnough = input.split(/\s+/).length > 50;
+            const input = document.getElementById("intro-input").value.toLowerCase().trim();
+            const hasAmorce = ["depuis", "histoire", "société"].some(w => input.includes(w));
+            const hasCitation = input.includes(quote.toLowerCase().substring(0, 20));
+            const hasProblem = input.includes("individu") && input.includes("communauté") && input.includes("?") && data.problem.toLowerCase().split(" ").every(w => input.includes(w));
+            const hasPlan = data.planKeywords.every(k => input.includes(k));
+            const hasWorks = data.works.every(w => input.includes(w.toLowerCase()));
+            const isLongEnough = input.split(/\s+/).length >= 80;
             feedback.style.display = "block";
             if (hasAmorce && hasCitation && hasProblem && hasPlan && hasWorks && isLongEnough) {
-                feedback.innerHTML = "Introduction magistrale ! +30 points ! Nouveau défi imminent...";
-                updateGamification(30);
-                setTimeout(generateIntroGame, 2000); // Boucle infinie
+                feedback.innerHTML = "Introduction exemplaire ! +30 points.";
+                updateGamification(30, "step-intro");
+                setTimeout(() => generateIntroGame(), 2000);
             } else {
-                feedback.innerHTML = "Incluez : amorce (contexte), citation exacte, problématique (individu/communauté), plan (" + data.planKeywords.join(", ") + "), œuvres (" + data.works.join(", ") + "), et au moins 50 mots.";
+                feedback.innerHTML = `Incomplet. Besoin de : amorce (contexte), citation (${quote.substring(0, 20)}...), problématique (${data.problem}), plan (${data.planKeywords.join(", ")}), œuvres (${data.works.join(", ")}), et 80+ mots.`;
+                updateGamification(0, "step-intro");
             }
+            hideFeedback("intro-feedback");
         }
 
-        // Niveau 6 : Première Partie (Corrigé et enrichi)
         function generatePart1Game() {
             const container = document.getElementById("part1-container");
             const data = part1Data[Math.floor(Math.random() * part1Data.length)];
-            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text); // 3 arguments aléatoires
+            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
             container.innerHTML = `
-                <p>Citation-support : "${data.quote}"</p>
+                <p>Citation : "${data.quote}"</p>
                 <p>Idée : ${data.idea}</p>
                 <p>Intro partielle : ${data.introPartial}</p>
-                <p>Sous-parties suggérées (arguments des œuvres) : ${randomArgs.join(", ")}</p>
+                <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
                 <p>Conclusion partielle : ${data.conclusionPartial}</p>
             `;
             document.getElementById("part1-input").value = "";
@@ -1348,35 +589,34 @@ function showSubSection(subSectionId) {
 
         function checkPart1() {
             const feedback = document.getElementById("part1-feedback");
-            const input = document.getElementById("part1-input").value.toLowerCase();
+            const input = document.getElementById("part1-input").value.toLowerCase().trim();
             const quote = document.getElementById("part1-container").querySelector("p").textContent.split('"')[1];
             const data = part1Data.find(d => d.quote === quote);
-            const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-            const hasSub1 = input.includes("eschyle") || quotes.some(q => q.author === "Eschyle" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasSub2 = input.includes("spinoza") || quotes.some(q => q.author === "Spinoza" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasSub3 = input.includes("wharton") || quotes.some(q => q.author === "Wharton" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-            const isLongEnough = input.split(/\s+/).length > 100;
+            const hasIntro = input.includes(data.introPartial.toLowerCase());
+            const hasSubParts = data.subParts.every(sp => input.includes(sp.toLowerCase().split(" ")[0]));
+            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase());
+            const isLongEnough = input.split(/\s+/).length >= 120;
             feedback.style.display = "block";
-            if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-                feedback.innerHTML = "Partie I épique ! +40 points ! Nouveau défi imminent...";
-                updateGamification(40);
-                setTimeout(generatePart1Game, 2000); // Boucle infinie
+            if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
+                feedback.innerHTML = "Première partie solide ! +40 points.";
+                updateGamification(40, "step-part1");
+                setTimeout(() => generatePart1Game(), 2000);
             } else {
-                feedback.innerHTML = "Incluez : intro partielle (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Eschyle, Spinoza, Wharton), conclusion (" + data.conclusionPartial.split(" ")[0] + "), et au moins 100 mots.";
+                feedback.innerHTML = `Insuffisant. Besoin de : intro (${data.introPartial}), sous-parties (${data.subParts.join(", ")}), conclusion (${data.conclusionPartial}), et 120+ mots.`;
+                updateGamification(0, "step-part1");
             }
+            hideFeedback("part1-feedback");
         }
 
-        // Niveau 7 : Deuxième Partie (Corrigé et enrichi)
         function generatePart2Game() {
             const container = document.getElementById("part2-container");
             const data = part2Data[Math.floor(Math.random() * part2Data.length)];
-            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text); // 3 arguments aléatoires
+            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
             container.innerHTML = `
-                <p>Citation-support : "${data.quote}"</p>
+                <p>Citation : "${data.quote}"</p>
                 <p>Idée : ${data.idea}</p>
                 <p>Intro partielle : ${data.introPartial}</p>
-                <p>Sous-parties suggérées (arguments des œuvres) : ${randomArgs.join(", ")}</p>
+                <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
                 <p>Conclusion partielle : ${data.conclusionPartial}</p>
             `;
             document.getElementById("part2-input").value = "";
@@ -1384,35 +624,34 @@ function showSubSection(subSectionId) {
 
         function checkPart2() {
             const feedback = document.getElementById("part2-feedback");
-            const input = document.getElementById("part2-input").value.toLowerCase();
+            const input = document.getElementById("part2-input").value.toLowerCase().trim();
             const quote = document.getElementById("part2-container").querySelector("p").textContent.split('"')[1];
             const data = part2Data.find(d => d.quote === quote);
-            const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-            const hasSub1 = input.includes("eschyle") || quotes.some(q => q.author === "Eschyle" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasSub2 = input.includes("spinoza") || quotes.some(q => q.author === "Spinoza" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasSub3 = input.includes("wharton") || quotes.some(q => q.author === "Wharton" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-            const isLongEnough = input.split(/\s+/).length > 100;
+            const hasIntro = input.includes(data.introPartial.toLowerCase());
+            const hasSubParts = data.subParts.every(sp => input.includes(sp.toLowerCase().split(" ")[0]));
+            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase());
+            const isLongEnough = input.split(/\s+/).length >= 120;
             feedback.style.display = "block";
-            if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-                feedback.innerHTML = "Partie II magistrale ! +45 points ! Nouveau défi imminent...";
-                updateGamification(45);
-                setTimeout(generatePart2Game, 2000); // Boucle infinie
+            if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
+                feedback.innerHTML = "Deuxième partie robuste ! +45 points.";
+                updateGamification(45, "step-part2");
+                setTimeout(() => generatePart2Game(), 2000);
             } else {
-                feedback.innerHTML = "Incluez : intro partielle (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Eschyle, Spinoza, Wharton), conclusion (" + data.conclusionPartial.split(" ")[0] + "), et au moins 100 mots.";
+                feedback.innerHTML = `Incomplet. Besoin de : intro (${data.introPartial}), sous-parties (${data.subParts.join(", ")}), conclusion (${data.conclusionPartial}), et 120+ mots.`;
+                updateGamification(0, "step-part2");
             }
+            hideFeedback("part2-feedback");
         }
 
-        // Niveau 8 : Troisième Partie (Corrigé et enrichi)
         function generatePart3Game() {
             const container = document.getElementById("part3-container");
             const data = part3Data[Math.floor(Math.random() * part3Data.length)];
-            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text); // 3 arguments aléatoires
+            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
             container.innerHTML = `
-                <p>Citation-support : "${data.quote}"</p>
+                <p>Citation : "${data.quote}"</p>
                 <p>Idée : ${data.idea}</p>
                 <p>Intro partielle : ${data.introPartial}</p>
-                <p>Sous-parties suggérées (arguments des œuvres) : ${randomArgs.join(", ")}</p>
+                <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
                 <p>Conclusion partielle : ${data.conclusionPartial}</p>
             `;
             document.getElementById("part3-input").value = "";
@@ -1420,59 +659,210 @@ function showSubSection(subSectionId) {
 
         function checkPart3() {
             const feedback = document.getElementById("part3-feedback");
-            const input = document.getElementById("part3-input").value.toLowerCase();
+            const input = document.getElementById("part3-input").value.toLowerCase().trim();
             const quote = document.getElementById("part3-container").querySelector("p").textContent.split('"')[1];
             const data = part3Data.find(d => d.quote === quote);
-            const hasIntro = input.includes(data.introPartial.toLowerCase().split(" ")[0]);
-            const hasSub1 = input.includes("eschyle") || quotes.some(q => q.author === "Eschyle" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasSub2 = input.includes("spinoza") || quotes.some(q => q.author === "Spinoza" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasSub3 = input.includes("wharton") || quotes.some(q => q.author === "Wharton" && input.includes(q.text.toLowerCase().split(" ")[0]));
-            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase().split(" ")[0]);
-            const isLongEnough = input.split(/\s+/).length > 100;
+            const hasIntro = input.includes(data.introPartial.toLowerCase());
+            const hasSubParts = data.subParts.every(sp => input.includes(sp.toLowerCase().split(" ")[0]));
+            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase());
+            const isLongEnough = input.split(/\s+/).length >= 120;
             feedback.style.display = "block";
-            if (hasIntro && hasSub1 && hasSub2 && hasSub3 && hasConclusion && isLongEnough) {
-                feedback.innerHTML = "Partie III légendaire ! +50 points ! Nouveau défi imminent...";
-                updateGamification(50);
-                setTimeout(generatePart3Game, 2000); // Boucle infinie
+            if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
+                feedback.innerHTML = "Troisième partie impeccable ! +50 points.";
+                updateGamification(50, "step-part3");
+                setTimeout(() => generatePart3Game(), 2000);
             } else {
-                feedback.innerHTML = "Incluez : intro partielle (" + data.introPartial.split(" ")[0] + "), 3 sous-parties (Eschyle, Spinoza, Wharton), conclusion (" + data.conclusionPartial.split(" ")[0] + "), et au moins 100 mots.";
+                feedback.innerHTML = `Insuffisant. Besoin de : intro (${data.introPartial}), sous-parties (${data.subParts.join(", ")}), conclusion (${data.conclusionPartial}), et 120+ mots.`;
+                updateGamification(0, "step-part3");
             }
+            hideFeedback("part3-feedback");
         }
 
-        // Niveau 9 : Conclusion (Corrigé et enrichi)
         function generateConclusionGame() {
             const container = document.getElementById("conclusion-container");
             const data = conclusionData[Math.floor(Math.random() * conclusionData.length)];
             container.innerHTML = `
-                <p>Citation-support : "${data.quote}"</p>
+                <p>Citation : "${data.quote}"</p>
                 <p>Résumé des parties : ${data.summary}</p>
-                <p>Ouverture suggérée : ${data.opening}</p>
+                <p>Ouverture : ${data.opening}</p>
             `;
             document.getElementById("conclusion-input").value = "";
         }
 
         function checkConclusion() {
             const feedback = document.getElementById("conclusion-feedback");
-            const input = document.getElementById("conclusion-input").value.toLowerCase();
+            const input = document.getElementById("conclusion-input").value.toLowerCase().trim();
             const quote = document.getElementById("conclusion-container").querySelector("p").textContent.split('"')[1];
             const data = conclusionData.find(d => d.quote === quote);
-            const summaryWords = data.summary.toLowerCase().split(" ");
-            const hasSummary = summaryWords.some(w => input.includes(w)) && input.includes("eschyle") && input.includes("spinoza") && input.includes("wharton");
-            const hasOpening = input.includes(data.opening.toLowerCase().split(" ")[0]);
-            const isLongEnough = input.split(/\s+/).length > 50;
+            const hasSummary = data.summary.toLowerCase().split(" ").every(w => input.includes(w)) && ["eschyle", "spinoza", "wharton"].every(w => input.includes(w));
+            const hasOpening = input.includes(data.opening.toLowerCase());
+            const isLongEnough = input.split(/\s+/).length >= 60;
             feedback.style.display = "block";
             if (hasSummary && hasOpening && isLongEnough) {
-                feedback.innerHTML = "Conclusion triomphale ! +60 points ! Nouveau défi imminent...";
-                updateGamification(60);
-                setTimeout(generateConclusionGame, 2000); // Boucle infinie
+                feedback.innerHTML = "Conclusion magistrale ! +60 points.";
+                updateGamification(60, "step-conclusion");
+                setTimeout(() => generateConclusionGame(), 2000);
             } else {
-                feedback.innerHTML = "Incluez : sommaire des parties (" + summaryWords.slice(0, 3).join(", ") + " + œuvres), ouverture (" + data.opening.split(" ")[0] + "), et au moins 50 mots.";
+                feedback.innerHTML = `Incomplet. Besoin de : résumé (${data.summary}), ouverture (${data.opening}), œuvres (Eschyle, Spinoza, Wharton), et 60+ mots.`;
+                updateGamification(0, "step-conclusion");
             }
+            hideFeedback("conclusion-feedback");
         }
 
-        // Initialisation
-        showSection('home');
-        updateGamification();
+        // Données pour SCI-RES (Résumés)
+        const summaryTexts = [
+            {
+                text: "Depuis l’aube de l’humanité, l’individu a cherché dans la communauté un refuge face aux aléas de l’existence. Les premières sociétés humaines, des chasseurs-cueilleurs aux cités antiques, ont survécu grâce à une solidarité implacable : un individu seul ne pouvait affronter les bêtes sauvages ou les famines. Cette entraide a forgé des liens puissants, visibles dans les rites collectifs ou les travaux communs, où chacun trouvait sa place au sein d’un tout protecteur. Historiquement, la communauté a été un rempart contre l’incertitude, offrant sécurité physique et affective là où la solitude menait à la perdition. Les récits mythiques, comme ceux des cités grecques, exaltent cette union sacrée face au chaos extérieur. Cependant, cette force collective a un revers : elle impose des normes qui brident l’individu. Dès qu’une communauté s’organise, elle établit des règles, des hiérarchies, des attentes qui écrasent souvent les désirs personnels. Dans les sociétés traditionnelles, le bien commun prime sur l’aspiration individuelle, transformant l’appartenance en une prison dorée. Aujourd’hui, les réseaux sociaux amplifient ce phénomène : l’individu, sous pression pour se conformer à des standards de beauté ou d’opinion, perd une part de son authenticité. Les codes sociaux, bien que protecteurs, deviennent des chaînes invisibles, limitant la liberté de penser ou d’agir hors des sentiers battus. Cette tension révèle une vérité : la communauté, pour exister, exige parfois le sacrifice de l’unicité. Ainsi, la quête d’un équilibre devient essentielle. Si la communauté offre un cadre vital, elle ne doit pas étouffer l’individu sous son poids. L’histoire montre des tentatives pour concilier ces pôles : des révoltes individuelles aux pactes sociaux rationnels, l’humanité oscille entre union et autonomie. Une société idéale serait celle où l’individu conserve une marge de liberté tout en bénéficiant de la force collective. Cela implique une redéfinition des liens sociaux, où la communauté soutient sans asservir, laissant à chacun la possibilité de s’épanouir. En somme, individu et communauté ne sont pas condamnés à s’opposer, mais à coexister dans une harmonie fragile, où chacun trouve sa juste place.",
+                thesis: "La communauté offre un refuge mais limite la liberté individuelle.",
+                args: ["Protection historique", "Normes restrictives", "Équilibre nécessaire"],
+                parts: ["Refuge communautaire", "Contrainte sociale", "Quête d’équilibre"],
+                circuit: ["Cause (protection)", "Opposition (contrainte)", "Concession (équilibre)"]
+            },
+            {
+                text: "La communauté a souvent été célébrée comme un idéal unificateur, une promesse de cohésion face à la dispersion individuelle. Depuis les sociétés primitives, elle incarne une aspiration à l’unité, où les individus se fondent dans un projet commun, comme les cités grecques défendues par leurs héros. Cet idéal a inspiré des récits épiques et des systèmes sociaux où le groupe transcende les égoïsmes, offrant un sens d’appartenance et une force collective. Les utopies, des phalanstères aux kibboutz, témoignent de ce rêve d’une vie harmonieuse où l’individu s’épanouit dans le tout. Ces expériences historiques exaltent la communauté comme un rempart contre la solitude et un vecteur d’identité partagée, où chacun contribue à un bien supérieur. Pourtant, la réalité dément cet idéal avec une violence implacable. Les communautés, dès qu’elles s’organisent, se fissurent sous le poids des conflits internes : luttes de pouvoir, divergences d’intérêts, exclusions des marginaux. Les guerres fratricides, les ostracismes ou les schismes religieux montrent que l’unité reste une illusion, brisée par la diversité humaine. Même dans les sociétés modernes, les tentatives de cohésion – nationalismes ou réseaux sociaux – engendrent autant de divisions que d’unions, révélant la fragilité du collectif face aux passions individuelles. Face à cette désillusion, la communauté apparaît comme une fiction nécessaire, un mythe mobilisateur. Si elle ne peut atteindre une harmonie parfaite, elle reste un horizon vers lequel tendre, un récit qui donne sens à la coexistence malgré les fractures. Les individus, tiraillés entre égoïsme et besoin d’appartenance, s’accrochent à cette idée pour surmonter leurs différends, comme un idéal qui transcende la réalité. En somme, la communauté est un paradoxe : une illusion séduisante mais irréalisable, pourtant essentielle pour structurer la vie sociale et donner à l’individu un cadre où exister.",
+                thesis: "La communauté est une fiction séduisante mais irréalisable.",
+                args: ["Idéal historique", "Conflits réels", "Fiction nécessaire"],
+                parts: ["Idéal communautaire", "Réalité conflictuelle", "Fiction mobilisatrice"],
+                circuit: ["Cause (idéal)", "Opposition (réalité)", "Synthèse (fiction)"]
+            },
+            {
+                text: "L’idée que l’individu doive se sacrifier pour la communauté a traversé les âges, portée par des visions héroïques et des impératifs collectifs. Dans les cités antiques, comme Sparte ou Athènes, le citoyen était prêt à mourir pour défendre la polis, incarnation d’un devoir sacré. Ce sacrifice, exalté dans les épopées, forgeait la grandeur des nations : un individu offrait sa vie pour la survie du groupe, assurant la pérennité des valeurs communes. Cette logique trouve écho dans les guerres modernes, où les soldats tombent pour la patrie, symbolisant une transcendance de l’égoïsme au profit du bien commun. La communauté, en retour, glorifie ces héros, leur offrant une reconnaissance qui dépasse leur existence éphémère. Cependant, ce sacrifice a un coût humain dévastateur. L’individu, en s’effaçant pour la collectivité, perd sa liberté, ses rêves, parfois sa vie. Les récits de guerre montrent des destins brisés, des familles endeuillées, des consciences écrasées par un devoir imposé. Dans les sociétés autoritaires, ce principe devient une arme : l’individu est réduit à un pion, sa valeur intrinsèque niée au nom d’un collectif oppressif. Même dans des contextes moins extrêmes, le conformisme social peut exiger des renoncements silencieux, étouffant les aspirations personnelles sous le poids des attentes. Ainsi, la question éthique surgit : le sacrifice individuel est-il toujours justifié ? Si la communauté bénéficie de ces actes, elle doit aussi préserver la dignité de chacun. L’histoire montre des résistances, des individus réclamant leur droit à exister face à l’absolutisme collectif. Une société équilibrée pourrait honorer le sacrifice sans l’exiger aveuglément, reconnaissant que l’individu n’est pas qu’un moyen, mais une fin en soi. En définitive, le sacrifice renforce la communauté, mais au prix d’une perte qui interroge sa légitimité.",
+                thesis: "Le sacrifice individuel renforce la communauté mais le détruit.",
+                args: ["Devoir héroïque", "Perte personnelle", "Réflexion éthique"],
+                parts: ["Sacrifice pour la cité", "Coût humain", "Questionnement moral"],
+                circuit: ["Cause (devoir)", "Conséquence (perte)", "Questionnement (éthique)"]
+            }
+        ];
+
+        // Fonctions SCI-RES
+        function generateThesisGame() {
+            const container = document.getElementById("thesis-container");
+            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
+            container.innerHTML = `<p>${data.text}</p>`;
+            document.getElementById("thesis-input").value = "";
+        }
+
+        function checkThesis() {
+            const feedback = document.getElementById("thesis-feedback");
+            const input = document.getElementById("thesis-input").value.toLowerCase().trim();
+            const text = document.getElementById("thesis-container").textContent;
+            const data = summaryTexts.find(t => t.text === text);
+            const isCorrect = input === data.thesis.toLowerCase();
+            feedback.style.display = "block";
+            if (isCorrect) {
+                feedback.innerHTML = "Thèse exacte ! +20 points.";
+                updateGamification(20, "step-thesis");
+                setTimeout(() => generateThesisGame(), 2000);
+            } else {
+                feedback.innerHTML = `Faux. Thèse attendue : "${data.thesis}". Soyez précis !`;
+                updateGamification(0, "step-thesis");
+            }
+            hideFeedback("thesis-feedback");
+        }
+
+        function generateArgsGame() {
+            const container = document.getElementById("args-container");
+            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
+            container.innerHTML = `<p>${data.text}</p>`;
+            document.getElementById("args-input").value = "";
+        }
+
+        function checkArgs() {
+            const feedback = document.getElementById("args-feedback");
+            const input = document.getElementById("args-input").value.toLowerCase().trim().split(/,\s*/).filter(a => a);
+            const text = document.getElementById("args-container").textContent;
+            const data = summaryTexts.find(t => t.text === text);
+            const isCorrect = input.length === 3 && data.args.every((arg, i) => input[i] === arg.toLowerCase());
+            feedback.style.display = "block";
+            if (isCorrect) {
+                feedback.innerHTML = "Arguments parfaits ! +25 points.";
+                updateGamification(25, "step-args");
+                setTimeout(() => generateArgsGame(), 2000);
+            } else {
+                feedback.innerHTML = `Incorrect. Arguments attendus : ${data.args.join(", ")}. Listez-les exactement dans l’ordre !`;
+                updateGamification(0, "step-args");
+            }
+            hideFeedback("args-feedback");
+        }
+
+        function generatePartsGame() {
+            const container = document.getElementById("parts-container");
+            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
+            container.innerHTML = `<p>${data.text}</p>`;
+            document.getElementById("parts-input").value = "";
+        }
+
+        function checkParts() {
+            const feedback = document.getElementById("parts-feedback");
+            const input = document.getElementById("parts-input").value.toLowerCase().trim().split(/,\s*/).filter(p => p);
+            const text = document.getElementById("parts-container").textContent;
+            const data = summaryTexts.find(t => t.text === text);
+            const isCorrect = input.length === 3 && data.parts.every((part, i) => input[i] === part.toLowerCase());
+            feedback.style.display = "block";
+            if (isCorrect) {
+                feedback.innerHTML = "Parties bien identifiées ! +30 points.";
+                updateGamification(30, "step-parts");
+                setTimeout(() => generatePartsGame(), 2000);
+            } else {
+                feedback.innerHTML = `Faux. Parties attendues : ${data.parts.join(", ")}. Soyez exact !`;
+                updateGamification(0, "step-parts");
+            }
+            hideFeedback("parts-feedback");
+        }
+
+        function generateCircuitGame() {
+            const container = document.getElementById("circuit-container");
+            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
+            container.innerHTML = `<p>${data.text}</p>`;
+            document.getElementById("circuit-input").value = "";
+        }
+
+        function checkCircuit() {
+            const feedback = document.getElementById("circuit-feedback");
+            const input = document.getElementById("circuit-input").value.toLowerCase().trim().split(/,\s*/).filter(c => c);
+            const text = document.getElementById("circuit-container").textContent;
+            const data = summaryTexts.find(t => t.text === text);
+            const isCorrect = input.length === 3 && data.circuit.every((link, i) => input[i] === link.toLowerCase());
+            feedback.style.display = "block";
+            if (isCorrect) {
+                feedback.innerHTML = "Circuit précis ! +40 points.";
+                updateGamification(40, "step-circuit");
+                setTimeout(() => generateCircuitGame(), 2000);
+            } else {
+                feedback.innerHTML = `Incorrect. Circuit attendu : ${data.circuit.join(", ")}. Listez les liens dans l’ordre !`;
+                updateGamification(0, "step-circuit");
+            }
+            hideFeedback("circuit-feedback");
+        }
+
+        function generateSummaryGame() {
+            const container = document.getElementById("summary-container");
+            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
+            container.innerHTML = `<p>${data.text}</p>`;
+            document.getElementById("summary-input").value = "";
+            countWords("summary-input", "summary-word-count", 100);
+        }
+
+        function checkSummary() {
+            const feedback = document.getElementById("summary-feedback");
+            const input = document.getElementById("summary-input").value.toLowerCase().trim();
+            const text = document.getElementById("summary-container").textContent;
+            const data = summaryTexts.find(t => t.text === text);
+            const wordCount = input.split(/\s+/).length;
+            const hasThesis = input.includes(data.thesis.toLowerCase());
+            const hasArgs = data.args.every(arg => input.includes(arg.toLowerCase().split(" ")[0]));
+            const isCorrectLength = wordCount === 100;
+            feedback.style.display = "block";
+            if (hasThesis && hasArgs && isCorrectLength) {
+                feedback.innerHTML = `Résumé parfait (100 mots) ! +60 points.`;
+                updateGamification(60, "step-summary");
+                setTimeout(() => generateSummaryGame(), 2000);
+            } else {
+                feedback.innerHTML = `Inexact (${wordCount} mots). Besoin de : thèse exacte ("${data.thesis}"), arguments (${data.args.join(", ")}), et pile 100 mots.`;
+                updateGamification(0, "step-summary");
+            }
+            hideFeedback("summary-feedback");
+        }
     </script>
 </body>
 </html>
