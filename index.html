@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Méthodo Prépas</title>
+    <title>Mode d’emploi de Méthodo Prépas</title>
     <style>
         :root {
             --primary-blue: #1e3a8a;
@@ -12,9 +13,9 @@
             --white: #ffffff;
             --shadow: rgba(0, 0, 0, 0.1);
             --text-dark: #1f2937;
-            --purple: #8b5cf6;
-            --pink: #ec4899;
             --gold: #eab308;
+            --purple: #8b5cf6;
+            --red: #ef4444;
         }
 
         body {
@@ -34,1980 +35,206 @@
             box-shadow: 0 4px 12px var(--shadow);
         }
 
-        h1 { margin: 0; font-size: 48px; font-weight: 800; }
-        p.subtitle { font-size: 22px; margin: 10px 0; opacity: 0.9; }
-        .container { max-width: 1100px; margin: 20px auto; padding: 20px; }
+        h1 {
+            margin: 0;
+            font-size: 48px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
 
-        .gamification-bar {
-            background: linear-gradient(to right, var(--primary-blue), var(--purple));
-            color: var(--white);
+        h2 {
+            font-size: 28px;
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--accent-orange);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: var(--purple);
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
             padding: 20px;
-            border-radius: 10px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-green);
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 5px solid var(--gold);
+            margin: 10px 0;
+            font-weight: 500;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--accent-orange);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 5px;
+            box-shadow: 0 2px 5px var(--shadow);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            opacity: 0.95;
+        }
+
+        .signature {
             text-align: center;
-            margin-bottom: 25px;
+            margin-top: 40px;
+            padding: 20px;
+            background: var(--primary-blue);
+            color: var(--white);
+            font-style: italic;
+            font-size: 18px;
+            border-radius: 8px;
             box-shadow: 0 3px 10px var(--shadow);
         }
 
-        .gamification-bar span { margin: 0 20px; font-weight: bold; font-size: 18px; }
-        .progress-bar { width: 90%; margin: 15px auto; background: #e5e7eb; height: 25px; border-radius: 12px; overflow: hidden; border: 2px solid var(--gold); }
-        .progress { height: 100%; background: linear-gradient(to right, var(--secondary-green), var(--accent-orange)); width: 0; transition: width 0.6s ease; }
-        .badge { background: var(--gold); color: var(--text-dark); padding: 6px 14px; border-radius: 20px; font-size: 14px; margin: 5px; display: inline-block; }
-
-        .button-container { display: flex; justify-content: center; gap: 15px; margin: 30px 0; flex-wrap: wrap; }
-        button { padding: 12px 25px; font-size: 16px; font-weight: 600; color: var(--white); border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 2px 5px var(--shadow); }
-        button:hover { transform: scale(1.06); opacity: 0.95; }
-        button.sci { background: var(--secondary-green); }
-        button.com { background: var(--accent-orange); }
-        button.dissertations { background: var(--primary-blue); }
-        button.summary { background: var(--purple); }
-        button.synthesis { background: var(--pink); }
-        button.verify-button { background: var(--accent-orange); }
-        button.next-button { background: var(--secondary-green); }
-
-        .section { display: none; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px var(--shadow); margin-top: 25px; }
-        .section.active { display: block; }
-        .sub-section { display: none; }
-        .sub-section.active { display: block; }
-
-        .game-step { margin: 20px 0; padding: 20px; background: var(--white); border-radius: 10px; box-shadow: 0 4px 10px var(--shadow); transition: transform 0.2s; }
-        .game-step:hover { transform: translateY(-2px); }
-        .game-step h3 { color: var(--primary-blue); }
-        #step-citations { border-left: 6px solid var(--secondary-green); }
-        #step-analysis { border-left: 6px solid var(--purple); }
-        #step-problem { border-left: 6px solid var(--primary-blue); }
-        #step-plan { border-left: 6px solid var(--accent-orange); }
-        #step-intro { border-left: 6px solid var(--pink); }
-        #step-part1 { border-left: 6px solid var(--gold); }
-        #step-part2 { border-left: 6px solid #3b82f6; }
-        #step-part3 { border-left: 6px solid #10b981; }
-        #step-conclusion { border-left: 6px solid var(--purple); }
-
-        .feedback { background: #fef3c7; padding: 15px; margin: 10px 0; border-radius: 8px; border: 2px solid var(--gold); font-weight: 500; display: none; }
-        .works-reference { background: #dbeafe; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; margin: 20px 0; border-left: 5px solid var(--primary-blue); }
-
-        footer { text-align: center; padding: 25px; background: var(--primary-blue); color: var(--white); font-size: 16px; margin-top: 50px; border-top: 5px solid var(--secondary-green); }
-        select, input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--primary-blue);
+            color: var(--white);
+            font-size: 14px;
+            margin-top: 50px;
+        }
 
         @media (max-width: 768px) {
             h1 { font-size: 32px; }
-            p.subtitle { font-size: 18px; }
-            .button-container { gap: 10px; }
-            button { padding: 10px 20px; font-size: 14px; }
-            .gamification-bar span { font-size: 16px; margin: 0 10px; }
-            .game-step { padding: 15px; }
+            h2 { font-size: 20px; }
+            h3 { font-size: 16px; }
+            .container { margin: 10px; padding: 10px; }
+            .section { padding: 15px; }
+            .button { padding: 8px 16px; font-size: 14px; }
+            .signature { font-size: 16px; padding: 15px; }
         }
-            /* Ajout du style pour le bouton retour */
-        button.return-button { 
-            background: #6b7280; /* Gris neutre */
-            padding: 10px 20px; 
-            margin-bottom: 20px; 
-        }
-        button.return-button:hover { 
-            transform: scale(1.06); 
-            opacity: 0.95; 
-        }
-
     </style>
 </head>
 <body>
     <header>
-        <h1>Méthodo Prépas</h1>
-        <p class="subtitle">De Novice à Légende des Concours : Maîtrisez les Épreuves !</p>
+        <h1>Mode d’emploi de Méthodo Prépas</h1>
+        <p class="subtitle">De Novice à Légende des Concours – Guide pour Professeurs et Étudiants</p>
     </header>
     <div class="container">
-        <div class="gamification-bar">
-            <span id="player-level">Niveau : Novice (1)</span> |
-            <span id="player-points">Points : 0</span> |
-            <span id="badges">Badges : Aucun</span>
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
-            </div>
+        <h2>1. Présentation générale</h2>
+        <p>Méthodo Prépas est une plateforme interactive accessible à l’adresse <a href="https://methodoprepas.web.app" class="button">methodoprepas.web.app</a>. Elle aide les étudiants à se préparer aux concours scientifiques et commerciaux grâce à des exercices de dissertation, résumé et synthèse, tout en offrant un système de gamification motivant (points, badges, progression) pour les étudiants, et des outils de gestion pour les professeurs.</p>
+        <div class="highlight">Pourquoi l’utiliser ? Méthodo Prépas rend l’apprentissage ludique, structuré et adapté aux besoins des classes préparatoires, tout en facilitant la supervision pour les professeurs !</div>
+
+        <h2>2. Connexion et inscription</h2>
+        <h3>Pour les étudiants</h3>
+        <div class="section">
+            <p><strong>Accès initial :</strong> Rendez-vous sur le site, choisissez <strong>"Étudiant"</strong> sur l’écran d’accueil.</p>
+            <p><strong>Inscription/Connexion avec un compte :</strong>  
+            - Remplissez <strong>Email</strong> et <strong>Mot de passe</strong>.  
+            - Cliquez sur <strong>"Inscription"</strong> ou <strong>"Connexion"</strong>.  
+            - Option : Continuez sans compte via <strong>"Continuer sans compte"</strong> (progrès non sauvegardés).</p>
+            <div class="highlight">Un compte permet de sauvegarder vos points, badges et niveaux pour une progression continue !</div>
         </div>
 
-        <div id="home" class="section active">
-            <h2>Bienvenue, Aspirant Penseur !</h2>
-            <p>Choisissez votre filière pour débuter l’épopée :</p>
-            <div class="button-container">
-                <button class="sci" onclick="showSection('sci')">Prépas Scientifiques</button>
-                <button class="com" onclick="showSection('com')">Prépas Commerciales</button>
-            </div>
+        <h3>Pour les professeurs</h3>
+        <div class="section">
+            <p><strong>Accès initial :</strong> Choisissez <strong>"Professeur"</strong>, puis connectez-vous ou inscrivez-vous avec <strong>Email</strong> et <strong>Mot de passe</strong>.</p>
+            <p><strong>Rôle :</strong> Gérer les contenus, superviser les étudiants via l’espace <strong>"La Chambre des Sages"</strong>.</p>
+            <div class="highlight">Profitez de Méthodo Prépas pour enrichir vos cours et motiver vos étudiants avec des défis interactifs !</div>
         </div>
 
-        <div id="sci" class="section">
-            <h2>Prépas Scientifiques - Individu et Communauté</h2>
-            <p>Forgez vos compétences pour les concours :</p>
-            <div class="button-container">
-                <button class="dissertations" onclick="showSubSection('sci-diss')">Dissertations</button>
-                <button class="summary" onclick="showSubSection('sci-res')">Résumés</button>
-            </div>
+        <h2>3. Navigation pour les étudiants</h2>
+        <div class="section">
+            <p>Après connexion, accédez à la page d’accueil avec :</p>
+            <ul>
+                <li><strong>Barre de gamification :</strong> Votres titres (Novice, Penseur, etc.), points, badges, et une barre de progression.</li>
+                <li><strong>Choix des voies :</strong> Sélectionnez <strong>"Voie Scientifique"</strong> ou <strong>"Voie Commerciale"</strong>.</li>
+            </ul>
 
-            <div id="sci-diss" class="sub-section">
-                <h2>Dissertation : La Quête du Savoir</h2>
-                <div class="works-reference">Œuvres : <em>Eschyle (Les Sept, Les Suppliantes)</em>, <em>Spinoza (Traité Théologicopolitique)</em>, <em>Wharton (Le Temps de l’innocence)</em></div>
+            <h3>3.1. Voie Scientifique</h3>
+            <p><strong>Dissertation scientifique :</strong> 9 niveaux (Citation → Parties III & Conclusion).  
+            <strong>Résumé scientifique :</strong> 5 niveaux (Thèse → Résumé).</p>
 
-                <div class="game-step" id="step-citations">
-                    <h3>Niveau 1 : Maître des Citations</h3>
-                    <p>Associez ces citations aux auteurs (10 points) :</p>
-                    <div id="quote-container"></div>
-                    <button class="verify-button" onclick="checkQuotes()">Vérifier</button>
-                    <button class="next-button" onclick="generateQuoteGame()">Nouveau Défi</button>
-                    <div id="quote-feedback" class="feedback"></div>
-                </div>
+            <h3>3.2. Voie Commerciale</h3>
+            <p><strong>Dissertation commerciale :</strong> Similaire, avec contenus adaptés.  
+            <strong>Résumé commercial :</strong> Idem.  
+            <strong>Synthèse commerciale :</strong> 5 niveaux (Problématique → Perfection).</p>
 
-                <div class="game-step" id="step-analysis">
-                    <h3>Niveau 2 : Analyseur de Citations</h3>
-                    <p>Analysez cette citation (15 points) :</p>
-                    <div id="analysis-container"></div>
-                    <button class="verify-button" onclick="checkAnalysis()">Vérifier</button>
-                    <button class="next-button" onclick="generateAnalysisGame()">Nouveau Défi</button>
-                    <div id="analysis-feedback" class="feedback"></div>
-                </div>
+            <h3>3.3. Fonctionnement des défis</h3>
+            <p>- Niveaux verrouillés jusqu’à validation du précédent.  
+            - <strong>Niveau 1 :</strong> Cliquez <strong>"Valider"</strong>.  
+            - <strong>Niveaux suivants :</strong> Rédigez dans la zone texte, cliquez <strong>"Vérifier"</strong>.  
+            - <strong>Feedback :</strong> Messages détaillés avec points et conseils d’amélioration.  
+            - <strong>Nouveau Défi :</strong> Cliquez <strong>"Nouveau Défi"</strong> pour un contenu aléatoire.</p>
 
-                <div class="game-step" id="step-problem">
-                    <h3>Niveau 3 : Forger une Problématique</h3>
-                    <p>Rédigez une problématique (20 points) :</p>
-                    <div id="problem-container"></div>
-                    <textarea id="problem-input" placeholder="Votre problématique..."></textarea>
-                    <button class="verify-button" onclick="checkProblem()">Vérifier</button>
-                    <button class="next-button" onclick="generateProblemGame()">Nouveau Défi</button>
-                    <div id="problem-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-plan">
-                    <h3>Niveau 4 : Architecte du Plan</h3>
-                    <p>Proposez un plan en 3 parties (25 points) :</p>
-                    <div id="plan-container"></div>
-                    <textarea id="plan-input" placeholder="Ex. : I. ... II. ... III. ..." maxlength="500"></textarea>
-                    <button class="verify-button" onclick="checkPlan()">Vérifier</button>
-                    <button class="next-button" onclick="generatePlanGame()">Nouveau Défi</button>
-                    <div id="plan-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-intro">
-                    <h3>Niveau 5 : Rédacteur d’Introduction</h3>
-                    <p>Rédigez une introduction (30 points) :</p>
-                    <div id="intro-container"></div>
-                    <textarea id="intro-input" placeholder="Votre introduction..." maxlength="1000"></textarea>
-                    <button class="verify-button" onclick="checkIntro()">Vérifier</button>
-                    <button class="next-button" onclick="generateIntroGame()">Nouveau Défi</button>
-                    <div id="intro-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-part1">
-                    <h3>Niveau 6 : Développeur de la Première Partie</h3>
-                    <p>Rédigez la première partie (40 points) :</p>
-                    <div id="part1-container"></div>
-                    <textarea id="part1-input" placeholder="Votre première partie..." maxlength="1500"></textarea>
-                    <button class="verify-button" onclick="checkPart1()">Vérifier</button>
-                    <button class="next-button" onclick="generatePart1Game()">Nouveau Défi</button>
-                    <div id="part1-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-part2">
-                    <h3>Niveau 7 : Développeur de la Deuxième Partie</h3>
-                    <p>Rédigez la deuxième partie (45 points) :</p>
-                    <div id="part2-container"></div>
-                    <textarea id="part2-input" placeholder="Votre deuxième partie..." maxlength="1500"></textarea>
-                    <button class="verify-button" onclick="checkPart2()">Vérifier</button>
-                    <button class="next-button" onclick="generatePart2Game()">Nouveau Défi</button>
-                    <div id="part2-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-part3">
-                    <h3>Niveau 8 : Développeur de la Troisième Partie</h3>
-                    <p>Rédigez la troisième partie (50 points) :</p>
-                    <div id="part3-container"></div>
-                    <textarea id="part3-input" placeholder="Votre troisième partie..." maxlength="1500"></textarea>
-                    <button class="verify-button" onclick="checkPart3()">Vérifier</button>
-                    <button class="next-button" onclick="generatePart3Game()">Nouveau Défi</button>
-                    <div id="part3-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-conclusion">
-                    <h3>Niveau 9 : Maître de la Conclusion</h3>
-                    <p>Rédigez la conclusion (60 points) :</p>
-                    <div id="conclusion-container"></div>
-                    <textarea id="conclusion-input" placeholder="Votre conclusion..." maxlength="1000"></textarea>
-                    <button class="verify-button" onclick="checkConclusion()">Vérifier</button>
-                    <button class="next-button" onclick="generateConclusionGame()">Nouveau Défi</button>
-                    <div id="conclusion-feedback" class="feedback"></div>
-                </div>
-                    <p style="text-align: center;"><button class="return-button" onclick="showSection('home')">Retour</button></p>
-                </div>
-
-            <div id="sci-res" class="sub-section">
-                <h2>Résumés : La Voie de la Concision</h2>
-                <p>Maîtrisez l’art du résumé (20-60 points) :</p>
-
-                    <div class="game-step" id="step-thesis">
-                    <h3>Niveau 1 : Détective de la Thèse</h3>
-                    <p>Trouvez la thèse (20 points) :</p>
-                    <div id="thesis-container"></div>
-                    <textarea id="thesis-input" placeholder="Écrivez la thèse..." maxlength="200"></textarea>
-                    <button class="verify-button" onclick="checkThesis()">Vérifier</button>
-                    <button class="next-button" onclick="generateThesisGame()">Nouveau Défi</button>
-                    <div id="thesis-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-args">
-                    <h3>Niveau 2 : Chercheur d’Arguments</h3>
-                    <p>Listez les arguments (25 points) :</p>
-                    <div id="args-container"></div>
-                    <textarea id="args-input" placeholder="Écrivez les arguments..." maxlength="300"></textarea>
-                    <button class="verify-button" onclick="checkArgs()">Vérifier</button>
-                    <button class="next-button" onclick="generateArgsGame()">Nouveau Défi</button>
-                    <div id="args-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-parts">
-                    <h3>Niveau 3 : Architecte des Parties</h3>
-                    <p>Identifiez les parties (30 points) :</p>
-                    <div id="parts-container"></div>
-                    <textarea id="parts-input" placeholder="Écrivez les parties..." maxlength="300"></textarea>
-                    <button class="verify-button" onclick="checkParts()">Vérifier</button>
-                    <button class="next-button" onclick="generatePartsGame()">Nouveau Défi</button>
-                    <div id="parts-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-circuit">
-                    <h3>Niveau 4 : Décodeur du Circuit</h3>
-                    <p>Analysez le circuit argumentatif (40 points) :</p>
-                    <div id="circuit-container"></div>
-                    <textarea id="circuit-input" placeholder="Décrivez le circuit..." maxlength="400"></textarea>
-                    <button class="verify-button" onclick="checkCircuit()">Vérifier</button>
-                    <button class="next-button" onclick="generateCircuitGame()">Nouveau Défi</button>
-                    <div id="circuit-feedback" class="feedback"></div>
-                </div>
-
-                <div class="game-step" id="step-summary">
-                    <h3>Niveau 5 : Maître du Résumé</h3>
-                    <p>Résumez en 100 mots (60 points) :</p>
-                    <div id="summary-container"></div>
-                    <textarea id="summary-input" placeholder="Votre résumé (100 mots max)..." maxlength="500" oninput="countWords('summary-input', 'summary-word-count', 100)"></textarea>
-                    <p id="summary-word-count">Mots : 0/100</p>
-                    <button class="verify-button" onclick="checkSummary()">Vérifier</button>
-                    <button class="next-button" onclick="generateSummaryGame()">Nouveau Défi</button>
-                    <div id="summary-feedback" class="feedback"></div>
-                </div>
-                    <p style="text-align: center;"><button class="return-button" onclick="showSection('home')">Retour</button></p>
-            </div>
+            <h3>3.4. Gamification</h3>
+            <p>- <strong>Points :</strong> Gagnés pour bonnes réponses, perdus (-5) après 3 erreurs.  
+            - <strong>Titres :</strong> Débloqués par paliers (Novice, Apprenant, etc.).  
+            - <strong>Badges :</strong> Récompensent les niveaux clés (ex. : Analyste Éclairé au niveau 2).</p>
+            <div class="highlight">Motivez vos étudiants avec ce système ludique et engageant – idéal pour les classes préparatoires !</div>
         </div>
 
-        <div id="com" class="section">
-            <h2>Prépas Commerciales - L’Image</h2>
-            <p>Forgez vos compétences pour les concours :</p>
-            <div class="button-container">
-                <button class="dissertations" onclick="showSubSection('com-diss')">Dissertations</button>
-                <button class="summary" onclick="showSubSection('com-res')">Résumés</button>
-                <button class="synthesis" onclick="showSubSection('com-syn')">Synthèses</button>
-            </div>
+        <h2>4. Navigation pour les professeurs</h2>
+        <div class="section">
+            <p>Accédez à <strong>"La Chambre des Sages"</strong> pour gérer les contenus :</p>
+            <ul>
+                <li><strong>Sélectionnez une section :</strong> Via le menu déroulant.</li>
+                <li><strong>Gérez les contenus :</strong> Blocs affichant Professeur, Date, Contenu, et Actions (Modifier/Supprimer pour vos contenus, ou Supprimer pour contenus orphelins).</li>
+                <li><strong>Ajoutez un contenu :</strong> Remplissez le formulaire, cliquez <strong>"Ajouter"</strong>.</li>
+                <li><strong>Modifiez un contenu :</strong> Cliquez <strong>"Modifier"</strong>, ajustez, puis <strong>"Enregistrer"</strong>.</li>
+                <li><strong>Supprimez un contenu :</strong> Cliquez <strong>"Supprimer"</strong>, confirmez.</li>
+                <li><strong>Contenus orphelins :</strong> Identifiés en rouge, supprimables manuellement ou via <strong>"Nettoyer les contenus orphelins"</strong>.</li>
+            </ul>
+            <div class="highlight">Facilitez votre enseignement en créant des défis personnalisés et en maintenant une base de données propre avec Méthodo Prépas !</div>
+        </div>
 
-            <div id="com-diss" class="sub-section">
-                <h2>Dissertation : La Quête de l’Image</h2>
-                    <div class="game-step" id="step-citations">
-                    <h3>Niveau 1 : Maître des Citations</h3>
-                    <p>Associez ces citations aux auteurs (10 points) :</p>
-                    <div id="quote-container-com"></div>
-                    <button class="verify-button" onclick="checkQuotesCom()">Vérifier</button>
-                    <button class="next-button" onclick="generateQuoteGameCom()">Nouveau Défi</button>
-                    <div id="quote-feedback-com" class="feedback"></div>
-                </div>
-                <div class="game-step" id="step-analysis">
-                    <h3>Niveau 2 : Analyseur de Citations</h3>
-                    <p>Analysez cette citation (15 points) :</p>
-                    <div id="analysis-container-com"></div>
-                    <button class="verify-button" onclick="checkAnalysisCom()">Vérifier</button>
-                    <button class="next-button" onclick="generateAnalysisGameCom()">Nouveau Défi</button>
-                    <div id="analysis-feedback-com" class="feedback"></div>
-                </div>
-                <div class="game-step" id="step-problem">
-                    <h3>Niveau 3 : Forger une Problématique</h3>
-                    <p>Rédigez une problématique (20 points) :</p>
-                    <div id="problem-container-com"></div>
-                    <textarea id="problem-input-com" placeholder="Votre problématique..."></textarea>
-                    <button class="verify-button" onclick="checkProblemCom()">Vérifier</button>
-                    <button class="next-button" onclick="generateProblemGameCom()">Nouveau Défi</button>
-                    <div id="problem-feedback-com" class="feedback"></div>
-                </div>
-                <div class="game-step" id="step-plan">
-                    <h3>Niveau 4 : Architecte du Plan</h3>
-                    <p>Proposez un plan en 3 parties (25 points) :</p>
-                    <div id="plan-container-com"></div>
-                    <textarea id="plan-input-com" placeholder="Ex. : I. ... II. ... III. ..." maxlength="500"></textarea>
-                    <button class="verify-button" onclick="checkPlanCom()">Vérifier</button>
-                    <button class="next-button" onclick="generatePlanGameCom()">Nouveau Défi</button>
-                    <div id="plan-feedback-com" class="feedback"></div>
-                </div>
-                <div class="game-step" id="step-intro">
-                    <h3>Niveau 5 : Rédacteur d’Introduction</h3>
-                    <p>Rédigez une introduction (30 points) :</p>
-                    <div id="intro-container-com"></div>
-                    <textarea id="intro-input-com" placeholder="Votre introduction..." maxlength="1000"></textarea>
-                    <button class="verify-button" onclick="checkIntroCom()">Vérifier</button>
-                    <button class="next-button" onclick="generateIntroGameCom()">Nouveau Défi</button>
-                    <div id="intro-feedback-com" class="feedback"></div>
-                </div>
-                <div class="game-step" id="step-part1">
-                    <h3>Niveau 6 : Développeur de la Première Partie</h3>
-                    <p>Rédigez la première partie (40 points) :</p>
-                    <div id="part1-container-com"></div>
-                    <textarea id="part1-input-com" placeholder="Votre première partie..." maxlength="1500"></textarea>
-                    <button class="verify-button" onclick="checkPart1Com()">Vérifier</button>
-                    <button class="next-button" onclick="generatePart1GameCom()">Nouveau Défi</button>
-                    <div id="part1-feedback-com" class="feedback"></div>
-                </div>
-                <div class="game-step" id="step-part2">
-                    <h3>Niveau 7 : Développeur de la Deuxième Partie</h3>
-                    <p>Rédigez la deuxième partie (45 points) :</p>
-                    <div id="part2-container-com"></div>
-                    <textarea id="part2-input-com" placeholder="Votre deuxième partie..." maxlength="1500"></textarea>
-                    <button class="verify-button" onclick="checkPart2Com()">Vérifier</button>
-                    <button class="next-button" onclick="generatePart2GameCom()">Nouveau Défi</button>
-                    <div id="part2-feedback-com" class="feedback"></div>
-                </div>
-                <div class="game-step" id="step-part3">
-                    <h3>Niveau 8 : Développeur de la Troisième Partie</h3>
-                    <p>Rédigez la troisième partie (50 points) :</p>
-                    <div id="part3-container-com"></div>
-                    <textarea id="part3-input-com" placeholder="Votre troisième partie..." maxlength="1500"></textarea>
-                    <button class="verify-button" onclick="checkPart3Com()">Vérifier</button>
-                    <button class="next-button" onclick="generatePart3GameCom()">Nouveau Défi</button>
-                    <div id="part3-feedback-com" class="feedback"></div>
-                </div>
-                <div class="game-step" id="step-conclusion">
-                    <h3>Niveau 9 : Maître de la Conclusion</h3>
-                    <p>Rédigez la conclusion (60 points) :</p>
-                    <div id="conclusion-container-com"></div>
-                    <textarea id="conclusion-input-com" placeholder="Votre conclusion..." maxlength="1000"></textarea>
-                    <button class="verify-button" onclick="checkConclusionCom()">Vérifier</button>
-                    <button class="next-button" onclick="generateConclusionGameCom()">Nouveau Défi</button>
-                    <div id="conclusion-feedback-com" class="feedback"></div>
-                </div>
-                   <p style="text-align: center;"><button class="return-button" onclick="showSection('home')">Retour</button></p>
+        <h2>5. Conseils et bonnes pratiques</h2>
+        <div class="section">
+            <p><strong>Pour les étudiants :</strong> Lisez les instructions, utilisez les feedbacks pour progresser, et engagez-vous dans la gamification pour rester motivés.</p>
+            <p><strong>Pour les professeurs :</strong> Ajoutez des contenus variés, surveillez les orphelins, et encouragez vos étudiants avec les badges et titres.</p>
+            <div class="highlight">Transformez vos cours en une aventure éducative captivante avec Méthodo Prépas – adoptez-le dès aujourd’hui !</div>
+        </div>
 
-            </div>
+        <h2>6. Dépannage</h2>
+        <div class="section">
+            <p>- <strong>Problème avec `sci-diss` :</strong> Vérifiez les contenus dans Firebase (`sci-diss/citations`). Reconnectez-vous pour recharger les données initiales.  
+            - <strong>Contenus orphelins :</strong> Utilisez le nettoyage pour les supprimer.  
+            - <strong>Erreur technique :</strong> Ouvrez la console JavaScript (F12) et contactez [support@methodoprepas.com].</p>
+        </div>
 
-               <div id="com-res" class="sub-section">
-    <h2>Résumés : La Voie de la Concision</h2>
-    <p>Maîtrisez l’art du résumé sur l’image (20-60 points) :</p>
-    
-    <div class="game-step" id="step-thesis">
-        <h3>Niveau 1 : Détective de la Thèse</h3>
-        <p>Trouvez la thèse (20 points) :</p>
-        <div id="thesis-container-com"></div>
-        <textarea id="thesis-input-com" placeholder="Écrivez la thèse..." maxlength="200"></textarea>
-        <button class="verify-button" onclick="checkThesisCom()">Vérifier</button>
-        <button class="next-button" onclick="generateThesisGameCom()">Nouveau Défi</button>
-        <div id="thesis-feedback-com" class="feedback"></div>
-    </div>
+        <h2>7. Contact et support</h2>
+        <div class="section">
+            <p>Pour toute question, contactez-nous à <a href="mailto:support@methodoprepas.com" class="button">support@methodoprepas.com</a>. Nous sommes là pour vous aider à maximiser l’utilisation de Méthodo Prépas !</p>
+            <div class="highlight">Rejoignez la communauté Méthodo Prépas et offrez à vos étudiants une préparation d’excellence !</div>
+        </div>
 
-    <div class="game-step" id="step-args">
-        <h3>Niveau 2 : Chercheur d’Arguments</h3>
-        <p>Listez les principaux arguments (25 points) :</p>
-        <div id="args-container-com"></div>
-        <textarea id="args-input-com" placeholder="Écrivez les arguments..." maxlength="300"></textarea>
-        <button class="verify-button" onclick="checkArgsCom()">Vérifier</button>
-        <button class="next-button" onclick="generateArgsGameCom()">Nouveau Défi</button>
-        <div id="args-feedback-com" class="feedback"></div>
-    </div>
-
-    <div class="game-step" id="step-parts">
-        <h3>Niveau 3 : Architecte des Parties</h3>
-        <p>Identifiez les parties ou mouvements du texte (30 points) :</p>
-        <div id="parts-container-com"></div>
-        <textarea id="parts-input-com" placeholder="Écrivez les parties..." maxlength="300"></textarea>
-        <button class="verify-button" onclick="checkPartsCom()">Vérifier</button>
-        <button class="next-button" onclick="generatePartsGameCom()">Nouveau Défi</button>
-        <div id="parts-feedback-com" class="feedback"></div>
-    </div>
-
-    <div class="game-step" id="step-circuit">
-        <h3>Niveau 4 : Décodeur du Circuit</h3>
-        <p>Analysez le circuit argumentatif du texte (40 points) :</p>
-        <div id="circuit-container-com"></div>
-        <textarea id="circuit-input-com" placeholder="Décrivez le circuit (ex. cause, effet, synthèse)..." maxlength="400"></textarea>
-        <button class="verify-button" onclick="checkCircuitCom()">Vérifier</button>
-        <button class="next-button" onclick="generateCircuitGameCom()">Nouveau Défi</button>
-        <div id="circuit-feedback-com" class="feedback"></div>
-    </div>
-
-    <div class="game-step" id="step-summary">
-        <h3>Niveau 5 : Maître du Résumé</h3>
-        <p>Résumez le texte en 100 mots (60 points) :</p>
-        <div id="summary-container-com"></div>
-        <textarea id="summary-input-com" placeholder="Votre résumé (100 mots max)..." maxlength="1000" oninput="countWords('summary-input-com', 'summary-word-count-com', 100)"></textarea>
-        <p id="summary-word-count-com">Mots : 0/100</p>
-        <button class="verify-button" onclick="checkSummaryCom()">Vérifier</button>
-        <button class="next-button" onclick="generateSummaryGameCom()">Nouveau Défi</button>
-        <div id="summary-feedback-com" class="feedback"></div>
-    </div>
-
-                <div id="com-syn" class="sub-section">
-            <h2>Synthèse : L’Art de l’Équilibre</h2>
-            <p>Maîtrisez la synthèse sur l’image (20-60 points) :</p>
-
-            <div class="game-step" id="step-quickread">
-                <h3>Niveau 1 : Lecteur Rapide</h3>
-                <p>Identifiez la problématique générale (20 points) :</p>
-                <div id="quickread-container-com-syn"></div>
-                <textarea id="quickread-input-com-syn" placeholder="Écrivez la problématique..." maxlength="100"></textarea>
-                <button onclick="generateQuickReadGameComSyn()">Nouveau Défi</button>
-                <button onclick="checkQuickReadComSyn()">Vérifier</button>
-                <div id="quickread-feedback-com-syn" class="feedback"></div>
-            </div>
-
-            <div class="game-step" id="step-deepread">
-                <h3>Niveau 2 : Explorateur Approfondi</h3>
-                <p>Relevez les éléments clés (30 points) :</p>
-                <div id="deepread-container-com-syn"></div>
-                <textarea id="deepread-input-com-syn" placeholder="Listez les points (ex. idée 1, idée 2, ...)" maxlength="300"></textarea>
-                <button onclick="generateDeepReadGameComSyn()">Nouveau Défi</button>
-                <button onclick="checkDeepReadComSyn()">Vérifier</button>
-                <div id="deepread-feedback-com-syn" class="feedback"></div>
-            </div>
-
-            <div class="game-step" id="step-plan">
-                <h3>Niveau 3 : Architecte du Plan</h3>
-                <p>Construisez le plan (40 points) :</p>
-                <div id="plan-container-com-syn"></div>
-                <textarea id="plan-input-com-syn" placeholder="Listez les 3 sous-questions (séparées par des virgules)" maxlength="300"></textarea>
-                <button onclick="generatePlanGameComSyn()">Nouveau Défi</button>
-                <button onclick="checkPlanGameComSyn()">Vérifier</button>
-                <div id="plan-feedback-com-syn" class="feedback"></div>
-            </div>
-
-            <div class="game-step" id="step-synthesis">
-                <h3>Niveau 4 : Rédacteur Synthétique</h3>
-                <p>Rédigez une synthèse en 300 mots (60 points) :</p>
-                <div id="synthesis-container-com-syn"></div>
-                <textarea id="synthesis-input-com-syn" placeholder="Rédigez la synthèse (270-330 mots)" maxlength="1500" oninput="countWords('synthesis-input-com-syn', 'synthesis-word-count-com-syn', 300)"></textarea>
-                <p id="synthesis-word-count-com-syn">Mots : 0/300</p>
-                <button onclick="generateSynthesisGameComSyn()">Nouveau Défi</button>
-                <button onclick="checkSynthesisComSyn()">Vérifier</button>
-                <div id="synthesis-feedback-com-syn" class="feedback"></div>
-            </div>
+        <div class="signature">
+            Créé par : EL FILALI MOHAMED - CPGE MOHAMED V - CASABLANCA
         </div>
     </div>
-
     <footer>
-        <p>© 2025 Méthodo Prépas - Tous droits réservés
+        <p>© 2025 Méthodo Prépas - Tous droits réservés</p>
     </footer>
-
-    <script>
-        let playerPoints = 0;
-        let playerLevel = 1;
-        let badges = [];
-        const levelThresholds = [0, 50, 150, 300, 500, 750, 1000, 1300, 1700, 2200];
-        let errorCount = {};
-
-        function updateGamification(pointsToAdd, stepId) {
-            if (pointsToAdd < 0) {
-                errorCount[stepId] = (errorCount[stepId] || 0) + 1;
-                if (errorCount[stepId] >= 3) {
-                    playerPoints = Math.max(0, playerPoints - 5);
-                    alert("Trop d’erreurs consécutives ! -5 points.");
-                    errorCount[stepId] = 0;
-                }
-            } else {
-                errorCount[stepId] = 0;
-                playerPoints += pointsToAdd;
-            }
-            const currentThreshold = levelThresholds[playerLevel - 1];
-            const nextThreshold = levelThresholds[playerLevel] || levelThresholds[levelThresholds.length - 1];
-            const progress = ((playerPoints - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
-            document.getElementById("player-points").textContent = `Points : ${playerPoints}`;
-            document.getElementById("player-level").textContent = `Niveau : ${getLevelName(playerLevel)} (${playerLevel})`;
-            document.getElementById("badges").textContent = `Badges : ${badges.length ? badges.join(", ") : "Aucun"}`;
-            document.getElementById("progress").style.width = `${Math.min(progress, 100)}%`;
-
-            if (playerPoints >= nextThreshold && playerLevel < 10) {
-                playerLevel++;
-                badges.push(`${getLevelName(playerLevel)} Niv. ${playerLevel}`);
-                alert(`Triomphe ! Vous êtes ${getLevelName(playerLevel)} (Niveau ${playerLevel}) !`);
-            }
-        }
-
-        function getLevelName(level) {
-            const names = ["Novice", "Apprenant", "Analyseur", "Problématicien", "Planificateur", "Rédacteur", "Développeur I", "Développeur II", "Développeur III", "Légende des Concours"];
-            return names[Math.min(level - 1, names.length - 1)];
-        }
-
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        function showSubSection(subSectionId) {
-    const subSection = document.getElementById(subSectionId);
-    const mainSection = subSection.closest('.section');
-    mainSection.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
-    subSection.classList.add('active');
-    if (subSectionId === 'sci-diss') {
-        generateQuoteGame();
-        generateAnalysisGame();
-        generateProblemGame();
-        generatePlanGame();
-        generateIntroGame();
-        generatePart1Game();
-        generatePart2Game();
-        generatePart3Game();
-        generateConclusionGame();
-        document.querySelector('#step-citations .verify-button').onclick = checkQuotes;
-    } else if (subSectionId === 'sci-res') {
-        generateThesisGame();
-        generateArgsGame();
-        generatePartsGame();
-        generateCircuitGame();
-        generateSummaryGame();
-    } else if (subSectionId === 'com-diss') {
-        generateQuoteGameCom();
-        generateAnalysisGameCom();
-        generateProblemGameCom();
-        generatePlanGameCom();
-        generateIntroGameCom();
-        generatePart1GameCom();
-        generatePart2GameCom();
-        generatePart3GameCom();
-        generateConclusionGameCom();
-        document.querySelector('#step-citations .verify-button').onclick = checkQuotesCom;
-    } else if (subSectionId === 'com-res') {
-        generateThesisGameCom();
-        generateArgsGameCom();
-        generatePartsGameCom();
-        generateCircuitGameCom();
-        generateSummaryGameCom();
-    } else if (subSectionId === 'com-syn') {
-        generateQuickReadGameComSyn();
-        generateDeepReadGameComSyn();
-        generatePlanGameComSyn();
-        generateSynthesisGameComSyn();
-    }
-}
-
-        function countWords(inputId, countId, max) {
-            const text = document.getElementById(inputId).value.trim();
-            const wordCount = text ? text.split(/\s+/).length : 0;
-            document.getElementById(countId).textContent = `Mots : ${wordCount}/${max}`;
-        }
-
-        function hideFeedback(feedbackId) {
-            setTimeout(() => {
-                document.getElementById(feedbackId).style.display = "none";
-            }, 5000);
-        }
-
-        // Données pour SCI-DISS
-const quotes = [
-    { text: "seul, Étéocle sera décrié dans toute la ville", author: "Eschyle", work: "Les Sept contre Thèbes" },
-    { text: "pas encore atteint la force de la jeunesse ou qui en avez dépassé l’âge, de tendre tous votre vigueur, et chacun faisant son devoir comme il convient", author: "Eschyle", work: "Les Suppliantes" },
-    { text: "asseyez-vous dans ce lieu sacré, comme un essaim de colombes fuyant des éperviers, qui sont leurs frères par le sang, mais devenus pour elles des ennemis qui souillent la race. Comme serait-il pur, l’oiseau qui dévore l’oiseau ?", author: "Eschyle", work: "Les Suppliantes" },
-    { text: "Thèbes est présentée comme un miroir inversé et vicié de la cité idéalisée qu’est Athènes", author: "Eschyle", work: "Les Sept contre Thèbes" },
-    { text: "Hermès a eu raison de les apparier : c’est un ennemi qui se mesurera avec un ennemi", author: "Eschyle", work: "Les Sept contre Thèbes" },
-    { text: "Thébains qui vont affronter les Argiens ont un nom, mais ils forment surtout un groupe homogène grâce à leurs qualités communes (la piété, la justice, le courage, l’action efficace)", author: "Eschyle", work: "Les Sept contre Thèbes" },
-    { text: "la cité prime l’individu et que c’est tomber dans une forme d’hubris que de vouloir tyranniquement ignorer sa loi", author: "Eschyle", work: "Les Suppliantes" },
-    { text: "Étéocle est bien celui qui souhaite réaliser l’union de tous les citoyens en vue de sauver la cité, considérée ici comme un tout inclusif de chacune de ses parties mises à profit selon leur propre hétérogénéité", author: "Eschyle", work: "Les Sept contre Thèbes" },
-    { text: "cité est par nature antérieure à une famille et à chacun de nous", author: "Eschyle", work: "Les Suppliantes" },
-    { text: "chacun doit se donn[er] au rôle qui convient à ses forces, porter secours à la cité, aux autels des dieux du pays", author: "Eschyle", work: "Les Suppliantes" },
-    
-    { text: "la tolérance ne revient pas simplement à accepter que les autres individus ne ressentent pas les choses comme nous (principe d’altérité), ni à se fier à l’arbitrage du collectif plus qu’à soi-même (principe du contrat social), elle consiste à reconnaître qu’aucun individu humain n’est tout à fait maître de lui-même", author: "Spinoza", work: "Traité Théologico-Politique" },
-    { text: "l’effort de chacun se trouve augmenté et non pas limité par celui des autres – peu importe ce qu’ils pensent ou ce qu’ils croient, pourvu qu’ils se laissent vivre entre eux", author: "Spinoza", work: "Traité Théologico-Politique" },
-    { text: "y sont développées des pensées originales sur la nature de la religion, la constitution de l’espace politique, l’extension de l’individu et l’interdépendance de la tolérance et de la liberté", author: "Spinoza", work: "Traité Théologico-Politique" },
-    { text: "nous ne sommes jamais dans une posture de face-à-face avec les autres, la société ou la nature, mais que nous sommes impliqués dans des rapports qui nous englobent et qui nous sont parfois utiles, parfois nocifs", author: "Spinoza", work: "Traité Théologico-Politique" },
-    { text: "Pour l’individu, la joie peut en ce sens résider dans le sentiment d’accomplissement et d’harmonie qu’il ressent à l’égard de la totalité dont il fait partie", author: "Spinoza", work: "Traité Théologico-Politique" },
-    { text: "la communauté reconnaît un droit absolu à la singularité des opinions", author: "Spinoza", work: "Traité Théologico-Politique" },
-    { text: "nul ne peut de son droit naturel être privé de quoi que ce soit sans que le droit civil de la communauté tout entière ne soit violé", author: "Spinoza", work: "Traité Théologico-Politique" },
-    { text: "c’est pour vivre dans la sécurité et le mieux possible que les hommes ont dû nécessairement aspirer à s’unir en un corps et ont fait par là que le droit que chacun avait de Nature sur toutes choses appartînt à la collectivité et fût déterminé non plus par la force et l’appétit de l’individu mais par la puissance et la volonté de tous ensemble", author: "Spinoza", work: "Traité Théologico-Politique" },
-    { text: "Comment concilier ces deux interprétations qui éclairent différemment l’entrée de l’individu en communauté, une entrée par le bas (l’utile supérieur) et une entrée par le haut (l’amour universel) ?", author: "Spinoza", work: "Traité Théologico-Politique" },
-    
-    { text: "on ne peut cerner une personnalité d’un simple trait noir, mais que chaque être se fond insensiblement dans son entourage et son environnement, comme le produi[t] de [ses] conditions matérielles et de [son] milieu", author: "Wharton", work: "Le Temps de l’innocence" },
-    { text: "La mélancolique pensée qu’il fallait bien tuer le temps hant[e] ainsi Mrs. Welland, comme le problème des chômeurs angoisse le philanthrope", author: "Wharton", work: "Le Temps de l’innocence" },
-    { text: "le roman nous invite à les questionner, en réinterrogeant par là même les deux notions d’individu et de communauté", author: "Wharton", work: "Le Temps de l’innocence" },
-    { text: "l’une des plus grandes polémiques de notre temps : la querelle entre ceux qui affirment que la société dans ses différentes manifestations ne représente jamais qu’un moyen dont la fin serait le bien-être de chaque individu, et ceux qui affirment que l’individu est secondaire, que le plus important, la véritable fin de la vie individuelle serait la perpétuation de la collectivité sociale dont l’individu constitue l’une des parties", author: "Wharton", work: "Le Temps de l’innocence" },
-    { text: "La communauté désigne ce qui est commun à plusieurs personnes, dont l’ensemble est constitué de liens d’intérêts, d’habitudes, d’opinions ou de caractères partagés", author: "Wharton", work: "Le Temps de l’innocence" },
-    { text: "Si la communauté dans son entier peut en effet apparaître comme un cadre sécurisant et même un rempart contre l’adversité (comme la comtesse Olenska le pense en venant y trouver refuge, ce en quoi sa communauté commence par faire illusion)", author: "Wharton", work: "Le Temps de l’innocence" },
-    { text: "La communauté, c’est chaud comme du peau à peau ; la société, c’est froid comme l’intérêt", author: "Wharton", work: "Le Temps de l’innocence" },
-    { text: "la communauté peut aussi bien l’aliéner et l’opprimer, si elle oublie qu’elle ne le forme pas exclusivement pour elle, mais d’abord pour qu’il devienne une personne", author: "Wharton", work: "Le Temps de l’innocence" },
-    { text: "La communauté qui ne connaît que des individus est inhumaine ; l’individualiste qui ne voit autour de lui qu’une société sans âme ni principe est égocentrique, replié dans la solitude incommunicable de sa propre subjectivité et finalement seul dans la foule immense des autres qui sont pourtant comme lui", author: "Wharton", work: "Le Temps de l’innocence" }
-];
-
-
-       const analysisData = [
-    { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", keywords: ["conscience", "société", "individu"], reformulation: "La perception de soi diffère entre l’individu et le collectif." },
-    { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", keywords: ["lien", "force", "entrave"], reformulation: "Les relations sociales soutiennent mais limitent." },
-    { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", keywords: ["individu", "regard", "autres"], reformulation: "L’identité dépend du collectif." },
-    { quote: "L’homme est un animal politique (Aristote)", keywords: ["homme", "politique", "communauté"], reformulation: "L’individu s’épanouit dans la vie collective." },
-    { quote: "La liberté de l’individu s’arrête là où commence celle d’autrui (John Stuart Mill)", keywords: ["liberté", "individu", "autrui"], reformulation: "La liberté personnelle est limitée par le collectif." },
-    { quote: "Le tout est plus que la somme de ses parties (Gestalt)", keywords: ["tout", "parties", "communauté"], reformulation: "La communauté dépasse les individus qui la composent." },
-    { quote: "On ne peut être soi qu’en étant avec les autres (Hannah Arendt)", keywords: ["soi", "autres", "être"], reformulation: "L’identité se construit dans la relation au groupe." },
-    { quote: "La société est un contrat entre les vivants, les morts et ceux qui naîtront (Edmund Burke)", keywords: ["société", "contrat", "générations"], reformulation: "La communauté unit les individus à travers le temps." },
-    { quote: "L’individu est une abstraction, la communauté est une réalité (Ferdinand Tönnies)", keywords: ["individu", "communauté", "réalité"], reformulation: "Le collectif prime sur l’individu isolé." },
-    { quote: "L’homme seul est une bête ou un dieu (Platon)", keywords: ["homme", "solitude", "communauté"], reformulation: "L’individu hors du groupe perd son humanité." },
-    { quote: "La vraie liberté ne peut exister sans la sécurité donnée par la communauté (Thomas Hobbes)", keywords: ["liberté", "sécurité", "communauté"], reformulation: "La collectivité garantit la liberté individuelle." },
-    { quote: "Chaque individu est une exception, mais la société les égalise (Georg Simmel)", keywords: ["individu", "société", "égalité"], reformulation: "Le collectif uniformise les singularités." },
-    { quote: "Nous sommes des nains juchés sur les épaules de géants (Bernard de Chartres)", keywords: ["nous", "géants", "héritage"], reformulation: "L’individu s’appuie sur l’héritage communautaire." },
-    { quote: "La communauté est une nécessité, mais elle peut étouffer l’âme (Carl Gustav Jung)", keywords: ["communauté", "nécessité", "âme"], reformulation: "Le groupe est vital mais peut limiter l’individu." },
-    { quote: "L’individu ne pense pas, c’est la société qui pense en lui (Émile Durkheim)", keywords: ["individu", "société", "pensée"], reformulation: "La pensée individuelle reflète le collectif." },
-    { quote: "Je est un autre (Arthur Rimbaud)", keywords: ["je", "autre", "identité"], reformulation: "L’identité personnelle se mêle au regard collectif." },
-    { quote: "Le progrès de l’individu dépend du progrès de tous (Herbert Spencer)", keywords: ["progrès", "individu", "tous"], reformulation: "L’évolution personnelle passe par le collectif." },
-    { quote: "La solitude ne vient pas de l’absence d’autrui, mais de l’incapacité à communier (Carl Rogers)", keywords: ["solitude", "autrui", "communion"], reformulation: "L’isolement naît d’un manque de lien avec le groupe." }
-];
-
-       const problemData = [
-    { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", problem: "Comment concilier la conscience individuelle et collective ?", keywords: ["conscience", "société", "individu"] },
-    { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", problem: "Dans quelle mesure le lien social libère-t-il ou enferme-t-il l’individu ?", keywords: ["lien", "social", "entrave"] },
-    { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", problem: "L’individu peut-il se définir hors du regard collectif ?", keywords: ["individu", "regard", "autres"] },
-    { quote: "L’homme est un animal politique (Aristote)", problem: "L’individu peut-il exister pleinement hors de la communauté politique ?", keywords: ["homme", "politique", "communauté"] },
-    { quote: "La liberté de l’individu s’arrête là où commence celle d’autrui (John Stuart Mill)", problem: "Comment définir les limites entre liberté individuelle et collective ?", keywords: ["liberté", "individu", "autrui"] },
-    { quote: "Le tout est plus que la somme de ses parties (Gestalt)", problem: "La communauté a-t-elle une valeur qui dépasse celle des individus ?", keywords: ["tout", "parties", "communauté"] },
-    { quote: "On ne peut être soi qu’en étant avec les autres (Hannah Arendt)", problem: "L’identité individuelle est-elle possible sans interaction avec autrui ?", keywords: ["soi", "autres", "identité"] },
-    { quote: "La société est un contrat entre les vivants, les morts et ceux qui naîtront (Edmund Burke)", problem: "Comment l’individu s’inscrit-il dans une continuité collective ?", keywords: ["société", "contrat", "continuité"] },
-    { quote: "L’individu est une abstraction, la communauté est une réalité (Ferdinand Tönnies)", problem: "L’individu existe-t-il réellement indépendamment du collectif ?", keywords: ["individu", "communauté", "réalité"] },
-    { quote: "L’homme seul est une bête ou un dieu (Platon)", problem: "Que devient l’individu coupé de toute communauté ?", keywords: ["homme", "solitude", "communauté"] },
-    { quote: "La vraie liberté ne peut exister sans la sécurité donnée par la communauté (Thomas Hobbes)", problem: "La liberté individuelle dépend-elle toujours du cadre collectif ?", keywords: ["liberté", "sécurité", "communauté"] },
-    { quote: "Chaque individu est une exception, mais la société les égalise (Georg Simmel)", problem: "La société supprime-t-elle la singularité individuelle ?", keywords: ["individu", "société", "singularité"] },
-    { quote: "Nous sommes des nains juchés sur les épaules de géants (Bernard de Chartres)", problem: "L’individu peut-il progresser sans s’appuyer sur le collectif passé ?", keywords: ["nains", "géants", "progrès"] },
-    { quote: "La communauté est une nécessité, mais elle peut étouffer l’âme (Carl Gustav Jung)", problem: "Comment préserver l’individualité dans une communauté oppressante ?", keywords: ["communauté", "nécessité", "âme"] },
-    { quote: "L’individu ne pense pas, c’est la société qui pense en lui (Émile Durkheim)", problem: "La pensée individuelle peut-elle échapper à l’influence collective ?", keywords: ["individu", "société", "pensée"] },
-    { quote: "Je est un autre (Arthur Rimbaud)", problem: "Dans quelle mesure l’identité individuelle est-elle façonnée par autrui ?", keywords: ["je", "autre", "identité"] },
-    { quote: "Le progrès de l’individu dépend du progrès de tous (Herbert Spencer)", problem: "L’épanouissement personnel est-il indissociable du bien collectif ?", keywords: ["progrès", "individu", "tous"] },
-    { quote: "La solitude ne vient pas de l’absence d’autrui, mais de l’incapacité à communier (Carl Rogers)", problem: "Pourquoi l’individu se sent-il seul au sein d’une communauté ?", keywords: ["solitude", "autrui", "communier"] }
-];
-
-        const planData = [
-            { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", keywords: ["conscience", "tension", "harmonie"] },
-            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", keywords: ["lien", "force", "limite"] },
-            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", keywords: ["identité", "autrui", "autonomie"] }
-        ];
-
-        const introData = [
-            { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", problem: "Comment concilier la conscience individuelle et collective ?", planKeywords: ["conscience", "tension", "harmonie"], works: ["Eschyle", "Spinoza", "Wharton"] },
-            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", problem: "Dans quelle mesure le lien social libère-t-il ou enferme-t-il l’individu ?", planKeywords: ["lien", "force", "limite"], works: ["Eschyle", "Spinoza", "Wharton"] },
-            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", problem: "L’individu peut-il se définir hors du regard collectif ?", planKeywords: ["identité", "autrui", "autonomie"], works: ["Eschyle", "Spinoza", "Wharton"] }
-        ];
-
-        const part1Data = [
-            { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "La conscience collective domine", introPartial: "La communauté forge une identité.", subParts: ["Protection dans Les Suppliantes", "Soutien ambigu dans Wharton", "Pacte sécurisant chez Spinoza"], conclusionPartial: "Mais la conscience individuelle résiste." },
-            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", idea: "La force du collectif", introPartial: "Le lien unit les individus.", subParts: ["Solidarité chez Eschyle", "Règles chez Spinoza", "Normes chez Wharton"], conclusionPartial: "Mais il impose des contraintes." },
-            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", idea: "L’identité par autrui", introPartial: "Le regard collectif façonne.", subParts: ["Devoir chez Eschyle", "Jugement chez Wharton", "Raison chez Spinoza"], conclusionPartial: "Mais l’individu cherche à s’émanciper." }
-        ];
-
-        const part2Data = [
-            { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "La tension persiste", introPartial: "Le décalage crée des conflits.", subParts: ["Oppression dans Wharton", "Conflit chez Eschyle", "Limite chez Spinoza"], conclusionPartial: "La tension appelle une résolution." },
-            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", idea: "Les limites du lien", introPartial: "Les règles étouffent.", subParts: ["Tyrannie chez Eschyle", "Conformité chez Wharton", "Contrôle chez Spinoza"], conclusionPartial: "Mais l’individu résiste." },
-            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", idea: "Conflit intérieur", introPartial: "Le regard oppresse.", subParts: ["Poids chez Wharton", "Devoir chez Eschyle", "Critique chez Spinoza"], conclusionPartial: "L’autonomie reste fragile." }
-        ];
-
-        const part3Data = [
-            { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", idea: "Une harmonie est possible", introPartial: "Un équilibre peut émerger.", subParts: ["Pacte rationnel chez Spinoza", "Résistance chez Wharton", "Solidarité chez Eschyle"], conclusionPartial: "L’harmonie reste précaire." },
-            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", idea: "Vers un équilibre", introPartial: "La coopération s’ajuste.", subParts: ["Raison chez Spinoza", "Adaptation chez Wharton", "Unité chez Eschyle"], conclusionPartial: "Mais les tensions subsistent." },
-            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", idea: "Autonomie partielle", introPartial: "L’individu s’affirme.", subParts: ["Liberté chez Spinoza", "Rejet chez Wharton", "Courage chez Eschyle"], conclusionPartial: "Le regard reste influent." }
-        ];
-
-        const conclusionData = [
-            { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", summary: "La conscience collective domine, mais la tension persiste et peut s’harmoniser.", opening: "Comment cette dualité évolue-t-elle aujourd’hui ?" },
-            { quote: "Le lien social est à la fois une force et une entrave (Durkheim)", summary: "Le lien soutient mais limite, un équilibre émerge.", opening: "Quel lien social pour demain ?" },
-            { quote: "L’individu n’existe qu’à travers le regard des autres (Sartre)", summary: "L’identité dépend d’autrui mais cherche l’autonomie.", opening: "L’individu peut-il s’affranchir ?" }
-        ];
-
-        // Fonctions SCI-DISS
-        function generateQuoteGame() {
-            const container = document.getElementById("quote-container");
-            const selected = quotes.sort(() => 0.5 - Math.random()).slice(0, 3);
-            container.innerHTML = selected.map((q, i) => `
-                <p>${i + 1}. "${q.text}"</p>
-                <select id="quote-${i}">
-                    <option value="">Choisissez...</option>
-                    <option value="Eschyle">Eschyle</option>
-                    <option value="Spinoza">Spinoza</option>
-                    <option value="Wharton">Wharton</option>
-                </select>
-            `).join('');
-        }
-
-        function checkQuotes() {
-            const feedback = document.getElementById("quote-feedback");
-            let correct = 0;
-            for (let i = 0; i < 3; i++) {
-                const select = document.getElementById(`quote-${i}`);
-                const text = select.previousElementSibling.textContent.split('"')[1];
-                if (select.value === quotes.find(q => q.text === text).author) correct++;
-            }
-            feedback.style.display = "block";
-            if (correct === 3) {
-                feedback.innerHTML = "Parfait ! Toutes les citations sont correctes. +10 points.";
-                updateGamification(10, "step-citations");
-                setTimeout(() => generateQuoteGame(), 2000);
-            } else {
-                feedback.innerHTML = `${correct}/3 correctes. Étudiez mieux les auteurs !`;
-                updateGamification(0, "step-citations");
-            }
-            hideFeedback("quote-feedback");
-        }
-
-        function generateAnalysisGame() {
-            const container = document.getElementById("analysis-container");
-            const data = analysisData[Math.floor(Math.random() * analysisData.length)];
-            container.innerHTML = `
-                <p>Citation : "${data.quote}"</p>
-                <label>Mots-clés (exactement ${data.keywords.length}) :</label><input id="keywords-input" placeholder="ex. conscience, société...">
-                <label>Reformulation :</label><input id="reform-input" placeholder="Reformulez la citation...">
-            `;
-        }
-
-        function checkAnalysis() {
-            const feedback = document.getElementById("analysis-feedback");
-            const quote = document.getElementById("analysis-container").querySelector("p").textContent.split('"')[1];
-            const data = analysisData.find(d => d.quote === quote);
-            const keywords = document.getElementById("keywords-input").value.toLowerCase().split(/,\s*/).filter(k => k);
-            const reform = document.getElementById("reform-input").value.toLowerCase().trim();
-            const keywordMatch = data.keywords.length === keywords.length && data.keywords.every(k => keywords.includes(k));
-            const reformMatch = reform.split(/\s+/).length >= 5 && data.reformulation.toLowerCase().split(" ").every(w => reform.includes(w));
-            feedback.style.display = "block";
-            if (keywordMatch && reformMatch) {
-                feedback.innerHTML = "Analyse précise ! +15 points.";
-                updateGamification(15, "step-analysis");
-                setTimeout(() => generateAnalysisGame(), 2000);
-            } else {
-                feedback.innerHTML = `Incorrect. Mots-clés attendus : ${data.keywords.join(", ")}. Reformulation : "${data.reformulation}". Soyez exact !`;
-                updateGamification(0, "step-analysis");
-            }
-            hideFeedback("analysis-feedback");
-        }
-
-        function generateProblemGame() {
-    const container = document.getElementById("problem-container");
-    const data = problemData[Math.floor(Math.random() * problemData.length)];
-    container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
-    document.getElementById("problem-input").value = ""; // Réinitialise le champ de saisie
-}
-
-function checkProblem() {
-    const feedback = document.getElementById("problem-feedback");
-    const quote = document.getElementById("problem-container").querySelector("p").textContent.split('"')[1];
-    const data = problemData.find(d => d.quote === quote);
-    const input = document.getElementById("problem-input").value.toLowerCase().trim();
-    
-    // Critères de validation
-    const includesKeyTerms = input.includes("individu") && input.includes("communauté");
-    const isQuestion = input.endsWith("?");
-    const hasEnoughWords = input.split(/\s+/).length >= 8;
-    // Vérifie si la réponse reflète la problématique attendue de manière flexible
-    const expectedWords = data.problem.toLowerCase().split(" ").filter(w => w.length > 3); // Ignore mots courts comme "le", "est", etc.
-    const reflectsProblem = expectedWords.some(w => input.includes(w)); // Au moins un mot clé significatif présent
-    
-    feedback.style.display = "block";
-    
-    if (includesKeyTerms && isQuestion && hasEnoughWords && reflectsProblem) {
-        feedback.innerHTML = "Problématique rigoureuse ! +20 points.";
-        updateGamification(20, "step-problem");
-        setTimeout(() => generateProblemGame(), 2000); // Génère une nouvelle citation après 2 secondes
-    } else {
-        feedback.innerHTML = `Insuffisant. Exemple : "${data.problem}". Doit inclure "individu", "communauté", finir par "?" et refléter la citation (8+ mots).`;
-        updateGamification(0, "step-problem");
-    }
-    
-    hideFeedback("problem-feedback"); // Cache le feedback après un délai (fonction supposée existante)
-}
-
-        function generatePlanGame() {
-    const container = document.getElementById("plan-container");
-    const data = problemData[Math.floor(Math.random() * problemData.length)];
-    container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
-    document.getElementById("plan-input").value = ""; // Réinitialise le champ de saisie
-}
-
-        
-       function checkPlan() {
-    const feedback = document.getElementById("plan-feedback");
-    const quote = document.getElementById("plan-container").querySelector("p").textContent.split('"')[1];
-    const data = problemData.find(d => d.quote === quote);
-    const input = document.getElementById("plan-input").value.toLowerCase().trim();
-    
-    // Vérifie les trois parties dialectiques (Certes :, Mais :, Alors :)
-    const parts = input.split(/(certes|mais|alors)\s*:\s*/).filter(p => p && !["certes", "mais", "alors"].includes(p.trim()));
-    const hasThreeParts = parts.length === 3 && 
-                         input.includes("certes") && input.includes("mais") && input.includes("alors") && 
-                         parts.every(p => p.split(/\s+/).length >= 5);
-    
-    // Vérifie la présence des mots-clés associés à la citation
-    const hasKeywords = data.keywords.every(k => input.includes(k));
-    
-    feedback.style.display = "block";
-    
-    if (hasThreeParts && hasKeywords) {
-        feedback.innerHTML = "Plan dialectique structuré et pertinent ! +25 points.";
-        updateGamification(25, "step-plan");
-        setTimeout(() => generatePlanGame(), 2000); // Nouvelle citation après 2 secondes
-    } else {
-        feedback.innerHTML = `Incomplet. Besoin de : 3 parties dialectiques (Certes :, Mais :, Alors :, 5+ mots chacune), mots-clés (${data.keywords.join(", ")}).`;
-        updateGamification(0, "step-plan");
-    }
-    
-    hideFeedback("plan-feedback"); // Cache le feedback (fonction supposée existante)
-}
-
-        function generateIntroGame() {
-            const container = document.getElementById("intro-container");
-            const data = introData[Math.floor(Math.random() * introData.length)];
-            container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
-            document.getElementById("intro-input").value = "";
-        }
-
-        function checkIntro() {
-            const feedback = document.getElementById("intro-feedback");
-            const quote = document.getElementById("intro-container").querySelector("p").textContent.split('"')[1];
-            const data = introData.find(d => d.quote === quote);
-            const input = document.getElementById("intro-input").value.toLowerCase().trim();
-            const hasAmorce = ["depuis", "histoire", "société"].some(w => input.includes(w));
-            const hasCitation = input.includes(quote.toLowerCase().substring(0, 20));
-            const hasProblem = input.includes("individu") && input.includes("communauté") && input.includes("?") && data.problem.toLowerCase().split(" ").every(w => input.includes(w));
-            const hasPlan = data.planKeywords.every(k => input.includes(k));
-            const hasWorks = data.works.every(w => input.includes(w.toLowerCase()));
-            const isLongEnough = input.split(/\s+/).length >= 80;
-            feedback.style.display = "block";
-            if (hasAmorce && hasCitation && hasProblem && hasPlan && hasWorks && isLongEnough) {
-                feedback.innerHTML = "Introduction exemplaire ! +30 points.";
-                updateGamification(30, "step-intro");
-                setTimeout(() => generateIntroGame(), 2000);
-            } else {
-                feedback.innerHTML = `Incomplet. Besoin de : amorce (contexte), citation (${quote.substring(0, 20)}...), problématique (${data.problem}), plan (${data.planKeywords.join(", ")}), œuvres (${data.works.join(", ")}), et 80+ mots.`;
-                updateGamification(0, "step-intro");
-            }
-            hideFeedback("intro-feedback");
-        }
-
-        function generatePart1Game() {
-            const container = document.getElementById("part1-container");
-            const data = part1Data[Math.floor(Math.random() * part1Data.length)];
-            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-            container.innerHTML = `
-                <p>Citation : "${data.quote}"</p>
-                <p>Idée : ${data.idea}</p>
-                <p>Intro partielle : ${data.introPartial}</p>
-                <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
-                <p>Conclusion partielle : ${data.conclusionPartial}</p>
-            `;
-            document.getElementById("part1-input").value = "";
-        }
-
-        function checkPart1() {
-            const feedback = document.getElementById("part1-feedback");
-            const input = document.getElementById("part1-input").value.toLowerCase().trim();
-            const quote = document.getElementById("part1-container").querySelector("p").textContent.split('"')[1];
-            const data = part1Data.find(d => d.quote === quote);
-            const hasIntro = input.includes(data.introPartial.toLowerCase());
-            const hasSubParts = data.subParts.every(sp => input.includes(sp.toLowerCase().split(" ")[0]));
-            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase());
-            const isLongEnough = input.split(/\s+/).length >= 120;
-            feedback.style.display = "block";
-            if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
-                feedback.innerHTML = "Première partie solide ! +40 points.";
-                updateGamification(40, "step-part1");
-                setTimeout(() => generatePart1Game(), 2000);
-            } else {
-                feedback.innerHTML = `Insuffisant. Besoin de : intro (${data.introPartial}), sous-parties (${data.subParts.join(", ")}), conclusion (${data.conclusionPartial}), et 120+ mots.`;
-                updateGamification(0, "step-part1");
-            }
-            hideFeedback("part1-feedback");
-        }
-
-        function generatePart2Game() {
-            const container = document.getElementById("part2-container");
-            const data = part2Data[Math.floor(Math.random() * part2Data.length)];
-            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-            container.innerHTML = `
-                <p>Citation : "${data.quote}"</p>
-                <p>Idée : ${data.idea}</p>
-                <p>Intro partielle : ${data.introPartial}</p>
-                <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
-                <p>Conclusion partielle : ${data.conclusionPartial}</p>
-            `;
-            document.getElementById("part2-input").value = "";
-        }
-
-        function checkPart2() {
-            const feedback = document.getElementById("part2-feedback");
-            const input = document.getElementById("part2-input").value.toLowerCase().trim();
-            const quote = document.getElementById("part2-container").querySelector("p").textContent.split('"')[1];
-            const data = part2Data.find(d => d.quote === quote);
-            const hasIntro = input.includes(data.introPartial.toLowerCase());
-            const hasSubParts = data.subParts.every(sp => input.includes(sp.toLowerCase().split(" ")[0]));
-            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase());
-            const isLongEnough = input.split(/\s+/).length >= 120;
-            feedback.style.display = "block";
-            if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
-                feedback.innerHTML = "Deuxième partie robuste ! +45 points.";
-                updateGamification(45, "step-part2");
-                setTimeout(() => generatePart2Game(), 2000);
-            } else {
-                feedback.innerHTML = `Incomplet. Besoin de : intro (${data.introPartial}), sous-parties (${data.subParts.join(", ")}), conclusion (${data.conclusionPartial}), et 120+ mots.`;
-                updateGamification(0, "step-part2");
-            }
-            hideFeedback("part2-feedback");
-        }
-
-        function generatePart3Game() {
-            const container = document.getElementById("part3-container");
-            const data = part3Data[Math.floor(Math.random() * part3Data.length)];
-            const randomArgs = quotes.sort(() => 0.5 - Math.random()).slice(0, 3).map(q => q.text);
-            container.innerHTML = `
-                <p>Citation : "${data.quote}"</p>
-                <p>Idée : ${data.idea}</p>
-                <p>Intro partielle : ${data.introPartial}</p>
-                <p>Sous-parties suggérées : ${randomArgs.join(", ")}</p>
-                <p>Conclusion partielle : ${data.conclusionPartial}</p>
-            `;
-            document.getElementById("part3-input").value = "";
-        }
-
-        function checkPart3() {
-            const feedback = document.getElementById("part3-feedback");
-            const input = document.getElementById("part3-input").value.toLowerCase().trim();
-            const quote = document.getElementById("part3-container").querySelector("p").textContent.split('"')[1];
-            const data = part3Data.find(d => d.quote === quote);
-            const hasIntro = input.includes(data.introPartial.toLowerCase());
-            const hasSubParts = data.subParts.every(sp => input.includes(sp.toLowerCase().split(" ")[0]));
-            const hasConclusion = input.includes(data.conclusionPartial.toLowerCase());
-            const isLongEnough = input.split(/\s+/).length >= 120;
-            feedback.style.display = "block";
-            if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
-                feedback.innerHTML = "Troisième partie impeccable ! +50 points.";
-                updateGamification(50, "step-part3");
-                setTimeout(() => generatePart3Game(), 2000);
-            } else {
-                feedback.innerHTML = `Insuffisant. Besoin de : intro (${data.introPartial}), sous-parties (${data.subParts.join(", ")}), conclusion (${data.conclusionPartial}), et 120+ mots.`;
-                updateGamification(0, "step-part3");
-            }
-            hideFeedback("part3-feedback");
-        }
-
-        function generateConclusionGame() {
-            const container = document.getElementById("conclusion-container");
-            const data = conclusionData[Math.floor(Math.random() * conclusionData.length)];
-            container.innerHTML = `
-                <p>Citation : "${data.quote}"</p>
-                <p>Résumé des parties : ${data.summary}</p>
-                <p>Ouverture : ${data.opening}</p>
-            `;
-            document.getElementById("conclusion-input").value = "";
-        }
-
-        function checkConclusion() {
-            const feedback = document.getElementById("conclusion-feedback");
-            const input = document.getElementById("conclusion-input").value.toLowerCase().trim();
-            const quote = document.getElementById("conclusion-container").querySelector("p").textContent.split('"')[1];
-            const data = conclusionData.find(d => d.quote === quote);
-            const hasSummary = data.summary.toLowerCase().split(" ").every(w => input.includes(w)) && ["eschyle", "spinoza", "wharton"].every(w => input.includes(w));
-            const hasOpening = input.includes(data.opening.toLowerCase());
-            const isLongEnough = input.split(/\s+/).length >= 60;
-            feedback.style.display = "block";
-            if (hasSummary && hasOpening && isLongEnough) {
-                feedback.innerHTML = "Conclusion magistrale ! +60 points.";
-                updateGamification(60, "step-conclusion");
-                setTimeout(() => generateConclusionGame(), 2000);
-            } else {
-                feedback.innerHTML = `Incomplet. Besoin de : résumé (${data.summary}), ouverture (${data.opening}), œuvres (Eschyle, Spinoza, Wharton), et 60+ mots.`;
-                updateGamification(0, "step-conclusion");
-            }
-            hideFeedback("conclusion-feedback");
-        }
-
-        // Données pour SCI-RES (Résumés)
-        const summaryTexts = [
-            {
-                text: "Depuis l’aube de l’humanité, l’individu a cherché dans la communauté un refuge face aux aléas de l’existence. Les premières sociétés humaines, des chasseurs-cueilleurs aux cités antiques, ont survécu grâce à une solidarité implacable : un individu seul ne pouvait affronter les bêtes sauvages ou les famines. Cette entraide a forgé des liens puissants, visibles dans les rites collectifs ou les travaux communs, où chacun trouvait sa place au sein d’un tout protecteur. Historiquement, la communauté a été un rempart contre l’incertitude, offrant sécurité physique et affective là où la solitude menait à la perdition. Les récits mythiques, comme ceux des cités grecques, exaltent cette union sacrée face au chaos extérieur. Cependant, cette force collective a un revers : elle impose des normes qui brident l’individu. Dès qu’une communauté s’organise, elle établit des règles, des hiérarchies, des attentes qui écrasent souvent les désirs personnels. Dans les sociétés traditionnelles, le bien commun prime sur l’aspiration individuelle, transformant l’appartenance en une prison dorée. Aujourd’hui, les réseaux sociaux amplifient ce phénomène : l’individu, sous pression pour se conformer à des standards de beauté ou d’opinion, perd une part de son authenticité. Les codes sociaux, bien que protecteurs, deviennent des chaînes invisibles, limitant la liberté de penser ou d’agir hors des sentiers battus. Cette tension révèle une vérité : la communauté, pour exister, exige parfois le sacrifice de l’unicité. Ainsi, la quête d’un équilibre devient essentielle. Si la communauté offre un cadre vital, elle ne doit pas étouffer l’individu sous son poids. L’histoire montre des tentatives pour concilier ces pôles : des révoltes individuelles aux pactes sociaux rationnels, l’humanité oscille entre union et autonomie. Une société idéale serait celle où l’individu conserve une marge de liberté tout en bénéficiant de la force collective. Cela implique une redéfinition des liens sociaux, où la communauté soutient sans asservir, laissant à chacun la possibilité de s’épanouir. En somme, individu et communauté ne sont pas condamnés à s’opposer, mais à coexister dans une harmonie fragile, où chacun trouve sa juste place.",
-                thesis: "La communauté offre un refuge mais limite la liberté individuelle.",
-                args: ["Protection historique", "Normes restrictives", "Équilibre nécessaire"],
-                parts: ["Refuge communautaire", "Contrainte sociale", "Quête d’équilibre"],
-                circuit: ["Cause (protection)", "Opposition (contrainte)", "Concession (équilibre)"]
-            },
-            {
-                text: "La communauté a souvent été célébrée comme un idéal unificateur, une promesse de cohésion face à la dispersion individuelle. Depuis les sociétés primitives, elle incarne une aspiration à l’unité, où les individus se fondent dans un projet commun, comme les cités grecques défendues par leurs héros. Cet idéal a inspiré des récits épiques et des systèmes sociaux où le groupe transcende les égoïsmes, offrant un sens d’appartenance et une force collective. Les utopies, des phalanstères aux kibboutz, témoignent de ce rêve d’une vie harmonieuse où l’individu s’épanouit dans le tout. Ces expériences historiques exaltent la communauté comme un rempart contre la solitude et un vecteur d’identité partagée, où chacun contribue à un bien supérieur. Pourtant, la réalité dément cet idéal avec une violence implacable. Les communautés, dès qu’elles s’organisent, se fissurent sous le poids des conflits internes : luttes de pouvoir, divergences d’intérêts, exclusions des marginaux. Les guerres fratricides, les ostracismes ou les schismes religieux montrent que l’unité reste une illusion, brisée par la diversité humaine. Même dans les sociétés modernes, les tentatives de cohésion – nationalismes ou réseaux sociaux – engendrent autant de divisions que d’unions, révélant la fragilité du collectif face aux passions individuelles. Face à cette désillusion, la communauté apparaît comme une fiction nécessaire, un mythe mobilisateur. Si elle ne peut atteindre une harmonie parfaite, elle reste un horizon vers lequel tendre, un récit qui donne sens à la coexistence malgré les fractures. Les individus, tiraillés entre égoïsme et besoin d’appartenance, s’accrochent à cette idée pour surmonter leurs différends, comme un idéal qui transcende la réalité. En somme, la communauté est un paradoxe : une illusion séduisante mais irréalisable, pourtant essentielle pour structurer la vie sociale et donner à l’individu un cadre où exister.",
-                thesis: "La communauté est une fiction séduisante mais irréalisable.",
-                args: ["Idéal historique", "Conflits réels", "Fiction nécessaire"],
-                parts: ["Idéal communautaire", "Réalité conflictuelle", "Fiction mobilisatrice"],
-                circuit: ["Cause (idéal)", "Opposition (réalité)", "Synthèse (fiction)"]
-            },
-            {
-                text: "L’idée que l’individu doive se sacrifier pour la communauté a traversé les âges, portée par des visions héroïques et des impératifs collectifs. Dans les cités antiques, comme Sparte ou Athènes, le citoyen était prêt à mourir pour défendre la polis, incarnation d’un devoir sacré. Ce sacrifice, exalté dans les épopées, forgeait la grandeur des nations : un individu offrait sa vie pour la survie du groupe, assurant la pérennité des valeurs communes. Cette logique trouve écho dans les guerres modernes, où les soldats tombent pour la patrie, symbolisant une transcendance de l’égoïsme au profit du bien commun. La communauté, en retour, glorifie ces héros, leur offrant une reconnaissance qui dépasse leur existence éphémère. Cependant, ce sacrifice a un coût humain dévastateur. L’individu, en s’effaçant pour la collectivité, perd sa liberté, ses rêves, parfois sa vie. Les récits de guerre montrent des destins brisés, des familles endeuillées, des consciences écrasées par un devoir imposé. Dans les sociétés autoritaires, ce principe devient une arme : l’individu est réduit à un pion, sa valeur intrinsèque niée au nom d’un collectif oppressif. Même dans des contextes moins extrêmes, le conformisme social peut exiger des renoncements silencieux, étouffant les aspirations personnelles sous le poids des attentes. Ainsi, la question éthique surgit : le sacrifice individuel est-il toujours justifié ? Si la communauté bénéficie de ces actes, elle doit aussi préserver la dignité de chacun. L’histoire montre des résistances, des individus réclamant leur droit à exister face à l’absolutisme collectif. Une société équilibrée pourrait honorer le sacrifice sans l’exiger aveuglément, reconnaissant que l’individu n’est pas qu’un moyen, mais une fin en soi. En définitive, le sacrifice renforce la communauté, mais au prix d’une perte qui interroge sa légitimité.",
-                thesis: "Le sacrifice individuel renforce la communauté mais le détruit.",
-                args: ["Devoir héroïque", "Perte personnelle", "Réflexion éthique"],
-                parts: ["Sacrifice pour la cité", "Coût humain", "Questionnement moral"],
-                circuit: ["Cause (devoir)", "Conséquence (perte)", "Questionnement (éthique)"]
-            }
-        ];
-
-    
-
-        // Fonctions SCI-RES
-        function generateThesisGame() {
-            const container = document.getElementById("thesis-container");
-            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-            container.innerHTML = `<p>${data.text}</p>`;
-            document.getElementById("thesis-input").value = "";
-        }
-
-        function checkThesis() {
-            const feedback = document.getElementById("thesis-feedback");
-            const input = document.getElementById("thesis-input").value.toLowerCase().trim();
-            const text = document.getElementById("thesis-container").textContent;
-            const data = summaryTexts.find(t => t.text === text);
-            const isCorrect = input === data.thesis.toLowerCase();
-            feedback.style.display = "block";
-            if (isCorrect) {
-                feedback.innerHTML = "Thèse exacte ! +20 points.";
-                updateGamification(20, "step-thesis");
-                setTimeout(() => generateThesisGame(), 2000);
-            } else {
-                feedback.innerHTML = `Faux. Thèse attendue : "${data.thesis}". Soyez précis !`;
-                updateGamification(0, "step-thesis");
-            }
-            hideFeedback("thesis-feedback");
-        }
-
-        function generateArgsGame() {
-            const container = document.getElementById("args-container");
-            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-            container.innerHTML = `<p>${data.text}</p>`;
-            document.getElementById("args-input").value = "";
-        }
-
-        function checkArgs() {
-            const feedback = document.getElementById("args-feedback");
-            const input = document.getElementById("args-input").value.toLowerCase().trim().split(/,\s*/).filter(a => a);
-            const text = document.getElementById("args-container").textContent;
-            const data = summaryTexts.find(t => t.text === text);
-            const isCorrect = input.length === 3 && data.args.every((arg, i) => input[i] === arg.toLowerCase());
-            feedback.style.display = "block";
-            if (isCorrect) {
-                feedback.innerHTML = "Arguments parfaits ! +25 points.";
-                updateGamification(25, "step-args");
-                setTimeout(() => generateArgsGame(), 2000);
-            } else {
-                feedback.innerHTML = `Incorrect. Arguments attendus : ${data.args.join(", ")}. Listez-les exactement dans l’ordre !`;
-                updateGamification(0, "step-args");
-            }
-            hideFeedback("args-feedback");
-        }
-
-        function generatePartsGame() {
-            const container = document.getElementById("parts-container");
-            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-            container.innerHTML = `<p>${data.text}</p>`;
-            document.getElementById("parts-input").value = "";
-        }
-
-        function checkParts() {
-            const feedback = document.getElementById("parts-feedback");
-            const input = document.getElementById("parts-input").value.toLowerCase().trim().split(/,\s*/).filter(p => p);
-            const text = document.getElementById("parts-container").textContent;
-            const data = summaryTexts.find(t => t.text === text);
-            const isCorrect = input.length === 3 && data.parts.every((part, i) => input[i] === part.toLowerCase());
-            feedback.style.display = "block";
-            if (isCorrect) {
-                feedback.innerHTML = "Parties bien identifiées ! +30 points.";
-                updateGamification(30, "step-parts");
-                setTimeout(() => generatePartsGame(), 2000);
-            } else {
-                feedback.innerHTML = `Faux. Parties attendues : ${data.parts.join(", ")}. Soyez exact !`;
-                updateGamification(0, "step-parts");
-            }
-            hideFeedback("parts-feedback");
-        }
-
-        function generateCircuitGame() {
-            const container = document.getElementById("circuit-container");
-            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-            container.innerHTML = `<p>${data.text}</p>`;
-            document.getElementById("circuit-input").value = "";
-        }
-
-        function checkCircuit() {
-            const feedback = document.getElementById("circuit-feedback");
-            const input = document.getElementById("circuit-input").value.toLowerCase().trim().split(/,\s*/).filter(c => c);
-            const text = document.getElementById("circuit-container").textContent;
-            const data = summaryTexts.find(t => t.text === text);
-            const isCorrect = input.length === 3 && data.circuit.every((link, i) => input[i] === link.toLowerCase());
-            feedback.style.display = "block";
-            if (isCorrect) {
-                feedback.innerHTML = "Circuit précis ! +40 points.";
-                updateGamification(40, "step-circuit");
-                setTimeout(() => generateCircuitGame(), 2000);
-            } else {
-                feedback.innerHTML = `Incorrect. Circuit attendu : ${data.circuit.join(", ")}. Listez les liens dans l’ordre !`;
-                updateGamification(0, "step-circuit");
-            }
-            hideFeedback("circuit-feedback");
-        }
-
-        function generateSummaryGame() {
-            const container = document.getElementById("summary-container");
-            const data = summaryTexts[Math.floor(Math.random() * summaryTexts.length)];
-            container.innerHTML = `<p>${data.text}</p>`;
-            document.getElementById("summary-input").value = "";
-            countWords("summary-input", "summary-word-count", 100);
-        }
-
-        function checkSummary() {
-            const feedback = document.getElementById("summary-feedback");
-            const input = document.getElementById("summary-input").value.toLowerCase().trim();
-            const text = document.getElementById("summary-container").textContent;
-            const data = summaryTexts.find(t => t.text === text);
-            const wordCount = input.split(/\s+/).length;
-            const hasThesis = input.includes(data.thesis.toLowerCase());
-            const hasArgs = data.args.every(arg => input.includes(arg.toLowerCase().split(" ")[0]));
-            const isCorrectLength = wordCount === 100;
-            feedback.style.display = "block";
-            if (hasThesis && hasArgs && isCorrectLength) {
-                feedback.innerHTML = `Résumé parfait (100 mots) ! +60 points.`;
-                updateGamification(60, "step-summary");
-                setTimeout(() => generateSummaryGame(), 2000);
-            } else {
-                feedback.innerHTML = `Inexact (${wordCount} mots). Besoin de : thèse exacte ("${data.thesis}"), arguments (${data.args.join(", ")}), et pile 100 mots.`;
-                updateGamification(0, "step-summary");
-            }
-            hideFeedback("summary-feedback");
-        }
-
-// COM-DISS Data and Functions
-      const quotesCom = [
-    { text: "Les images sont des ombres des réalités intelligibles.", author: "Platon", work: "République" },
-    { text: "Le spectacle est le capital à un degré tel qu’il devient image.", author: "Debord", work: "La Société du spectacle" },
-    { text: "L’image précède le réel dans un monde de simulacres.", author: "Baudrillard", work: "Simulacres et Simulation" },
-    { text: "La caverne montre l’illusion des images sensibles.", author: "Platon", work: "République" },
-    { text: "Le spectacle généralisé est l’aliénation ultime.", author: "Debord", work: "La Société du spectacle" },
-    { text: "La réalité s’efface derrière les signes de l’image.", author: "Baudrillard", work: "Simulacres et Simulation" },
-    { text: "L’image publique façonne la valeur des choses.", author: "Smith", work: "La Richesse des nations" },
-    { text: "Les images publicitaires vendent plus que les produits.", author: "McLuhan", work: "Understanding Media" },
-    { text: "L’image est le miroir où se perd le sujet.", author: "Lacan", work: "Le Stade du miroir" },
-    { text: "La marchandise devient image dans l’économie moderne.", author: "Marx", work: "Le Capital" },
-    { text: "L’image médiatique construit le pouvoir des marques.", author: "Bourdieu", work: "Sur la télévision" },
-    { text: "Les images cachent la vérité sous l’apparence.", author: "Nietzsche", work: "Ainsi parlait Zarathoustra" },
-    { text: "L’image virtuelle remplace l’expérience du réel.", author: "Virilio", work: "La Vitesse de libération" },
-    { text: "Le commerce prospère sur l’empire des images.", author: "Schumpeter", work: "Capitalisme, socialisme et démocratie" },
-    { text: "L’image fixe la perception dans l’instant fugace.", author: "Bergson", work: "Matière et mémoire" },
-    { text: "Les images manipulent les désirs des consommateurs.", author: "Adorno", work: "Dialectique de la raison" },
-    { text: "L’image est un langage universel du marché.", author: "Barthes", work: "Mythologies" },
-    { text: "La société consomme ses rêves par les images.", author: "Benjamin", work: "Paris, capitale du XIXe siècle" },
-    { text: "L’image publicitaire est une promesse sans substance.", author: "Eco", work: "Histoire de la laideur" },
-    { text: "Les images numériques redéfinissent l’économie réelle.", author: "Castells", work: "L’Ère de l’information" },
-    { text: "L’image vend l’illusion d’un bonheur accessible.", author: "Fromm", work: "Avoir ou être" },
-    { text: "L’image est une idole qui enchaîne l’esprit.", author: "Bacon", work: "Novum Organum" },
-    { text: "Les images déforment la réalité par leur éclat.", author: "Pascal", work: "Pensées" },
-    { text: "L’image domine là où la raison s’efface.", author: "Hobbes", work: "Léviathan" },
-    { text: "L’image est une ombre de l’idée éternelle.", author: "Hegel", work: "Phénoménologie de l’esprit" },
-    { text: "Les images sont des pièges pour la liberté.", author: "Sartre", work: "L’Être et le Néant" },
-    { text: "L’image enferme le temps dans l’instant.", author: "Heidegger", work: "Être et Temps" },
-    { text: "L’image reflète le chaos du désir humain.", author: "Freud", work: "L’Interprétation des rêves" },
-    { text: "Les images construisent un monde sans profondeur.", author: "Arendt", work: "Condition de l’homme moderne" },
-    { text: "L’image est une illusion qui guide l’action.", author: "Spinoza", work: "Éthique" },
-    { text: "Les images masquent l’absence de sens réel.", author: "Camus", work: "Le Mythe de Sisyphe" },
-    { text: "L’image est un outil de domination subtile.", author: "Foucault", work: "Surveiller et punir" },
-    { text: "L’image simplifie le complexe en apparence.", author: "Kant", work: "Critique de la raison pure" },
-    { text: "Les images captent l’âme par leur éclat.", author: "Augustin", work: "Confessions" },
-    { text: "L’image est le signe d’une vérité perdue.", author: "Leibniz", work: "Nouveaux essais sur l’entendement humain" }
-];
-
-        const analysisDataCom = [
-    { quote: "Le vrai mystère du monde est le visible, et non l’invisible (Oscar Wilde)", keywords: ["visible", "mystère", "image"], reformulation: "Le visible contient des énigmes profondes." },
-    { quote: "L’image est une création pure de l’esprit (Pierre Reverdy)", keywords: ["image", "esprit", "création"], reformulation: "L’image naît de l’imagination." },
-    { quote: "L’image n’en appelle pas à la raison, mais aux sens (David Colon)", keywords: ["image", "sens", "raison"], reformulation: "L’image agit sur les émotions." },
-    { quote: "Les images sont des ombres projetées par l’âme (Platon)", keywords: ["images", "ombres", "âme"], reformulation: "Les images reflètent l’intériorité." },
-    { quote: "L’image spectaculaire aliène en fascinant les foules (Guy Debord)", keywords: ["image", "spectacle", "aliénation"], reformulation: "L’image captive et asservit." },
-    { quote: "Le réel disparaît sous le poids de l’image (Jean Baudrillard)", keywords: ["réel", "image", "poids"], reformulation: "L’image efface la réalité." },
-    { quote: "L’image vend mieux que la vérité elle-même (Marshall McLuhan)", keywords: ["image", "vente", "vérité"], reformulation: "L’image surpasse le réel commercialement." },
-    { quote: "L’image est un piège pour l’esprit distrait (René Descartes)", keywords: ["image", "piège", "esprit"], reformulation: "L’image détourne la pensée." },
-    { quote: "Les images publicitaires façonnent nos désirs modernes (Roland Barthes)", keywords: ["images", "publicité", "désirs"], reformulation: "Les images orientent les envies." },
-    { quote: "L’image est un langage plus fort que les mots (Walter Benjamin)", keywords: ["image", "langage", "mots"], reformulation: "L’image domine la parole." },
-    { quote: "Le commerce transforme toute chose en image (Karl Marx)", keywords: ["commerce", "image", "chose"], reformulation: "L’image devient marchandise." },
-    { quote: "L’image mentale précède toute action concrète (Henri Bergson)", keywords: ["image", "mentale", "action"], reformulation: "L’image guide les actes." },
-    { quote: "Les images cachent autant qu’elles révèlent (Friedrich Nietzsche)", keywords: ["images", "cachent", "révèlent"], reformulation: "Les images masquent la vérité." },
-    { quote: "L’image médiatique construit une réalité artificielle (Pierre Bourdieu)", keywords: ["image", "médiatique", "réalité"], reformulation: "L’image déforme le réel." },
-    { quote: "L’image est un produit de la société de consommation (Theodor Adorno)", keywords: ["image", "société", "consommation"], reformulation: "L’image sert la consommation." },
-    { quote: "Les images numériques redessinent notre perception collective (Manuel Castells)", keywords: ["images", "numériques", "perception"], reformulation: "Les images transforment le regard." },
-    { quote: "L’image promet un bonheur illusoire aux masses (Erich Fromm)", keywords: ["image", "bonheur", "illusoire"], reformulation: "L’image trompe sur le bonheur." },
-    { quote: "L’image est une arme dans la guerre économique (Paul Virilio)", keywords: ["image", "arme", "guerre"], reformulation: "L’image domine les rivalités." }
-];
-
-
-const problemDataCom = [
-    { quote: "La conscience que nous avons de nous-mêmes en tant que société, et la conscience que nous avons de nous-mêmes en tant qu’individus, ne coïncident jamais tout à fait (Norbert Elias)", problem: "Comment concilier la conscience individuelle et collective ?", keywords: ["conscience", "société", "individu"] },
-    { quote: "Les images sont des ombres des réalités intelligibles (Platon)", problem: "Comment distinguer l’image de la vérité qu’elle représente ?", keywords: ["images", "ombres", "vérité"] },
-    { quote: "Le spectacle est le capital à un degré tel qu’il devient image (Guy Debord)", problem: "L’image spectaculaire est-elle devenue la nouvelle richesse ?", keywords: ["spectacle", "capital", "image"] },
-    { quote: "L’image précède le réel dans un monde de simulacres (Jean Baudrillard)", problem: "Le réel peut-il survivre à la domination de l’image ?", keywords: ["image", "réel", "simulacres"] },
-    { quote: "Les images publicitaires vendent plus que les produits (Marshall McLuhan)", problem: "Pourquoi l’image l’emporte-t-elle sur la réalité matérielle ?", keywords: ["images", "publicité", "produits"] },
-    { quote: "L’image est le miroir où se perd le sujet (Jacques Lacan)", problem: "Comment l’image façonne-t-elle l’identité individuelle ?", keywords: ["image", "miroir", "sujet"] },
-    { quote: "La marchandise devient image dans l’économie moderne (Karl Marx)", problem: "L’image est-elle la vraie valeur dans le commerce actuel ?", keywords: ["marchandise", "image", "économie"] },
-    { quote: "L’image médiatique construit le pouvoir des marques (Pierre Bourdieu)", problem: "L’image peut-elle remplacer le pouvoir économique brut ?", keywords: ["image", "médiatique", "pouvoir"] },
-    { quote: "Les images cachent la vérité sous l’apparence (Friedrich Nietzsche)", problem: "Pourquoi l’image obscurcit-elle autant qu’elle éclaire ?", keywords: ["images", "vérité", "apparence"] },
-    { quote: "L’image virtuelle remplace l’expérience du réel (Paul Virilio)", problem: "L’image virtuelle menace-t-elle notre lien au réel ?", keywords: ["image", "virtuel", "réel"] },
-    { quote: "L’image fixe la perception dans l’instant fugace (Henri Bergson)", problem: "L’image peut-elle capturer la durée véritable ?", keywords: ["image", "perception", "instant"] },
-    { quote: "Les images manipulent les désirs des consommateurs (Theodor Adorno)", problem: "Comment les images influencent-elles nos choix économiques ?", keywords: ["images", "désirs", "consommateurs"] },
-    { quote: "L’image est un langage universel du marché (Roland Barthes)", problem: "L’image est-elle plus efficace que les mots en commerce ?", keywords: ["image", "langage", "marché"] },
-    { quote: "La société consomme ses rêves par les images (Walter Benjamin)", problem: "Les images sont-elles le moteur des aspirations modernes ?", keywords: ["société", "rêves", "images"] },
-    { quote: "L’image publicitaire est une promesse sans substance (Umberto Eco)", problem: "L’image publicitaire trompe-t-elle plus qu’elle informe ?", keywords: ["image", "publicitaire", "promesse"] },
-    { quote: "Les images numériques redéfinissent l’économie réelle (Manuel Castells)", problem: "L’image numérique transforme-t-elle la richesse traditionnelle ?", keywords: ["images", "numériques", "économie"] }
-];
-
-const planDataCom = [
-    { quote: "Les images sont des ombres des réalités intelligibles (Platon)", keywords: ["images", "ombres", "réalité"] },
-    { quote: "Le spectacle est le capital à un degré tel qu’il devient image (Guy Debord)", keywords: ["spectacle", "capital", "image"] },
-    { quote: "L’image précède le réel dans un monde de simulacres (Jean Baudrillard)", keywords: ["image", "réel", "simulacres"] },
-    { quote: "Les images publicitaires vendent plus que les produits (Marshall McLuhan)", keywords: ["images", "publicité", "vente"] },
-    { quote: "L’image médiatique construit le pouvoir des marques (Pierre Bourdieu)", keywords: ["image", "médiatique", "pouvoir"] }
-];
-
-const introDataCom = [
-    { quote: "Les images sont des ombres des réalités intelligibles (Platon)", problem: "Comment distinguer l’image de la vérité qu’elle représente ?", planKeywords: ["images", "ombres", "vérité"], works: ["Platon", "Debord", "McLuhan"] },
-    { quote: "Le spectacle est le capital à un degré tel qu’il devient image (Guy Debord)", problem: "L’image spectaculaire est-elle devenue la nouvelle richesse ?", planKeywords: ["spectacle", "capital", "image"], works: ["Debord", "Baudrillard", "Marx"] },
-    { quote: "L’image précède le réel dans un monde de simulacres (Jean Baudrillard)", problem: "Le réel peut-il survivre à la domination de l’image ?", planKeywords: ["image", "réel", "simulacres"], works: ["Baudrillard", "Barthes", "Eco"] },
-    { quote: "Les images publicitaires vendent plus que les produits (Marshall McLuhan)", problem: "Pourquoi l’image l’emporte-t-elle sur la réalité matérielle ?", planKeywords: ["images", "publicité", "vente"], works: ["McLuhan", "Bourdieu", "Adorno"] },
-    { quote: "L’image médiatique construit le pouvoir des marques (Pierre Bourdieu)", problem: "L’image peut-elle remplacer le pouvoir économique brut ?", planKeywords: ["image", "médiatique", "pouvoir"], works: ["Bourdieu", "Virilio", "Castells"] }
-];
-
-const part1DataCom = [
-    { quote: "Les images sont des ombres des réalités intelligibles (Platon)", idea: "L’image masque la vérité", introPartial: "Les images séduisent par leur apparence.", subParts: ["Illusion dans la République", "Spectacle chez Debord", "Mirage publicitaire chez McLuhan"], conclusionPartial: "Mais elles éloignent du réel." },
-    { quote: "Le spectacle est le capital à un degré tel qu’il devient image (Guy Debord)", idea: "L’image est une forme de richesse", introPartial: "L’image spectaculaire attire les masses.", subParts: ["Capital visuel chez Debord", "Simulacre chez Baudrillard", "Valeur chez Marx"], conclusionPartial: "Mais elle aliène l’individu." },
-    { quote: "L’image précède le réel dans un monde de simulacres (Jean Baudrillard)", idea: "L’image domine la réalité", introPartial: "Le réel s’efface derrière l’image.", subParts: ["Simulation chez Baudrillard", "Mythe chez Barthes", "Promesse chez Eco"], conclusionPartial: "Mais elle devient une illusion." },
-    { quote: "Les images publicitaires vendent plus que les produits (Marshall McLuhan)", idea: "L’image surpasse le produit", introPartial: "Les images captent l’attention.", subParts: ["Médium chez McLuhan", "Pouvoir chez Bourdieu", "Manipulation chez Adorno"], conclusionPartial: "Mais elles trompent le consommateur." },
-    { quote: "L’image médiatique construit le pouvoir des marques (Pierre Bourdieu)", idea: "L’image forge l’influence", introPartial: "Les marques s’appuient sur l’image.", subParts: ["Média chez Bourdieu", "Vitesse chez Virilio", "Réseaux chez Castells"], conclusionPartial: "Mais elle fragilise l’authenticité." }
-];
-
-const part2DataCom = [
-    { quote: "Les images sont des ombres des réalités intelligibles (Platon)", idea: "L’image crée une tension", introPartial: "Les images troublent la perception.", subParts: ["Ombre chez Platon", "Aliénation chez Debord", "Désir chez McLuhan"], conclusionPartial: "La vérité reste hors de portée." },
-    { quote: "Le spectacle est le capital à un degré tel qu’il devient image (Guy Debord)", idea: "L’image divise la société", introPartial: "Le spectacle isole les individus.", subParts: ["Séparation chez Debord", "Hyperréalité chez Baudrillard", "Fétichisme chez Marx"], conclusionPartial: "L’unité sociale s’effrite." },
-    { quote: "L’image précède le réel dans un monde de simulacres (Jean Baudrillard)", idea: "L’image efface le sens", introPartial: "Les simulacres brouillent la réalité.", subParts: ["Illusion chez Baudrillard", "Signe chez Barthes", "Vide chez Eco"], conclusionPartial: "Le réel devient introuvable." },
-    { quote: "Les images publicitaires vendent plus que les produits (Marshall McLuhan)", idea: "L’image manipule les choix", introPartial: "Les images orientent les désirs.", subParts: ["Message chez McLuhan", "Capital chez Bourdieu", "Raison chez Adorno"], conclusionPartial: "La liberté s’érode subtilement." },
-    { quote: "L’image médiatique construit le pouvoir des marques (Pierre Bourdieu)", idea: "L’image renforce l’inégalité", introPartial: "Les marques dominent par l’image.", subParts: ["Symboles chez Bourdieu", "Accélération chez Virilio", "Digital chez Castells"], conclusionPartial: "L’équilibre social est menacé." }
-];
-
-const part3DataCom = [
-    { quote: "Les images sont des ombres des réalités intelligibles (Platon)", idea: "L’image peut révéler", introPartial: "Une vérité émerge des images.", subParts: ["Idée chez Platon", "Critique chez Debord", "Médium chez McLuhan"], conclusionPartial: "Mais elle reste partielle." },
-    { quote: "Le spectacle est le capital à un degré tel qu’il devient image (Guy Debord)", idea: "L’image peut être déconstruite", introPartial: "Le spectacle peut être résisté.", subParts: ["Révolte chez Debord", "Démystification chez Baudrillard", "Conscience chez Marx"], conclusionPartial: "La lucidité reste fragile." },
-    { quote: "L’image précède le réel dans un monde de simulacres (Jean Baudrillard)", idea: "L’image peut être dépassée", introPartial: "Un retour au réel est possible.", subParts: ["Résistance chez Baudrillard", "Analyse chez Barthes", "Sens chez Eco"], conclusionPartial: "Mais l’effort est constant." },
-    { quote: "Les images publicitaires vendent plus que les produits (Marshall McLuhan)", idea: "L’image peut être maîtrisée", introPartial: "Les consommateurs peuvent décoder l’image.", subParts: ["Compréhension chez McLuhan", "Distance chez Bourdieu", "Critique chez Adorno"], conclusionPartial: "La vigilance est essentielle." },
-    { quote: "L’image médiatique construit le pouvoir des marques (Pierre Bourdieu)", idea: "L’image peut être équilibrée", introPartial: "Un usage éthique de l’image émerge.", subParts: ["Éducation chez Bourdieu", "Ralentissement chez Virilio", "Éthique chez Castells"], conclusionPartial: "L’équilibre reste précaire." }
-];
-
-const conclusionDataCom = [
-    { quote: "Les images sont des ombres des réalités intelligibles (Platon)", summary: "L’image masque, trouble, mais peut révéler la vérité.", opening: "Comment interpréter les images aujourd’hui ?" },
-    { quote: "Le spectacle est le capital à un degré tel qu’il devient image (Guy Debord)", summary: "L’image enrichit, divise, mais peut être contestée.", opening: "L’image domine-t-elle encore notre économie ?" },
-    { quote: "L’image précède le réel dans un monde de simulacres (Jean Baudrillard)", summary: "L’image domine, efface, mais peut être surmontée.", opening: "Le réel peut-il reprendre sa place ?" },
-    { quote: "Les images publicitaires vendent plus que les produits (Marshall McLuhan)", summary: "L’image surpasse, manipule, mais peut être comprise.", opening: "Les images dictent-elles nos désirs actuels ?" },
-    { quote: "L’image médiatique construit le pouvoir des marques (Pierre Bourdieu)", summary: "L’image influence, déséquilibre, mais peut s’équilibrer.", opening: "Quel rôle pour l’image dans le commerce futur ?" }
-];
-
-
-        function generateQuoteGameCom() {
-    const container = document.getElementById("quote-container-com");
-    const selected = problemDataCom.sort(() => 0.5 - Math.random()).slice(0, 3);
-    const allAuthors = [...new Set(problemDataCom.map(q => q.quote.split("(")[1].replace(")", "")))]; // Extrait les auteurs
-
-    container.innerHTML = selected.map((q, i) => {
-        const correctAuthor = q.quote.split("(")[1].replace(")", "");
-        const distractors = allAuthors.filter(a => a !== correctAuthor)
-                                     .sort(() => 0.5 - Math.random())
-                                     .slice(0, 4);
-        const options = [correctAuthor, ...distractors].sort(() => 0.5 - Math.random());
-
-        return `
-            <p>${i + 1}. "${q.quote}"</p>
-            <select id="quote-com-${i}">
-                <option value="">Choisissez...</option>
-                ${options.map(author => `<option value="${author}">${author}</option>`).join('')}
-            </select>
-        `;
-    }).join('');
-}
-
-function checkQuotesCom() {
-    const feedback = document.getElementById("quote-feedback-com");
-    let correct = 0;
-    
-    for (let i = 0; i < 3; i++) {
-        const select = document.getElementById(`quote-com-${i}`);
-        if (!select || !select.previousElementSibling) {
-            feedback.style.display = "block";
-            feedback.innerHTML = "Erreur : structure de jeu invalide.";
-            return;
-        }
-        
-        const text = select.previousElementSibling.textContent.split('"')[1];
-        const quoteData = problemDataCom.find(q => q.quote === text);
-        if (!quoteData) {
-            feedback.style.display = "block";
-            feedback.innerHTML = "Erreur : citation non reconnue.";
-            return;
-        }
-        
-        const correctAuthor = quoteData.quote.split("(")[1].replace(")", "");
-        if (select.value === correctAuthor) {
-            correct++;
-        }
-    }
-    
-    feedback.style.display = "block";
-    feedback.innerHTML = correct === 3 
-        ? "Maîtrise parfaite ! +10 points !" 
-        : `${correct}/3. Connaissez mieux les auteurs et leurs idées !`;
-    
-    if (correct === 3) {
-        updateGamification(10, "step-citations-com");
-        setTimeout(() => generateQuoteGameCom(), 2000);
-    }
-    
-    hideFeedback("quote-feedback-com");
-}
-        function generateAnalysisGameCom() {
-    const container = document.getElementById("analysis-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    container.innerHTML = `
-        <p>Citation : "${data.quote}"</p>
-        <label>Mots-clés (exactement ${data.keywords.length}) :</label><input id="keywords-input-com" placeholder="ex. image, réel...">
-        <label>Problématique :</label><input id="reform-input-com" placeholder="Formulez une problématique...">
-    `;
-}
-
-function checkAnalysisCom() {
-    const feedback = document.getElementById("analysis-feedback-com");
-    const quote = document.getElementById("analysis-container-com").querySelector("p").textContent.split('"')[1];
-    const data = problemDataCom.find(d => d.quote === quote);
-    const keywords = document.getElementById("keywords-input-com").value.toLowerCase().split(/,\s*/).filter(k => k);
-    const problem = document.getElementById("reform-input-com").value.toLowerCase().trim();
-    const keywordMatch = data.keywords.length === keywords.length && data.keywords.every(k => keywords.includes(k));
-    const problemMatch = problem.split(/\s+/).length >= 8 && problem.endsWith("?") && 
-                        data.problem.toLowerCase().split(" ").every(w => problem.includes(w));
-    feedback.style.display = "block";
-    if (keywordMatch && problemMatch) {
-        feedback.innerHTML = "Analyse précise ! +15 points.";
-        updateGamification(15, "step-analysis-com");
-        setTimeout(() => generateAnalysisGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Incorrect. Mots-clés attendus : ${data.keywords.join(", ")}. Problématique : "${data.problem}". Soyez exact !`;
-        updateGamification(0, "step-analysis-com");
-    }
-    hideFeedback("analysis-feedback-com");
-}
-
-function generateProblemGameCom() {
-    const container = document.getElementById("problem-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
-    document.getElementById("problem-input-com").value = "";
-}
-
-function checkProblemCom() {
-    const feedback = document.getElementById("problem-feedback-com");
-    const quote = document.getElementById("problem-container-com").querySelector("p").textContent.split('"')[1];
-    const data = problemDataCom.find(d => d.quote === quote);
-    const input = document.getElementById("problem-input-com").value.toLowerCase().trim();
-    
-    const includesKeyTerms = input.includes("image") && input.includes("réel");
-    const isQuestion = input.endsWith("?");
-    const hasEnoughWords = input.split(/\s+/).length >= 8;
-    const expectedWords = data.problem.toLowerCase().split(" ").filter(w => w.length > 3);
-    const reflectsProblem = expectedWords.some(w => input.includes(w));
-    
-    feedback.style.display = "block";
-    
-    if (includesKeyTerms && isQuestion && hasEnoughWords && reflectsProblem) {
-        feedback.innerHTML = "Problématique rigoureuse ! +20 points.";
-        updateGamification(20, "step-problem-com");
-        setTimeout(() => generateProblemGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Insuffisant. Exemple : "${data.problem}". Doit inclure "image", "réel", finir par "?" et refléter la citation (8+ mots).`;
-        updateGamification(0, "step-problem-com");
-    }
-    
-    hideFeedback("problem-feedback-com");
-}
-
-function generatePlanGameCom() {
-    const container = document.getElementById("plan-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
-    document.getElementById("plan-input-com").value = "";
-}
-
-function checkPlanCom() {
-    const feedback = document.getElementById("plan-feedback-com");
-    const quote = document.getElementById("plan-container-com").querySelector("p").textContent.split('"')[1];
-    const data = problemDataCom.find(d => d.quote === quote);
-    const input = document.getElementById("plan-input-com").value.toLowerCase().trim();
-    
-    const parts = input.split(/(certes|mais|alors)\s*:\s*/).filter(p => p && !["certes", "mais", "alors"].includes(p.trim()));
-    const hasThreeParts = parts.length === 3 && 
-                         input.includes("certes") && input.includes("mais") && input.includes("alors") && 
-                         parts.every(p => p.split(/\s+/).length >= 5);
-    const hasKeywords = data.keywords.every(k => input.includes(k));
-    
-    feedback.style.display = "block";
-    
-    if (hasThreeParts && hasKeywords) {
-        feedback.innerHTML = "Plan dialectique structuré et pertinent ! +25 points.";
-        updateGamification(25, "step-plan-com");
-        setTimeout(() => generatePlanGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Incomplet. Besoin de : 3 parties dialectiques (Certes :, Mais :, Alors :, 5+ mots chacune), mots-clés (${data.keywords.join(", ")}).`;
-        updateGamification(0, "step-plan-com");
-    }
-    
-    hideFeedback("plan-feedback-com");
-}
-
-function generateIntroGameCom() {
-    const container = document.getElementById("intro-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    container.innerHTML = `<p>Citation : "${data.quote}"</p>`;
-    document.getElementById("intro-input-com").value = "";
-}
-
-function checkIntroCom() {
-    const feedback = document.getElementById("intro-feedback-com");
-    const quote = document.getElementById("intro-container-com").querySelector("p").textContent.split('"')[1];
-    const data = problemDataCom.find(d => d.quote === quote);
-    const input = document.getElementById("intro-input-com").value.toLowerCase().trim();
-    
-    const hasAmorce = ["depuis", "histoire", "société"].some(w => input.includes(w));
-    const hasCitation = input.includes(quote.toLowerCase().substring(0, 20));
-    const hasProblem = input.includes("image") && input.includes("réel") && input.includes("?") && 
-                      data.problem.toLowerCase().split(" ").every(w => input.includes(w));
-    const hasPlan = data.keywords.every(k => input.includes(k));
-    const hasWorks = ["platon", "debord", "baudrillard"].every(w => input.includes(w));
-    const isLongEnough = input.split(/\s+/).length >= 80;
-    
-    feedback.style.display = "block";
-    if (hasAmorce && hasCitation && hasProblem && hasPlan && hasWorks && isLongEnough) {
-        feedback.innerHTML = "Introduction exemplaire ! +30 points.";
-        updateGamification(30, "step-intro-com");
-        setTimeout(() => generateIntroGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Incomplet. Besoin de : amorce (contexte), citation (${quote.substring(0, 20)}...), problématique (${data.problem}), plan (${data.keywords.join(", ")}), œuvres (Platon, Debord, Baudrillard), et 80+ mots.`;
-        updateGamification(0, "step-intro-com");
-    }
-    hideFeedback("intro-feedback-com");
-}
-
-function generatePart1GameCom() {
-    const container = document.getElementById("part1-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    const subParts = ["Perception chez Platon", "Spectacle chez Debord", "Simulation chez Baudrillard"];
-    container.innerHTML = `
-        <p>Citation : "${data.quote}"</p>
-        <p>Idée : L’image domine la perception</p>
-        <p>Intro partielle : Les images influencent fortement.</p>
-        <p>Sous-parties suggérées : ${subParts.join(", ")}</p>
-        <p>Conclusion partielle : Mais elles masquent la réalité.</p>
-    `;
-    document.getElementById("part1-input-com").value = "";
-}
-
-function checkPart1Com() {
-    const feedback = document.getElementById("part1-feedback-com");
-    const input = document.getElementById("part1-input-com").value.toLowerCase().trim();
-    const quote = document.getElementById("part1-container-com").querySelector("p").textContent.split('"')[1];
-    const data = problemDataCom.find(d => d.quote === quote);
-    const hasIntro = input.includes("les images influencent fortement");
-    const hasSubParts = ["platon", "debord", "baudrillard"].every(sp => input.includes(sp));
-    const hasConclusion = input.includes("mais elles masquent la réalité");
-    const isLongEnough = input.split(/\s+/).length >= 120;
-    feedback.style.display = "block";
-    if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
-        feedback.innerHTML = "Première partie solide ! +40 points.";
-        updateGamification(40, "step-part1-com");
-        setTimeout(() => generatePart1GameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Insuffisant. Besoin de : intro (Les images influencent fortement), sous-parties (Platon, Debord, Baudrillard), conclusion (Mais elles masquent la réalité), et 120+ mots.`;
-        updateGamification(0, "step-part1-com");
-    }
-    hideFeedback("part1-feedback-com");
-}
-
-function generatePart2GameCom() {
-    const container = document.getElementById("part2-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    const subParts = ["Illusion chez Platon", "Aliénation chez Debord", "Hyperréalité chez Baudrillard"];
-    container.innerHTML = `
-        <p>Citation : "${data.quote}"</p>
-        <p>Idée : L’image crée une tension</p>
-        <p>Intro partielle : Les images perturbent le réel.</p>
-        <p>Sous-parties suggérées : ${subParts.join(", ")}</p>
-        <p>Conclusion partielle : La vérité reste floue.</p>
-    `;
-    document.getElementById("part2-input-com").value = "";
-}
-
-function generatePart2GameCom() {
-    const container = document.getElementById("part2-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    const subParts = ["Illusion chez Platon", "Aliénation chez Debord", "Hyperréalité chez Baudrillard"];
-    container.innerHTML = `
-        <p>Citation : "${data.quote}"</p>
-        <p>Idée : L’image crée une tension</p>
-        <p>Intro partielle : Les images perturbent le réel.</p>
-        <p>Sous-parties suggérées : ${subParts.join(", ")}</p>
-        <p>Conclusion partielle : La vérité reste floue.</p>
-    `;
-    document.getElementById("part2-input-com").value = "";
-}
-
-function checkPart2Com() {
-    const feedback = document.getElementById("part2-feedback-com");
-    const input = document.getElementById("part2-input-com").value.toLowerCase().trim();
-    const quote = document.getElementById("part2-container-com").querySelector("p").textContent.split('"')[1];
-    const data = problemDataCom.find(d => d.quote === quote);
-    const hasIntro = input.includes("les images perturbent le réel");
-    const hasSubParts = ["platon", "debord", "baudrillard"].every(sp => input.includes(sp));
-    const hasConclusion = input.includes("la vérité reste floue");
-    const isLongEnough = input.split(/\s+/).length >= 120;
-    feedback.style.display = "block";
-    if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
-        feedback.innerHTML = "Deuxième partie robuste ! +45 points.";
-        updateGamification(45, "step-part2-com");
-        setTimeout(() => generatePart2GameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Incomplet. Besoin de : intro (Les images perturbent le réel), sous-parties (Platon, Debord, Baudrillard), conclusion (La vérité reste floue), et 120+ mots.`;
-        updateGamification(0, "step-part2-com");
-    }
-    hideFeedback("part2-feedback-com");
-}
-
-function generatePart3GameCom() {
-    const container = document.getElementById("part3-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    const subParts = ["Vérité chez Platon", "Résistance chez Debord", "Retour chez Baudrillard"];
-    container.innerHTML = `
-        <p>Citation : "${data.quote}"</p>
-        <p>Idée : L’image peut être dépassée</p>
-        <p>Intro partielle : Une maîtrise des images émerge.</p>
-        <p>Sous-parties suggérées : ${subParts.join(", ")}</p>
-        <p>Conclusion partielle : Mais la vigilance persiste.</p>
-    `;
-    document.getElementById("part3-input-com").value = "";
-}
-
-function checkPart3Com() {
-    const feedback = document.getElementById("part3-feedback-com");
-    const input = document.getElementById("part3-input-com").value.toLowerCase().trim();
-    const quote = document.getElementById("part3-container-com").querySelector("p").textContent.split('"')[1];
-    const data = problemDataCom.find(d => d.quote === quote);
-    const hasIntro = input.includes("une maîtrise des images émerge");
-    const hasSubParts = ["platon", "debord", "baudrillard"].every(sp => input.includes(sp));
-    const hasConclusion = input.includes("mais la vigilance persiste");
-    const isLongEnough = input.split(/\s+/).length >= 120;
-    feedback.style.display = "block";
-    if (hasIntro && hasSubParts && hasConclusion && isLongEnough) {
-        feedback.innerHTML = "Troisième partie impeccable ! +50 points.";
-        updateGamification(50, "step-part3-com");
-        setTimeout(() => generatePart3GameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Insuffisant. Besoin de : intro (Une maîtrise des images émerge), sous-parties (Platon, Debord, Baudrillard), conclusion (Mais la vigilance persiste), et 120+ mots.`;
-        updateGamification(0, "step-part3-com");
-    }
-    hideFeedback("part3-feedback-com");
-}
-
-function generateConclusionGameCom() {
-    const container = document.getElementById("conclusion-container-com");
-    const data = problemDataCom[Math.floor(Math.random() * problemDataCom.length)];
-    container.innerHTML = `
-        <p>Citation : "${data.quote}"</p>
-        <p>Résumé des parties : L’image domine, perturbe, mais peut être maîtrisée.</p>
-        <p>Ouverture : Quel avenir pour l’image dans notre société ?</p>
-    `;
-    document.getElementById("conclusion-input-com").value = "";
-}
-
-function checkConclusionCom() {
-    const feedback = document.getElementById("conclusion-feedback-com");
-    const input = document.getElementById("conclusion-input-com").value.toLowerCase().trim();
-    const quote = document.getElementById("conclusion-container-com").querySelector("p").textContent.split('"')[1];
-    const data = problemDataCom.find(d => d.quote === quote);
-    const hasSummary = "l’image domine, perturbe, mais peut être maîtrisée".toLowerCase().split(" ").every(w => input.includes(w)) && 
-                      ["platon", "debord", "baudrillard"].every(w => input.includes(w));
-    const hasOpening = input.includes("quel avenir pour l’image dans notre société");
-    const isLongEnough = input.split(/\s+/).length >= 60;
-    feedback.style.display = "block";
-    if (hasSummary && hasOpening && isLongEnough) {
-        feedback.innerHTML = "Conclusion magistrale ! +60 points.";
-        updateGamification(60, "step-conclusion-com");
-        setTimeout(() => generateConclusionGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Incomplet. Besoin de : résumé (L’image domine, perturbe, mais peut être maîtrisée), ouverture (Quel avenir pour l’image dans notre société ?), auteurs (Platon, Debord, Baudrillard), et 60+ mots.`;
-        updateGamification(0, "step-conclusion-com");
-    }
-    hideFeedback("conclusion-feedback-com");
-}
-
-// Données pour COM-RES (Résumés)
-     const summaryTextsCom = [
-
-            {
-                 text: "L’image occupe une place prépondérante dans notre société contemporaine, façonnant perceptions et comportements. Platon, dans *La      République*, voyait les images comme des ombres éloignant de la vérité intelligible, tandis que Debord, dans *La Société du spectacle*, les décrit comme un outil de domination capitaliste. Pourtant, leur pouvoir n’est pas absolu : Baudrillard, dans *Simulacres et Simulation*, suggère que l’image peut être déconstruite pour révéler son artificialité. D’abord, l’image séduit par sa capacité à simplifier le réel, masquant sa complexité sous une apparence accessible. Les publicités, par exemple, promettent un bonheur illusoire, captant l’attention sans profondeur. Ensuite, elle aliène en substituant une réalité fabriquée au vécu authentique, comme le spectacle médiatique qui remplace le dialogue par des représentations. Enfin, une résistance est possible : en analysant les simulacres, nous pouvons dépasser leur emprise pour retrouver un lien au réel.",
-              thesis: "L’image domine en tant qu’illusion, mais peut être surmontée par une analyse critique",
-              args: ["Séduction par simplification", "Aliénation par substitution", "Dépassement par analyse"],
-              parts: ["L’image séduit", "L’image aliène", "L’image peut être dépassée"],
-             circuit: ["Illusion initiale", "Rupture par aliénation", "Retour au réel"]
-          },
-         {
-                text: "Dans une économie moderne, l’image est devenue un levier essentiel de la valeur marchande. McLuhan, dans *Understanding Media*, affirme que les images publicitaires vendent plus que les produits eux-mêmes, tandis que Marx, dans *Le Capital*, voit la marchandise transformée en image par le fétichisme. Bourdieu, dans *Sur la télévision*, ajoute que l’image médiatique construit le pouvoir des marques. Premièrement, l’image amplifie la désirabilité en créant des symboles attirants, comme les logos qui surpassent la qualité intrinsèque des biens. Deuxièmement, elle manipule les consommateurs, orientant leurs choix par des promesses visuelles plutôt que des besoins réels. Troisièmement, elle redéfinit la richesse, où la perception visuelle prime sur la production matérielle, illustrée par l’essor des influenceurs.",
-             thesis: "L’image est le moteur de l’économie moderne en façonnant la valeur",
-             args: ["Amplification de la désirabilité", "Manipulation des choix", "Redéfinition de la richesse"],
-             parts: ["L’image attire", "L’image contrôle", "L’image réinvente"],
-             circuit: ["Désir créé", "Contrôle exercé", "Richesse transformée"]
-          },
-        {
-             text: "L’image joue un rôle clé dans la construction de l’identité individuelle et collective. Lacan, dans *Le Stade du miroir*, soutient que l’image façonne le sujet par un reflet extérieur, tandis que Barthes, dans *Mythologies*, voit l’image comme un langage universel du marché. Benjamin, dans *Paris, capitale du XIXe siècle*, ajoute qu’elle porte les rêves d’une société. D’abord, l’image structure le moi, offrant un cadre où l’individu se reconnaît ou se perd. Ensuite, elle universalise les désirs, imposant des modèles standardisés via la publicité. Enfin, elle peut libérer en permettant une réappropriation consciente, où l’individu choisit ses propres images.",
-           thesis: "L’image reflète et construit l’identité, avec un potentiel libérateur",
-           args: ["Structuration du moi", "Universalisation des désirs", "Réappropriation possible"],
-           parts: ["L’image forme", "L’image uniformise", "L’image libère"],
-           circuit: ["Reflet initial", "Uniformisation imposée", "Libération choisie"]
-        },
-       {
-            text: "L’image contemporaine tend à supplanter le réel, créant un monde de simulacres. Baudrillard, dans *Simulacres et Simulation*, argue que l’image précède la réalité, tandis que Virilio, dans *La Vitesse de libération*, voit l’image virtuelle effacer l’expérience. Eco, dans *Histoire de la laideur*, complète en décrivant l’image publicitaire comme une promesse vide. Premièrement, l’image simule en remplaçant le tangible par des signes, comme les écrans omniprésents. Deuxièmement, elle accélère la perte du réel, où la vitesse numérique érode la durée. Troisièmement, une critique peut émerger, permettant de démystifier ces illusions pour retrouver une vérité.",
-           thesis: "L’image simule le réel, mais une critique peut la dépasser",
-           args: ["Simulation par signes", "Perte par accélération", "Dépassement par critique"],
-           parts: ["L’image remplace", "L’image accélère", "L’image s’analyse"],
-          circuit: ["Remplacement initial", "Accélération critique", "Retour réfléchi"]
-        },
-      {
-        text: "L’image exerce un pouvoir social en façonnant normes et hiérarchies. Bourdieu, dans *Sur la télévision*, montre que l’image médiatique renforce les marques, tandis que Debord, dans *La Société du spectacle*, la décrit comme un outil d’aliénation. Adorno, dans *Dialectique de la raison*, insiste sur sa manipulation des désirs. D’abord, l’image impose des normes, dictant des standards esthétiques ou sociaux. Ensuite, elle aliène les individus, les enfermant dans une consommation passive. Enfin, elle peut être contestée, offrant une voie vers une émancipation par la prise de conscience.",
-          thesis: "L’image impose un pouvoir social, mais peut être contestée",
-          args: ["Imposition des normes", "Aliénation des individus", "Contestation possible"],
-          parts: ["L’image norme", "L’image aliène", "L’image se conteste"],
-         circuit: ["Norme imposée", "Aliénation subie", "Contestation émergente"]
-    }
-];
-        
-        // Fonctions COM-RES
-// Fonctions COM-RES
-function generateThesisGameCom() {
-    const container = document.getElementById("thesis-container-com");
-    const data = summaryTextsCom[Math.floor(Math.random() * summaryTextsCom.length)];
-    container.innerHTML = `<p>${data.text}</p>`;
-    document.getElementById("thesis-input-com").value = "";
-}
-
-function checkThesisCom() {
-    const feedback = document.getElementById("thesis-feedback-com");
-    const input = document.getElementById("thesis-input-com").value.toLowerCase().trim();
-    const text = document.getElementById("thesis-container-com").textContent;
-    const data = summaryTextsCom.find(t => t.text === text);
-    const isCorrect = input === data.thesis.toLowerCase();
-    feedback.style.display = "block";
-    if (isCorrect) {
-        feedback.innerHTML = "Thèse exacte ! +20 points.";
-        updateGamification(20, "step-thesis-com");
-        setTimeout(() => generateThesisGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Faux. Thèse attendue : "${data.thesis}". Soyez précis !`;
-        updateGamification(0, "step-thesis-com");
-    }
-    hideFeedback("thesis-feedback-com");
-}
-
-function generateArgsGameCom() {
-    const container = document.getElementById("args-container-com");
-    const data = summaryTextsCom[Math.floor(Math.random() * summaryTextsCom.length)];
-    container.innerHTML = `<p>${data.text}</p>`;
-    document.getElementById("args-input-com").value = "";
-}
-
-function checkArgsCom() {
-    const feedback = document.getElementById("args-feedback-com");
-    const input = document.getElementById("args-input-com").value.toLowerCase().trim().split(/,\s*/).filter(a => a);
-    const text = document.getElementById("args-container-com").textContent;
-    const data = summaryTextsCom.find(t => t.text === text);
-    const isCorrect = input.length === 3 && data.args.every((arg, i) => input[i] === arg.toLowerCase());
-    feedback.style.display = "block";
-    if (isCorrect) {
-        feedback.innerHTML = "Arguments parfaits ! +25 points.";
-        updateGamification(25, "step-args-com");
-        setTimeout(() => generateArgsGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Incorrect. Arguments attendus : ${data.args.join(", ")}. Listez-les exactement dans l’ordre !`;
-        updateGamification(0, "step-args-com");
-    }
-    hideFeedback("args-feedback-com");
-}
-
-function generatePartsGameCom() {
-    const container = document.getElementById("parts-container-com");
-    const data = summaryTextsCom[Math.floor(Math.random() * summaryTextsCom.length)];
-    container.innerHTML = `<p>${data.text}</p>`;
-    document.getElementById("parts-input-com").value = "";
-}
-
-function checkPartsCom() {
-    const feedback = document.getElementById("parts-feedback-com");
-    const input = document.getElementById("parts-input-com").value.toLowerCase().trim().split(/,\s*/).filter(p => p);
-    const text = document.getElementById("parts-container-com").textContent;
-    const data = summaryTextsCom.find(t => t.text === text);
-    const isCorrect = input.length === 3 && data.parts.every((part, i) => input[i] === part.toLowerCase());
-    feedback.style.display = "block";
-    if (isCorrect) {
-        feedback.innerHTML = "Parties bien identifiées ! +30 points.";
-        updateGamification(30, "step-parts-com");
-        setTimeout(() => generatePartsGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Faux. Parties attendues : ${data.parts.join(", ")}. Soyez exact !`;
-        updateGamification(0, "step-parts-com");
-    }
-    hideFeedback("parts-feedback-com");
-}
-
-function generateCircuitGameCom() {
-    const container = document.getElementById("circuit-container-com");
-    const data = summaryTextsCom[Math.floor(Math.random() * summaryTextsCom.length)];
-    container.innerHTML = `<p>${data.text}</p>`;
-    document.getElementById("circuit-input-com").value = "";
-}
-
-function checkCircuitCom() {
-    const feedback = document.getElementById("circuit-feedback-com");
-    const input = document.getElementById("circuit-input-com").value.toLowerCase().trim().split(/,\s*/).filter(c => c);
-    const text = document.getElementById("circuit-container-com").textContent;
-    const data = summaryTextsCom.find(t => t.text === text);
-    const isCorrect = input.length === 3 && data.circuit.every((link, i) => input[i] === link.toLowerCase());
-    feedback.style.display = "block";
-    if (isCorrect) {
-        feedback.innerHTML = "Circuit précis ! +40 points.";
-        updateGamification(40, "step-circuit-com");
-        setTimeout(() => generateCircuitGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Incorrect. Circuit attendu : ${data.circuit.join(", ")}. Listez les liens dans l’ordre !`;
-        updateGamification(0, "step-circuit-com");
-    }
-    hideFeedback("circuit-feedback-com");
-}
-
-function generateSummaryGameCom() {
-    const container = document.getElementById("summary-container-com");
-    const data = summaryTextsCom[Math.floor(Math.random() * summaryTextsCom.length)];
-    container.innerHTML = `<p>${data.text}</p>`;
-    document.getElementById("summary-input-com").value = "";
-    countWords("summary-input-com", "summary-word-count-com", 100);
-}
-
-function checkSummaryCom() {
-    const feedback = document.getElementById("summary-feedback-com");
-    const input = document.getElementById("summary-input-com").value.toLowerCase().trim();
-    const text = document.getElementById("summary-container-com").textContent;
-    const data = summaryTextsCom.find(t => t.text === text);
-    const wordCount = input.split(/\s+/).length;
-    const hasThesis = input.includes(data.thesis.toLowerCase());
-    const hasArgs = data.args.every(arg => input.includes(arg.toLowerCase().split(" ")[0]));
-    const isCorrectLength = wordCount === 100; // Corrigé pour 100 mots
-    feedback.style.display = "block";
-    if (hasThesis && hasArgs && isCorrectLength) {
-        feedback.innerHTML = `Résumé parfait (100 mots) ! +60 points.`;
-        updateGamification(60, "step-summary-com");
-        setTimeout(() => generateSummaryGameCom(), 2000);
-    } else {
-        feedback.innerHTML = `Inexact (${wordCount} mots). Besoin de : thèse exacte ("${data.thesis}"), arguments (${data.args.join(", ")}), et pile 100 mots.`;
-        updateGamification(0, "step-summary-com");
-    }
-    hideFeedback("summary-feedback-com");
-}
-
-// Fonctions de support
-function updateGamification(points, step) {
-    console.log(`Points gagnés : ${points} pour ${step}`);
-}
-
-function hideFeedback(id) {
-    setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) element.style.display = "none";
-    }, 2000);
-}
-
-function countWords(inputId, countId, target) {
-    const input = document.getElementById(inputId);
-    const countDisplay = document.getElementById(countId);
-    if (input && countDisplay) {
-        input.addEventListener("input", () => {
-            const words = input.value.trim().split(/\s+/).length || 0; // Évite NaN
-            countDisplay.textContent = `Mots : ${words}/${target}`;
-        });
-    }
-}
-
-        const synthesisDataCom = [
-    {
-        texts: [
-            "Les images sont des ombres des réalités intelligibles, éloignant les hommes de la vérité. Elles séduisent par leur apparence, mais ne reflètent qu’une illusion, comme les ombres dans la caverne. Pourtant, une élévation vers l’intelligible permet de dépasser cette tromperie. (Platon)",
-            "Le spectacle est le capital à un degré tel qu’il devient image, un outil de domination qui aliène les individus. L’image remplace le réel par une réalité fabriquée, mais une critique consciente peut révéler son artificialité et briser son emprise. (Debord)",
-            "L’image précède le réel dans un monde de simulacres, où elle ne reflète plus une vérité mais la simule. Cette hyperréalité efface toute distinction entre illusion et réalité, rendant la démystification essentielle pour retrouver un sens. (Baudrillard)"
-        ],
-        problem: "Comment l’image influence-t-elle notre rapport au réel ?",
-        keyPoints: {
-            Platon: ["Images comme ombres", "Séduction illusoire", "Dépassement par l’intelligible"],
-            Debord: ["Spectacle comme domination", "Remplacement du réel", "Critique possible"],
-            Baudrillard: ["Simulacres précèdent le réel", "Effacement de la vérité", "Démystification nécessaire"]
-        },
-        plan: [
-            "En quoi l’image séduit-elle par son apparence ?",
-            "Comment l’image remplace-t-elle le réel ?",
-            "L’image peut-elle être dépassée pour retrouver la vérité ?"
-        ],
-        synthesis: "Comment l’image influence-t-elle notre rapport au réel ? Platon considère que les images, telles des ombres, séduisent par leur apparence simple mais illusoires, éloignant de la vérité intelligible. Debord soutient que l’image, sous forme de spectacle, domine en substituant une réalité fabriquée au vécu, servant le capital. Baudrillard va plus loin, affirmant que l’image précède le réel dans un monde de simulacres, effaçant toute vérité. D’abord, l’image attire par sa capacité à simplifier : Platon y voit une tromperie, Debord un outil d’aliénation, et Baudrillard une simulation totale. Ensuite, elle remplace le réel : Platon parle d’ombres, Debord de spectacle, et Baudrillard d’hyperréalité où le vrai disparaît. Enfin, un dépassement est envisageable : Platon propose l’élévation vers l’intelligible, Debord une critique consciente, et Baudrillard une démystification. Ainsi, l’image façonne notre perception, mais une analyse permet d’en limiter l’emprise."
-    },
-    {
-        texts: [
-            "Les images publicitaires vendent plus que les produits eux-mêmes, créant une valeur par la désirabilité visuelle plutôt que par l’utilité réelle. Elles manipulent les perceptions pour orienter les choix. (McLuhan)",
-            "La marchandise devient image dans l’économie moderne, un fétichisme où l’apparence prime sur la substance. Cette transformation reflète la logique du capital. (Marx)",
-            "L’image médiatique construit le pouvoir des marques, imposant des symboles qui redéfinissent la richesse et influencent les comportements sociaux. (Bourdieu)"
-        ],
-        problem: "En quoi l’image façonne-t-elle la valeur économique ?",
-        keyPoints: {
-            McLuhan: ["Images vendent plus", "Manipulation visuelle", "Désirabilité créée"],
-            Marx: ["Marchandise comme image", "Fétichisme économique", "Apparence dominante"],
-            Bourdieu: ["Pouvoir des marques", "Symboles visuels", "Richesse redéfinie"]
-        },
-        plan: [
-            "Comment l’image amplifie-t-elle la désirabilité ?",
-            "En quoi l’image transforme-t-elle la marchandise ?",
-            "L’image redéfinit-elle la notion de richesse ?"
-        ],
-        synthesis: "En quoi l’image façonne-t-elle la valeur économique ? McLuhan affirme que les images publicitaires vendent plus que les produits, créant une désirabilité visuelle qui prime sur l’utilité. Marx soutient que la marchandise devient image dans une logique de fétichisme, où l’apparence surpasse la substance. Bourdieu ajoute que l’image médiatique renforce le pouvoir des marques, imposant des symboles économiques. D’abord, l’image amplifie la désirabilité : McLuhan y voit une manipulation, Marx une illusion marchande, et Bourdieu une force symbolique. Ensuite, elle transforme la marchandise : McLuhan parle de perception orientée, Marx de fétichisme visuel, et Bourdieu d’influence sociale. Enfin, elle redéfinit la richesse : McLuhan évoque une valeur visuelle, Marx une économie d’apparence, et Bourdieu une hiérarchie des marques. Ainsi, l’image est un moteur économique central."
-    }
-];
-
-        // Fonctions COM-SYN
-        function generateQuickReadGameComSyn() {
-            const container = document.getElementById("quickread-container-com-syn");
-            const data = synthesisDataCom[Math.floor(Math.random() * synthesisDataCom.length)];
-            container.innerHTML = data.texts.map(t => `<p>${t}</p>`).join('');
-            document.getElementById("quickread-input-com-syn").value = "";
-        }
-
-        function checkQuickReadComSyn() {
-            const feedback = document.getElementById("quickread-feedback-com-syn");
-            const input = document.getElementById("quickread-input-com-syn").value.toLowerCase().trim();
-            const text = document.getElementById("quickread-container-com-syn").textContent;
-            const data = synthesisDataCom.find(d => d.texts.join('') === text.replace(/\n/g, ''));
-            const isCorrect = input === data.problem.toLowerCase();
-            feedback.style.display = "block";
-            if (isCorrect) {
-                feedback.innerHTML = "Problématique trouvée ! +20 points.";
-                updateGamification(20, "step-quickread-com");
-                setTimeout(() => generateQuickReadGameComSyn(), 2000);
-            } else {
-                feedback.innerHTML = `Faux. Problématique attendue : "${data.problem}".`;
-                updateGamification(0, "step-quickread-com");
-            }
-            hideFeedback("quickread-feedback-com-syn");
-        }
-
-        function generateDeepReadGameComSyn() {
-            const container = document.getElementById("deepread-container-com-syn");
-            const data = synthesisDataCom[Math.floor(Math.random() * synthesisDataCom.length)];
-            container.innerHTML = data.texts.map(t => `<p>${t}</p>`).join('');
-            document.getElementById("deepread-input-com-syn").value = "";
-        }
-
-        function checkDeepReadComSyn() {
-            const feedback = document.getElementById("deepread-feedback-com-syn");
-            const input = document.getElementById("deepread-input-com-syn").value.toLowerCase().trim().split(/,\s*/).filter(p => p);
-            const text = document.getElementById("deepread-container-com-syn").textContent;
-            const data = synthesisDataCom.find(d => d.texts.join('') === text.replace(/\n/g, ''));
-            const expected = Object.values(data.keyPoints).flat().map(p => p.toLowerCase());
-            const isCorrect = input.length >= 6 && expected.every(e => input.some(i => i.includes(e.split(" ")[0])));
-            feedback.style.display = "block";
-            if (isCorrect) {
-                feedback.innerHTML = "Points clés bien relevés ! +30 points.";
-                updateGamification(30, "step-deepread-com");
-                setTimeout(() => generateDeepReadGameComSyn(), 2000);
-            } else {
-                feedback.innerHTML = `Incorrect. Points attendus : ${expected.join(", ")}.`;
-                updateGamification(0, "step-deepread-com");
-            }
-            hideFeedback("deepread-feedback-com-syn");
-        }
-
-        function generatePlanGameComSyn() {
-            const container = document.getElementById("plan-container-com-syn");
-            const data = synthesisDataCom[Math.floor(Math.random() * synthesisDataCom.length)];
-            container.innerHTML = data.texts.map(t => `<p>${t}</p>`).join('');
-            document.getElementById("plan-input-com-syn").value = "";
-        }
-
-        function checkPlanGameComSyn() {
-            const feedback = document.getElementById("plan-feedback-com-syn");
-            const input = document.getElementById("plan-input-com-syn").value.toLowerCase().trim().split(/,\s*/).filter(p => p);
-            const text = document.getElementById("plan-container-com-syn").textContent;
-            const data = synthesisDataCom.find(d => d.texts.join('') === text.replace(/\n/g, ''));
-            const isCorrect = input.length === 3 && data.plan.every((q, i) => input[i] === q.toLowerCase());
-            feedback.style.display = "block";
-            if (isCorrect) {
-                feedback.innerHTML = "Plan parfait ! +40 points.";
-                updateGamification(40, "step-plan-com");
-                setTimeout(() => generatePlanGameComSyn(), 2000);
-            } else {
-                feedback.innerHTML = `Faux. Plan attendu : ${data.plan.join(", ")}.`;
-                updateGamification(0, "step-plan-com");
-            }
-            hideFeedback("plan-feedback-com-syn");
-        }
-
-        function generateSynthesisGameComSyn() {
-            const container = document.getElementById("synthesis-container-com-syn");
-            const data = synthesisDataCom[Math.floor(Math.random() * synthesisDataCom.length)];
-            container.innerHTML = data.texts.map(t => `<p>${t}</p>`).join('');
-            document.getElementById("synthesis-input-com-syn").value = "";
-            countWords("synthesis-input-com-syn", "synthesis-word-count-com-syn", 300);
-        }
-
-        function checkSynthesisComSyn() {
-            const feedback = document.getElementById("synthesis-feedback-com-syn");
-            const input = document.getElementById("synthesis-input-com-syn").value.toLowerCase().trim();
-            const text = document.getElementById("synthesis-container-com-syn").textContent;
-            const data = synthesisDataCom.find(d => d.texts.join('') === text.replace(/\n/g, ''));
-            const wordCount = input.split(/\s+/).length;
-            const isCorrectLength = wordCount >= 270 && wordCount <= 330;
-            const hasProblem = input.startsWith(data.problem.toLowerCase());
-            const hasAuthors = ["platon", "debord", "baudrillard"].every(a => input.includes(a));
-            const hasPlan = data.plan.every(q => input.includes(q.toLowerCase().split(" ")[0]));
-            feedback.style.display = "block";
-            if (isCorrectLength && hasProblem && hasAuthors && hasPlan) {
-                feedback.innerHTML = `Synthèse réussie (${wordCount} mots) ! +60 points.`;
-                updateGamification(60, "step-synthesis-com");
-                setTimeout(() => generateSynthesisGameComSyn(), 2000);
-            } else {
-                feedback.innerHTML = `Inexact (${wordCount} mots). Besoin de : 270-330 mots, problématique ("${data.problem}"), auteurs (Platon, Debord, Baudrillard), sous-questions (${data.plan.join(", ")}).`;
-                updateGamification(0, "step-synthesis-com");
-            }
-            hideFeedback("synthesis-feedback-com-syn");
-        }
-
-// Fonctions de support
-function updateGamification(points, step) {
-    console.log(`Points gagnés : ${points} pour ${step}`);
-}
-
-function hideFeedback(id) {
-    setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) element.style.display = "none";
-    }, 2000);
-}
-
-function countWords(inputId, countId, target) {
-    const input = document.getElementById(inputId);
-    const countDisplay = document.getElementById(countId);
-    if (input && countDisplay) {
-        input.addEventListener("input", () => {
-            const words = input.value.trim().split(/\s+/).length || 0;
-            countDisplay.textContent = `Mots : ${words}/${target}`;
-        });
-    }
-}
-
-        // Initialisation
-        showSection('home');
-        updateGamification();
-
-    </script>
 </body>
 </html>
