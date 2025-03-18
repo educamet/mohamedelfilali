@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>GramSR - Mode Collège</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            margin: 0;
+            padding: 20px;
+            transition: background 0.5s ease;
+        }
+        h1 {
+            color: #2d3436;
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            padding: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+        }
+        .liste {
+            display: none;
+            padding: 15px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+        .item {
+            padding: 10px;
+            color: white;
+            cursor: pointer;
+            background: linear-gradient(45deg, #fd79a8, #f1c40f);
+            border-radius: 15px;
+            margin: 5px 0;
+            transition: background 0.3s ease;
+        }
+        .item:hover {
+            background: linear-gradient(45deg, #d63031, #e67e22);
+        }
+        .item span.icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .item:hover span.icon {
+            transform: scale(1.2);
+        }
+        .details {
+            display: none;
+            padding: 15px;
+            background: #fff;
+            border-left: 5px solid #fd79a8;
+            margin-top: 10px;
+            border-radius: 10px;
+            animation: slideIn 0.5s ease;
+        }
+        .example-btn, .return-btn, .astuce-btn, .transform-btn {
+            background: linear-gradient(45deg, #55efc4, #00b894);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 5px 5px 0 0;
+            transition: transform 0.2s ease;
+            font-size: 1.1em;
+        }
+        .astuce-btn {
+            background: linear-gradient(45deg, #ff7675, #d63031);
+        }
+        .transform-btn {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+        }
+        .example-btn:hover, .return-btn:hover, .astuce-btn:hover, .transform-btn:hover {
+            transform: scale(1.05);
+        }
+        .quiz {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fab1a0;
+            border-radius: 10px;
+            color: #2d3436;
+        }
+        .quiz select {
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .dark-mode body {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+        }
+        .dark-mode .card {
+            background: #dfe6e9;
+        }
+        .dark-mode .liste {
+            background: #b2bec3;
+        }
+        .dark-mode .details {
+            background: #dfe6e9;
+        }
+        .dark-mode h1 {
+            color: #dfe6e9;
+        }
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #6b48ff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #636e72;
+            font-size: 0.9em;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Mode Sombre</button>
+    <h1>GramSR - Collège</h1>
+    <div class="container">
+        <div class="card">
+            <div class="card-header" onclick="toggleListe('classes')">Classes grammaticales</div>
+            <div id="classes" class="liste">
+                <div class="item" onclick="toggleDetails('nom')"><span class="icon">✏️</span> Nom</div>
+                <div id="nom" class="details">
+                    <strong>Définition :</strong> Désigne une personne, un animal, une chose ou une idée.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Mon chien</span> <span style='color: #e74c3c'>joue</span>."<br>
+                    <strong>Types :</strong> Commun (chien), propre (Paul), concret (table), abstrait (joie).<br>
+                    <button class="example-btn" onclick="randomExample('nom')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Si tu peux mettre \'le\' ou \'la\' devant, c’est un nom !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('nom')">Retour</button>
+                    <div class="quiz">Quel est le nom ? <select onchange="checkAnswer(this, 'Mon chien')"><option value="">Choisis</option><option>Mon chien</option><option>joue</option></select></div>
+                </div>
+                <div class="item" onclick="toggleDetails('verbe')"><span class="icon">➡️</span> Verbe</div>
+                <div id="verbe" class="details">
+                    <strong>Définition :</strong> Exprime une action, un état ou une existence.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Il</span> <span style='color: #e74c3c'>saute</span> haut."<br>
+                    <strong>Types :</strong> Action (sauter), état (être), auxiliaire (avoir).<br>
+                    <button class="example-btn" onclick="randomExample('verbe')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Cherche ce qui bouge ou change !')">Astuce</button>
+                    <button class="transform-btn" onclick="alert('Transforme : Il ne saute pas haut.')">Transformer</button>
+                    <button class="return-btn" onclick="toggleDetails('verbe')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('adjectif')"><span class="icon">⭐</span> Adjectif</div>
+                <div id="adjectif" class="details">
+                    <strong>Définition :</strong> Qualifie un nom.<br>
+                    <strong>Exemple :</strong> "Le cartable est <span style='color: #f1c40f'>lourd</span>."<br>
+                    <strong>Types :</strong> Qualificatif (lourd), numéral (deux), possessif (mon), relationnel (scolaire).<br>
+                    <button class="example-btn" onclick="randomExample('adjectif')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Ça répond à \'Comment est-il ?\'')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('adjectif')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('pronom')"><span class="icon">👀</span> Pronom</div>
+                <div id="pronom" class="details">
+                    <strong>Définition :</strong> Remplace un nom.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Elle</span> dort bien."<br>
+                    <strong>Types :</strong> Personnel (elle), possessif (le mien), démonstratif (celui).<br>
+                    <button class="example-btn" onclick="randomExample('pronom')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Ça évite de répéter un nom !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('pronom')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('determinant')"><span class="icon">🔍</span> Déterminant</div>
+                <div id="determinant" class="details">
+                    <strong>Définition :</strong> Introduit un nom.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Le</span> chien aboie."<br>
+                    <strong>Types :</strong> Article (le, un), démonstratif (ce), possessif (mon).<br>
+                    <button class="example-btn" onclick="randomExample('determinant')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : C’est avant le nom !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('determinant')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('adverbe')"><span class="icon">⏩</span> Adverbe</div>
+                <div id="adverbe" class="details">
+                    <strong>Définition :</strong> Modifie un verbe, un adjectif ou un autre adverbe.<br>
+                    <strong>Exemple :</strong> "Il court <span style='color: #f1c40f'>vite</span>."<br>
+                    <strong>Types :</strong> Manière (vite), temps (souvent), lieu (ici).<br>
+                    <button class="example-btn" onclick="randomExample('adverbe')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Souvent en -ment !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('adverbe')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('preposition')"><span class="icon">↔️</span> Préposition</div>
+                <div id="preposition" class="details">
+                    <strong>Définition :</strong> Relie des mots ou groupes.<br>
+                    <strong>Exemple :</strong> "Je vais <span style='color: #e74c3c'>à</span> l’école."<br>
+                    <strong>Exemples :</strong> à, de, sur, dans, avec.<br>
+                    <button class="example-btn" onclick="randomExample('preposition')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Relie comme une passerelle !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('preposition')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('conjonction')"><span class="icon">🔗</span> Conjonction</div>
+                <div id="conjonction" class="details">
+                    <strong>Définition :</strong> Relie des mots ou des phrases.<br>
+                    <strong>Exemple :</strong> "Il pleut, <span style='color: #e74c3c'>mais</span> je sors."<br>
+                    <strong>Types :</strong> Coordination (et, mais), subordination (que, si).<br>
+                    <button class="example-btn" onclick="randomExample('conjonction')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Pense à \'et\' ou \'mais\' !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('conjonction')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('interjection')"><span class="icon">❗</span> Interjection</div>
+                <div id="interjection" class="details">
+                    <strong>Définition :</strong> Exprime une émotion.<br>
+                    <strong>Exemple :</strong> "<span style='color: #f1c40f'>Aïe</span> ! Ça fait mal !"<br>
+                    <strong>Exemples :</strong> Ouf, Bravo, Zut.<br>
+                    <button class="example-btn" onclick="randomExample('interjection')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : C’est un cri ou une surprise !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('interjection')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('proposition')"><span class="icon">📜</span> Proposition</div>
+                <div id="proposition" class="details">
+                    <strong>Définition :</strong> Phrase avec un verbe.<br>
+                    <strong>Exemple :</strong> "Il sait <span style='color: #e74c3c'>qu’il pleut</span>."<br>
+                    <strong>Types :</strong> Principale (Il sait), subordonnée (qu’il pleut).<br>
+                    <button class="example-btn" onclick="randomExample('proposition')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Cherche un verbe conjugué !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('proposition')">Retour</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" onclick="toggleListe('fonctions')">Fonctions grammaticales</div>
+            <div id="fonctions" class="liste">
+                <div class="item" onclick="toggleDetails('sujet')"><span class="icon">👤</span> Sujet</div>
+                <div id="sujet" class="details">
+                    <strong>Définition :</strong> Qui fait ou subit l’action.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Moi</span> <span style='color: #e74c3c'>je joue</span>."<br>
+                    <strong>Rôle :</strong> Détermine l’accord du verbe.<br>
+                    <button class="example-btn" onclick="randomExample('sujet')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Cherche qui agit !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('sujet')">Retour</button>
+                    <div class="quiz">Quel est le sujet ? <select onchange="checkAnswer(this, 'Moi')"><option value="">Choisis</option><option>Moi</option><option>je joue</option></select></div>
+                </div>
+                <div class="item" onclick="toggleDetails('cod')"><span class="icon">🎯</span> Complément d’objet direct</div>
+                <div id="cod" class="details">
+                    <strong>Définition :</strong> Reçoit directement l’action.<br>
+                    <strong>Exemple :</strong> "<span style='color: #e74c3c'>J’aime</span> <span style='color: #3498db'>le foot</span>."<br>
+                    <strong>Rôle :</strong> Complète le verbe sans préposition.<br>
+                    <button class="example-btn" onclick="randomExample('cod')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Demande \'quoi ?\' après le verbe !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('cod')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('coi')"><span class="icon">🤝</span> Complément d’objet indirect</div>
+                <div id="coi" class="details">
+                    <strong>Définition :</strong> Complète le verbe avec une préposition.<br>
+                    <strong>Exemple :</strong> "Je <span style='color: #e74c3c'>parle</span> <span style='color: #3498db'>à toi</span>."<br>
+                    <strong>Rôle :</strong> Répond à "à qui ?".<br>
+                    <button class="example-btn" onclick="randomExample('coi')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Cherche \'à\' ou \'de\' !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('coi')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('attribut')"><span class="icon">🌟</span> Attribut</div>
+                <div id="attribut" class="details">
+                    <strong>Définition :</strong> Décrit le sujet ou l’objet.<br>
+                    <strong>Exemple :</strong> "Je <span style='color: #e74c3c'>suis</span> <span style='color: #f1c40f'>fatigué</span>."<br>
+                    <strong>Rôle :</strong> Lié par un verbe d’état (être, sembler).<br>
+                    <button class="example-btn" onclick="randomExample('attribut')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Suit souvent \'être\' !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('attribut')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('complement_circonstanciel')"><span class="icon">⏰</span> Complément circonstanciel</div>
+                <div id="complement_circonstanciel" class="details">
+                    <strong>Définition :</strong> Donne des détails (lieu, temps, manière).<br>
+                    <strong>Exemple :</strong> "Je joue <span style='color: #f1c40f'>dehors</span>."<br>
+                    <strong>Types :</strong> Lieu (dehors), temps (tôt), manière (vite).<br>
+                    <button class="example-btn" onclick="randomExample('complement_circonstanciel')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Répond à \'où ?\', \'quand ?\', \'comment ?\' !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('complement_circonstanciel')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('complement_agent')"><span class="icon">🛠️</span> Complément d’agent</div>
+                <div id="complement_agent" class="details">
+                    <strong>Définition :</strong> Qui fait l’action dans une phrase passive.<br>
+                    <strong>Exemple :</strong> "Le livre est <span style='color: #e74c3c'>lu</span> <span style='color: #3498db'>par Paul</span>."<br>
+                    <strong>Rôle :</strong> Introduit par "par".<br>
+                    <button class="example-btn" onclick="randomExample('complement_agent')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Cherche \'par\' dans le passif !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('complement_agent')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('epithete')"><span class="icon">🌼</span> Épithète</div>
+                <div id="epithete" class="details">
+                    <strong>Définition :</strong> Adjectif qui décrit un nom.<br>
+                    <strong>Exemple :</strong> "Une fleur <span style='color: #f1c40f'>jolie</span> sent bon."<br>
+                    <strong>Rôle :</strong> Lié directement au nom.<br>
+                    <button class="example-btn" onclick="randomExample('epithete')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Collé au nom sans virgule !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('epithete')">Retour</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>GSR@ 2025 - Tous droits réservés</footer>
+    <script>
+        const examples = {
+            'nom': ['Mon chien joue.', 'L’école ferme.', 'Paul rit.'],
+            'verbe': ['Il saute haut.', 'Elle mange vite.', 'Tu dors bien.'],
+            'adjectif': ['Le cartable est lourd.', 'La pomme est rouge.', 'Mon sac est grand.'],
+            'pronom': ['Elle dort bien.', 'Nous jouons.', 'Tu ris fort.'],
+            'determinant': ['Le chien aboie.', 'Une fille rit.', 'Mon livre tombe.'],
+            'adverbe': ['Il court vite.', 'Elle parle fort.', 'Tu joues souvent.'],
+            'preposition': ['Je vais à l’école.', 'Le chat est sur la table.', 'Il joue dans le parc.'],
+            'conjonction': ['Il pleut, mais je sors.', 'J’aime jouer et manger.', 'Tu viens si tu veux.'],
+            'interjection': ['Aïe ! Ça fait mal !', 'Super ! J’ai gagné !', 'Ouf ! C’est fini !'],
+            'proposition': ['Il sait qu’il pleut.', 'Elle chante quand elle veut.', 'Tu ris parce que c’est drôle.'],
+            'sujet': ['Moi je joue.', 'Le prof parle.', 'La fille chante.'],
+            'cod': ['J’aime le foot.', 'Elle lit un manga.', 'Tu vois un film.'],
+            'coi': ['Je parle à toi.', 'Il donne au prof.', 'Elle écrit à sa mère.'],
+            'attribut': ['Je suis fatigué.', 'Le prof est gentil.', 'La mer est bleue.'],
+            'complement_circonstanciel': ['Je joue dehors.', 'Il arrive tôt.', 'Elle parle vite.'],
+            'complement_agent': ['Le livre est lu par Paul.', 'La maison est faite par eux.', 'Le gâteau est mangé par moi.'],
+            'epithete': ['Une fleur jolie sent bon.', 'Un chien gentil aboie.', 'Le sac lourd tombe.']
+        };
+        function randomExample(category) {
+            const ex = examples[category][Math.floor(Math.random() * examples[category].length)];
+            alert(ex);
+        }
+        function checkAnswer(select, correct) {
+            if (select.value === correct) alert('Bravo, c’est correct !');
+            else if (select.value) alert(`Non, la réponse était "${correct}" !`);
+        }
+        function toggleListe(id) { let element = document.getElementById(id); element.style.display = element.style.display === "block" ? "none" : "block"; }
+        function toggleDetails(id) { let element = document.getElementById(id); element.style.display = element.style.display === "block" ? "none" : "block"; }
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</body>
+</html>

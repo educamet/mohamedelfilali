@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>GramSR - Mode Primaire</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0eafc, #cfdef3) url('https://www.transparenttextures.com/patterns/cute-animals.png');
+            margin: 0;
+            padding: 20px;
+            transition: background 0.5s ease;
+        }
+        h1 {
+            color: #2d3436;
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            padding: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+        }
+        .liste {
+            display: none;
+            padding: 15px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+        .item {
+            padding: 10px;
+            color: white;
+            cursor: pointer;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            border-radius: 15px;
+            margin: 5px 0;
+            transition: background 0.3s ease;
+        }
+        .item:hover {
+            background: linear-gradient(45deg, #0984e3, #00cec9);
+        }
+        .item span.icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .item:hover span.icon {
+            transform: scale(1.2);
+        }
+        .details {
+            display: none;
+            padding: 15px;
+            background: #fff;
+            border-left: 5px solid #ffeaa7;
+            margin-top: 10px;
+            border-radius: 10px;
+            animation: slideIn 0.5s ease;
+        }
+        .example-btn, .return-btn, .astuce-btn {
+            background: linear-gradient(45deg, #55efc4, #00b894);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 5px 5px 0 0;
+            transition: transform 0.2s ease;
+            font-size: 1.1em;
+        }
+        .astuce-btn {
+            background: linear-gradient(45deg, #ff7675, #d63031);
+        }
+        .example-btn:hover, .return-btn:hover, .astuce-btn:hover {
+            transform: scale(1.05);
+        }
+        .quiz {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fab1a0;
+            border-radius: 10px;
+            color: #2d3436;
+        }
+        .quiz select {
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .dark-mode body {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+        }
+        .dark-mode .card {
+            background: #dfe6e9;
+        }
+        .dark-mode .liste {
+            background: #b2bec3;
+        }
+        .dark-mode .details {
+            background: #dfe6e9;
+        }
+        .dark-mode h1 {
+            color: #dfe6e9;
+        }
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #6b48ff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #636e72;
+            font-size: 0.9em;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Mode Sombre</button>
+    <h1>GramSR - Primaire</h1>
+    <div class="container">
+        <div class="card">
+            <div class="card-header" onclick="toggleListe('classes')">Classes grammaticales</div>
+            <div id="classes" class="liste">
+                <div class="item" onclick="toggleDetails('nom')"><span class="icon">✏️</span> Nom</div>
+                <div id="nom" class="details">
+                    <strong>Définition :</strong> Mot qui nomme une personne, un animal, un lieu ou une chose.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Le chat</span> <span style='color: #e74c3c'>dort</span>."<br>
+                    <strong>Types :</strong> Commun (chat), propre (Léo).<br>
+                    <button class="example-btn" onclick="randomExample('nom')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Mets \'le\' ou \'la\' devant !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('nom')">Retour</button>
+                    <div class="quiz">Quel est le nom ? <select onchange="checkAnswer(this, 'Le chat')"><option value="">Choisis</option><option>Le chat</option><option>dort</option></select></div>
+                </div>
+                <div class="item" onclick="toggleDetails('verbe')"><span class="icon">➡️</span> Verbe</div>
+                <div id="verbe" class="details">
+                    <strong>Définition :</strong> Mot qui montre une action ou un état.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Il</span> <span style='color: #e74c3c'>joue</span> dehors."<br>
+                    <strong>Types :</strong> Action (joue), état (est).<br>
+                    <button class="example-btn" onclick="randomExample('verbe')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : C’est ce que tu fais ou es !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('verbe')">Retour</button>
+                    <div class="quiz">Quel est le verbe ? <select onchange="checkAnswer(this, 'joue')"><option value="">Choisis</option><option>Il</option><option>joue</option></select></div>
+                </div>
+                <div class="item" onclick="toggleDetails('adjectif')"><span class="icon">⭐</span> Adjectif</div>
+                <div id="adjectif" class="details">
+                    <strong>Définition :</strong> Mot qui décrit un nom.<br>
+                    <strong>Exemple :</strong> "Le chien est <span style='color: #f1c40f'>gentil</span>."<br>
+                    <strong>Rôle :</strong> Dit comment est le nom (grand, petit).<br>
+                    <button class="example-btn" onclick="randomExample('adjectif')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Ça répond à \'Comment est-il ?\'')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('adjectif')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('article')"><span class="icon">🔍</span> Article</div>
+                <div id="article" class="details">
+                    <strong>Définition :</strong> Petit mot avant un nom.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Le</span> chien aboie."<br>
+                    <strong>Types :</strong> Défini (le, la), indéfini (un, une).<br>
+                    <button class="example-btn" onclick="randomExample('article')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : C’est souvent \'le\' ou \'un\' !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('article')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('preposition')"><span class="icon">↔️</span> Préposition</div>
+                <div id="preposition" class="details">
+                    <strong>Définition :</strong> Mot qui relie des choses.<br>
+                    <strong>Exemple :</strong> "Le chat est <span style='color: #e74c3c'>sur</span> la table."<br>
+                    <strong>Exemples courants :</strong> à, sur, dans.<br>
+                    <button class="example-btn" onclick="randomExample('preposition')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : C’est un petit mot qui place !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('preposition')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('pronom')"><span class="icon">👀</span> Pronom</div>
+                <div id="pronom" class="details">
+                    <strong>Définition :</strong> Mot qui remplace un nom.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Je</span> mange une pomme."<br>
+                    <strong>Types :</strong> Personnel (je, tu).<br>
+                    <button class="example-btn" onclick="randomExample('pronom')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Remplace un nom comme \'Léo\' !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('pronom')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('adverbe')"><span class="icon">⏩</span> Adverbe</div>
+                <div id="adverbe" class="details">
+                    <strong>Définition :</strong> Mot qui change le verbe.<br>
+                    <strong>Exemple :</strong> "Il joue <span style='color: #f1c40f'>bien</span>."<br>
+                    <strong>Exemples :</strong> bien, mal, vite.<br>
+                    <button class="example-btn" onclick="randomExample('adverbe')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Dit comment ça se passe !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('adverbe')">Retour</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" onclick="toggleListe('fonctions')">Fonctions grammaticales</div>
+            <div id="fonctions" class="liste">
+                <div class="item" onclick="toggleDetails('sujet')"><span class="icon">👤</span> Sujet</div>
+                <div id="sujet" class="details">
+                    <strong>Définition :</strong> Qui fait l’action.<br>
+                    <strong>Exemple :</strong> "<span style='color: #3498db'>Le chien</span> <span style='color: #e74c3c'>aboie</span>."<br>
+                    <strong>Rôle :</strong> Lié au verbe.<br>
+                    <button class="example-btn" onclick="randomExample('sujet')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Cherche qui agit !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('sujet')">Retour</button>
+                    <div class="quiz">Quel est le sujet ? <select onchange="checkAnswer(this, 'Le chien')"><option value="">Choisis</option><option>Le chien</option><option>aboie</option></select></div>
+                </div>
+                <div class="item" onclick="toggleDetails('cod')"><span class="icon">🎯</span> Complément d’objet direct</div>
+                <div id="cod" class="details">
+                    <strong>Définition :</strong> Ce qui reçoit l’action.<br>
+                    <strong>Exemple :</strong> "Il <span style='color: #e74c3c'>mange</span> <span style='color: #3498db'>une pomme</span>."<br>
+                    <strong>Rôle :</strong> Complète le verbe.<br>
+                    <button class="example-btn" onclick="randomExample('cod')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Demande \'quoi ?\' après le verbe !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('cod')">Retour</button>
+                </div>
+                <div class="item" onclick="toggleDetails('attribut')"><span class="icon">🌟</span> Attribut</div>
+                <div id="attribut" class="details">
+                    <strong>Définition :</strong> Décrit le sujet.<br>
+                    <strong>Exemple :</strong> "Le chien <span style='color: #e74c3c'>est</span> <span style='color: #f1c40f'>gentil</span>."<br>
+                    <strong>Rôle :</strong> Dit comment est le sujet.<br>
+                    <button class="example-btn" onclick="randomExample('attribut')">Exemple aléatoire</button>
+                    <button class="astuce-btn" onclick="alert('Astuce : Suit souvent \'est\' !')">Astuce</button>
+                    <button class="return-btn" onclick="toggleDetails('attribut')">Retour</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>GSR@ 2025 - Tous droits réservés</footer>
+    <script>
+        const examples = {
+            'nom': ['Le chat dort.', 'Une fille rit.', 'Mon copain joue.'],
+            'verbe': ['Il joue dehors.', 'Elle dessine bien.', 'Tu manges vite.'],
+            'adjectif': ['Le chien est gentil.', 'La fleur est jolie.', 'Mon sac est lourd.'],
+            'article': ['Le chien aboie.', 'Une pomme tombe.', 'La maison brille.'],
+            'preposition': ['Le chat est sur la table.', 'Je vais à l’école.', 'Il joue dans le parc.'],
+            'pronom': ['Je mange une pomme.', 'Tu ris fort.', 'Il dort bien.'],
+            'adverbe': ['Il joue bien.', 'Elle court vite.', 'Tu parles mal.'],
+            'sujet': ['Le chien aboie.', 'Moi je mange.', 'La fille rit.'],
+            'cod': ['Il mange une pomme.', 'Elle voit un oiseau.', 'Tu lis un livre.'],
+            'attribut': ['Le chien est gentil.', 'La fleur est jolie.', 'Moi je suis fatigué.']
+        };
+        function randomExample(category) {
+            const ex = examples[category][Math.floor(Math.random() * examples[category].length)];
+            alert(ex);
+        }
+        function checkAnswer(select, correct) {
+            if (select.value === correct) alert('Bravo, c’est correct !');
+            else if (select.value) alert(`Non, la réponse était "${correct}" !`);
+        }
+        function toggleListe(id) { let element = document.getElementById(id); element.style.display = element.style.display === "block" ? "none" : "block"; }
+        function toggleDetails(id) { let element = document.getElementById(id); element.style.display = element.style.display === "block" ? "none" : "block"; }
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</body>
+</html>

@@ -2,239 +2,93 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mode d’emploi de Méthodo Prépas</title>
+    <title>GramSR - Accueil</title>
     <style>
-        :root {
-            --primary-blue: #1e3a8a;
-            --secondary-green: #10b981;
-            --accent-orange: #f97316;
-            --light-bg: #f1f5f9;
-            --white: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --text-dark: #1f2937;
-            --gold: #eab308;
-            --purple: #8b5cf6;
-            --red: #ef4444;
-        }
-
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: var(--light-bg);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
             margin: 0;
             padding: 0;
-            color: var(--text-dark);
-            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background 0.5s ease;
         }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-blue), #3b82f6);
-            color: var(--white);
+        .mode-container {
             text-align: center;
-            padding: 40px 20px;
-            box-shadow: 0 4px 12px var(--shadow);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-
         h1 {
-            margin: 0;
-            font-size: 48px;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        h2 {
-            font-size: 28px;
-            color: var(--primary-blue);
-            border-bottom: 2px solid var(--accent-orange);
-            padding-bottom: 10px;
-            margin-top: 30px;
-        }
-
-        h3 {
-            font-size: 20px;
-            color: var(--purple);
-            margin-top: 20px;
-        }
-
-        p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 5px 15px var(--shadow);
-        }
-
-        .section {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f9fafb;
-            border-radius: 8px;
-            border-left: 5px solid var(--secondary-green);
-        }
-
-        .highlight {
-            background: #fef3c7;
-            padding: 10px;
-            border-radius: 6px;
-            border-left: 5px solid var(--gold);
-            margin: 10px 0;
-            font-weight: 500;
-        }
-
-        .button {
+            color: #2d3436;
+            font-size: 3em;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            -webkit-background-clip: text;
+            color: transparent;
             display: inline-block;
-            padding: 10px 20px;
-            background: var(--accent-orange);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 6px;
-            margin: 10px 5px;
-            box-shadow: 0 2px 5px var(--shadow);
-            transition: transform 0.2s, opacity 0.2s;
+            padding: 0 20px;
+            border-radius: 10px;
         }
-
-        .button:hover {
-            transform: scale(1.05);
-            opacity: 0.95;
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; /* Espacement uniforme entre les boutons */
         }
-
-        .signature {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            background: var(--primary-blue);
-            color: var(--white);
-            font-style: italic;
-            font-size: 18px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px var(--shadow);
+        .mode-btn {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #6b48ff, #00ddeb);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.3em;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 200px; /* Largeur fixe pour un alignement parfait */
         }
-
+        .mode-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
         footer {
+            width: 100%;
             text-align: center;
-            padding: 20px;
-            background: var(--primary-blue);
-            color: var(--white);
-            font-size: 14px;
-            margin-top: 50px;
+            color: #636e72;
+            font-size: 0.6em; /* Caractères très petits */
+            margin-top: 20px;
+            padding: 5px 0;
+            background: transparent;
+            display: block;
         }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 32px; }
-            h2 { font-size: 20px; }
-            h3 { font-size: 16px; }
-            .container { margin: 10px; padding: 10px; }
-            .section { padding: 15px; }
-            .button { padding: 8px 16px; font-size: 14px; }
-            .signature { font-size: 16px; padding: 15px; }
+        .dark-mode body {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+        }
+        .dark-mode .mode-container {
+            background: rgba(45, 52, 54, 0.95);
+        }
+        .dark-mode h1 {
+            color: #dfe6e9;
+        }
+        .dark-mode footer {
+            color: #b2bec3;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Mode d’emploi de Méthodo Prépas</h1>
-        <p class="subtitle">De Novice à Légende des Concours – Guide pour Professeurs et Étudiants</p>
-    </header>
-    <div class="container">
-        <h2>1. Présentation générale</h2>
-        <p>Méthodo Prépas est une plateforme interactive accessible à l’adresse <a href="https://methodoprepas.web.app" class="button">methodoprepas.web.app</a>. Elle aide les étudiants à se préparer aux concours scientifiques et commerciaux grâce à des exercices de dissertation, résumé et synthèse, tout en offrant un système de gamification motivant (points, badges, progression) pour les étudiants, et des outils de gestion pour les professeurs.</p>
-        <div class="highlight">Pourquoi l’utiliser ? Méthodo Prépas rend l’apprentissage ludique, structuré et adapté aux besoins des classes préparatoires, tout en facilitant la supervision pour les professeurs !</div>
-
-        <h2>2. Connexion et inscription</h2>
-        <h3>Pour les étudiants</h3>
-        <div class="section">
-            <p><strong>Accès initial :</strong> Rendez-vous sur le site, choisissez <strong>"Étudiant"</strong> sur l’écran d’accueil.</p>
-            <p><strong>Inscription/Connexion avec un compte :</strong>  
-            - Remplissez <strong>Email</strong> et <strong>Mot de passe</strong>.  
-            - Cliquez sur <strong>"Inscription"</strong> ou <strong>"Connexion"</strong>.  
-            - Option : Continuez sans compte via <strong>"Continuer sans compte"</strong> (progrès non sauvegardés).</p>
-            <div class="highlight">Un compte permet de sauvegarder vos points, badges et niveaux pour une progression continue !</div>
+    <div class="mode-container">
+        <h1>GramSR</h1>
+        <div class="button-group">
+            <button class="mode-btn" onclick="window.location.href='primaire.html'">Mode Primaire</button>
+            <button class="mode-btn" onclick="window.location.href='collège.html'">Mode Collège</button>
+            <button class="mode-btn" onclick="window.location.href='lycée.html'">Mode Lycée</button>
         </div>
-
-        <h3>Pour les professeurs</h3>
-        <div class="section">
-            <p><strong>Accès initial :</strong> Choisissez <strong>"Professeur"</strong>, puis connectez-vous ou inscrivez-vous avec <strong>Email</strong> et <strong>Mot de passe</strong>.</p>
-            <p><strong>Rôle :</strong> Gérer les contenus, superviser les étudiants via l’espace <strong>"La Chambre des Sages"</strong>.</p>
-            <div class="highlight">Profitez de Méthodo Prépas pour enrichir vos cours et motiver vos étudiants avec des défis interactifs !</div>
-        </div>
-
-        <h2>3. Navigation pour les étudiants</h2>
-        <div class="section">
-            <p>Après connexion, accédez à la page d’accueil avec :</p>
-            <ul>
-                <li><strong>Barre de gamification :</strong> Votres titres (Novice, Penseur, etc.), points, badges, et une barre de progression.</li>
-                <li><strong>Choix des voies :</strong> Sélectionnez <strong>"Voie Scientifique"</strong> ou <strong>"Voie Commerciale"</strong>.</li>
-            </ul>
-
-            <h3>3.1. Voie Scientifique</h3>
-            <p><strong>Dissertation scientifique :</strong> 9 niveaux (Citation → Parties III & Conclusion).  
-            <strong>Résumé scientifique :</strong> 5 niveaux (Thèse → Résumé).</p>
-
-            <h3>3.2. Voie Commerciale</h3>
-            <p><strong>Dissertation commerciale :</strong> Similaire, avec contenus adaptés.  
-            <strong>Résumé commercial :</strong> Idem.  
-            <strong>Synthèse commerciale :</strong> 5 niveaux (Problématique → Perfection).</p>
-
-            <h3>3.3. Fonctionnement des défis</h3>
-            <p>- Niveaux verrouillés jusqu’à validation du précédent.  
-            - <strong>Niveau 1 :</strong> Cliquez <strong>"Valider"</strong>.  
-            - <strong>Niveaux suivants :</strong> Rédigez dans la zone texte, cliquez <strong>"Vérifier"</strong>.  
-            - <strong>Feedback :</strong> Messages détaillés avec points et conseils d’amélioration.  
-            - <strong>Nouveau Défi :</strong> Cliquez <strong>"Nouveau Défi"</strong> pour un contenu aléatoire.</p>
-
-            <h3>3.4. Gamification</h3>
-            <p>- <strong>Points :</strong> Gagnés pour bonnes réponses, perdus (-5) après 3 erreurs.  
-            - <strong>Titres :</strong> Débloqués par paliers (Novice, Apprenant, etc.).  
-            - <strong>Badges :</strong> Récompensent les niveaux clés (ex. : Analyste Éclairé au niveau 2).</p>
-            <div class="highlight">Motivez vos étudiants avec ce système ludique et engageant – idéal pour les classes préparatoires !</div>
-        </div>
-
-        <h2>4. Navigation pour les professeurs</h2>
-        <div class="section">
-            <p>Accédez à <strong>"La Chambre des Sages"</strong> pour gérer les contenus :</p>
-            <ul>
-                <li><strong>Sélectionnez une section :</strong> Via le menu déroulant.</li>
-                <li><strong>Gérez les contenus :</strong> Blocs affichant Professeur, Date, Contenu, et Actions (Modifier/Supprimer pour vos contenus, ou Supprimer pour contenus orphelins).</li>
-                <li><strong>Ajoutez un contenu :</strong> Remplissez le formulaire, cliquez <strong>"Ajouter"</strong>.</li>
-                <li><strong>Modifiez un contenu :</strong> Cliquez <strong>"Modifier"</strong>, ajustez, puis <strong>"Enregistrer"</strong>.</li>
-                <li><strong>Supprimez un contenu :</strong> Cliquez <strong>"Supprimer"</strong>, confirmez.</li>
-                <li><strong>Contenus orphelins :</strong> Identifiés en rouge, supprimables manuellement ou via <strong>"Nettoyer les contenus orphelins"</strong>.</li>
-            </ul>
-            <div class="highlight">Facilitez votre enseignement en créant des défis personnalisés et en maintenant une base de données propre avec Méthodo Prépas !</div>
-        </div>
-
-        <h2>5. Conseils et bonnes pratiques</h2>
-        <div class="section">
-            <p><strong>Pour les étudiants :</strong> Lisez les instructions, utilisez les feedbacks pour progresser, et engagez-vous dans la gamification pour rester motivés.</p>
-            <p><strong>Pour les professeurs :</strong> Ajoutez des contenus variés, surveillez les orphelins, et encouragez vos étudiants avec les badges et titres.</p>
-            <div class="highlight">Transformez vos cours en une aventure éducative captivante avec Méthodo Prépas – adoptez-le dès aujourd’hui !</div>
-        </div>
-
-        <h2>6. Dépannage</h2>
-        <div class="section">
-            <p>- <strong>Problème avec `sci-diss` :</strong> Vérifiez les contenus dans Firebase (`sci-diss/citations`). Reconnectez-vous pour recharger les données initiales.  
-            - <strong>Contenus orphelins :</strong> Utilisez le nettoyage pour les supprimer.  
-            - <strong>Erreur technique :</strong> Ouvrez la console JavaScript (F12) et contactez [support@methodoprepas.com].</p>
-        </div>
-
-        <h2>7. Contact et support</h2>
-        <div class="section">
-            <p>Pour toute question, contactez-nous à <a href="mailto:support@methodoprepas.com" class="button">support@methodoprepas.com</a>. Nous sommes là pour vous aider à maximiser l’utilisation de Méthodo Prépas !</p>
-            <div class="highlight">Rejoignez la communauté Méthodo Prépas et offrez à vos étudiants une préparation d’excellence !</div>
-        </div>
-
-        <div class="signature">
-            Créé par : EL FILALI MOHAMED - CPGE MOHAMED V - CASABLANCA
-        </div>
+        <footer>GSR@ 2025 - Tous droits réservés</footer>
     </div>
-    <footer>
-        <p>© 2025 Méthodo Prépas - Tous droits réservés</p>
-    </footer>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </body>
 </html>
