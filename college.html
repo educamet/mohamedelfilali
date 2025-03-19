@@ -10,76 +10,77 @@
             font-family: 'Arial', sans-serif;
             background: #e0f7fa;
             min-height: 100vh;
-            padding: 20px;
+            padding: 1rem;
             color: #0277bd;
+            overflow-x: hidden;
         }
         h1 {
             text-align: center;
-            font-size: 2.8em;
-            margin-bottom: 30px;
+            font-size: 6vw;
+            margin-bottom: 2rem;
         }
         .activity-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+            gap: 2rem;
+            max-width: 120rem;
             margin: 0 auto;
         }
         .activity {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s;
-            border: 1px solid #b2ebf2;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+            border: 0.1rem solid #b2ebf2;
         }
-        .activity:hover { transform: translateY(-5px); }
         h2 {
-            margin: 0 0 10px;
-            font-size: 1.5em;
+            margin: 0 0 1rem;
+            font-size: 3vw;
             color: #0288d1;
         }
         p {
-            margin: 0 0 15px;
-            font-size: 1.1em;
+            margin: 0 0 1.5rem;
+            font-size: 2.5vw;
         }
         .option, textarea, input {
-            padding: 10px;
-            margin: 5px;
+            padding: 1rem;
+            margin: 0.5rem;
             background: #81d4fa;
-            border-radius: 5px;
+            border-radius: 0.5rem;
             border: none;
-            font-size: 1em;
+            font-size: 2vw;
         }
         .option { cursor: pointer; }
         .option:hover { background: #4fc3f7; }
         button {
-            padding: 10px 20px;
+            padding: 1rem 2rem;
             background: #0288d1;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 0.5rem;
             cursor: pointer;
-            margin: 5px;
+            margin: 0.5rem;
+            font-size: 2vw;
         }
         button:hover { background: #0277bd; }
         .feedback {
-            margin-top: 10px;
-            font-size: 1.1em;
+            margin-top: 1rem;
+            font-size: 2.5vw;
             text-align: center;
             display: none;
         }
         .recall {
             display: none;
-            padding: 10px;
+            padding: 1rem;
             background: #b2ebf2;
-            border-radius: 5px;
-            margin-top: 10px;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 2vw;
         }
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 1rem;
+            height: 1rem;
             pointer-events: none;
         }
         @keyframes pulse {
@@ -90,10 +91,17 @@
         @keyframes fall {
             to { transform: translateY(100vh); }
         }
+        @media (max-width: 600px) {
+            h1 { font-size: 8vw; }
+            .activity-container { grid-template-columns: 1fr; }
+            h2 { font-size: 5vw; }
+            p, .feedback { font-size: 4vw; }
+            .option, textarea, input, button, .recall { font-size: 3.5vw; }
+        }
     </style>
 </head>
 <body>
-    <a href="index.html" style="position: absolute; top: 20px; left: 20px; color: #0277bd; font-size: 1.2em; text-decoration: none;">← Retour</a>
+    <a href="index.html" style="position: absolute; top: 1rem; left: 1rem; color: #0277bd; font-size: 2.5vw; text-decoration: none;">← Retour</a>
     <h1>GramaScoR - Niveau Collège</h1>
     <audio id="successSound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
     <div class="activity-container">
@@ -307,7 +315,7 @@
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * window.innerWidth + 'px';
-                confetti.style.top = '-10px';
+                confetti.style.top = '-1rem';
                 confetti.style.background = ['#ff0', '#f00', '#0f0'][Math.floor(Math.random() * 3)];
                 confetti.style.animation = 'fall 2s linear';
                 document.body.appendChild(confetti);

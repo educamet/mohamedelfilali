@@ -10,100 +10,111 @@
             font-family: 'Arial', sans-serif;
             background: #f1f8e9;
             min-height: 100vh;
-            padding: 20px;
+            padding: 1rem;
             color: #33691e;
+            overflow-x: hidden;
         }
         h1 {
             text-align: center;
-            font-size: 2.8em;
-            margin-bottom: 30px;
+            font-size: 6vw;
+            margin-bottom: 2rem;
         }
         .activity-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+            gap: 2rem;
+            max-width: 120rem;
             margin: 0 auto;
         }
         .activity {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s;
-            border: 1px solid #dcedc8;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+            border: 0.1rem solid #dcedc8;
         }
-        .activity:hover { transform: translateY(-5px); }
         h2 {
-            margin: 0 0 10px;
-            font-size: 1.5em;
+            margin: 0 0 1rem;
+            font-size: 3vw;
             color: #558b2f;
         }
         p {
-            margin: 0 0 15px;
-            font-size: 1.1em;
+            margin: 0 0 1.5rem;
+            font-size: 2.5vw;
         }
         .draggable, .option, textarea, input {
-            padding: 10px;
-            margin: 5px;
+            padding: 1rem;
+            margin: 0.5rem;
             background: #aed581;
-            border-radius: 5px;
+            border-radius: 0.5rem;
             border: none;
-            font-size: 1em;
+            font-size: 2vw;
+            touch-action: none; /* Désactive le zoom/pan par défaut */
         }
-        .draggable { cursor: grab; }
+        .draggable { cursor: grab; user-select: none; }
         .drop-zone {
-            width: 80px;
-            height: 40px;
-            border: 2px dashed #33691e;
-            margin: 5px;
+            width: 8rem;
+            height: 4rem;
+            border: 0.2rem dashed #33691e;
+            margin: 0.5rem;
             text-align: center;
-            line-height: 40px;
+            line-height: 4rem;
             display: inline-block;
+            font-size: 2vw;
         }
         .drop-zone.correct { background: #a5d6a7; }
         .option { cursor: pointer; }
         .option:hover { background: #9ccc65; }
         button {
-            padding: 10px 20px;
+            padding: 1rem 2rem;
             background: #689f38;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 0.5rem;
             cursor: pointer;
-            margin: 5px;
+            margin: 0.5rem;
+            font-size: 2vw;
         }
         button:hover { background: #558b2f; }
         .feedback {
-            margin-top: 10px;
-            font-size: 1.1em;
+            margin-top: 1rem;
+            font-size: 2.5vw;
             text-align: center;
             display: none;
         }
         .recall {
             display: none;
-            padding: 10px;
+            padding: 1rem;
             background: #dcedc8;
-            border-radius: 5px;
-            margin-top: 10px;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 2vw;
         }
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 1rem;
+            height: 1rem;
             pointer-events: none;
         }
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-1rem); }
         }
         @keyframes fall {
             to { transform: translateY(100vh); }
         }
+        @media (max-width: 600px) {
+            h1 { font-size: 8vw; }
+            .activity-container { grid-template-columns: 1fr; }
+            h2 { font-size: 5vw; }
+            p, .feedback { font-size: 4vw; }
+            .draggable, .option, textarea, input, .drop-zone, button, .recall { font-size: 3.5vw; }
+            .drop-zone { width: 10rem; height: 5rem; line-height: 5rem; }
+        }
     </style>
 </head>
 <body>
-    <a href="index.html" style="position: absolute; top: 20px; left: 20px; color: #33691e; font-size: 1.2em; text-decoration: none;">← Retour</a>
+    <a href="index.html" style="position: absolute; top: 1rem; left: 1rem; color: #33691e; font-size: 2.5vw; text-decoration: none;">← Retour</a>
     <h1>GramaScoR - Niveau Primaire</h1>
     <audio id="successSound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
     <div class="activity-container">
@@ -147,7 +158,7 @@
                 <span class="draggable" draggable="true">chien</span>
                 <span class="draggable" draggable="true">aboie</span>
             </div>
-            <div class="drop-zone" style="width: 200px;"></div>
+            <div class="drop-zone" style="width: 20rem;"></div>
             <div class="feedback"></div>
             <button onclick="showRecall(this)">Fiche de rappel</button>
             <button onclick="newChallenge(this, 'act3')">Nouveau défi</button>
@@ -325,7 +336,7 @@
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * window.innerWidth + 'px';
-                confetti.style.top = '-10px';
+                confetti.style.top = '-1rem';
                 confetti.style.background = ['#ff0', '#f00', '#0f0'][Math.floor(Math.random() * 3)];
                 confetti.style.animation = 'fall 2s linear';
                 document.body.appendChild(confetti);
@@ -333,45 +344,84 @@
             }
         }
 
-        const draggables = document.querySelectorAll('.draggable');
-        const dropZones = document.querySelectorAll('.drop-zone');
-        draggables.forEach(d => {
-            d.addEventListener('dragstart', (e) => e.dataTransfer.setData('text', e.target.textContent));
-        });
-        dropZones.forEach(z => {
-            z.addEventListener('dragover', (e) => e.preventDefault());
-            z.addEventListener('drop', (e) => {
-                e.preventDefault();
-                const word = e.dataTransfer.getData('text');
-                const type = z.dataset.type || 'phrase';
-                const activity = z.closest('.activity');
-                const feedback = activity.querySelector('.feedback');
-                const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
-                let isCorrect = false;
+        function setupDragAndDrop() {
+            const draggables = document.querySelectorAll('.draggable');
+            const dropZones = document.querySelectorAll('.drop-zone');
 
-                if (type === 'determinant' && word === currentChallenge.answers.determinant) isCorrect = true;
-                if (type === 'nom' && word === currentChallenge.answers.nom) isCorrect = true;
-                if (type === 'verbe' && word === currentChallenge.answers.verbe) isCorrect = true;
-                if (type === 'phrase' && z.textContent === '' && word === currentChallenge.answer.split(' ')[0]) isCorrect = true;
-                if (type === 'phrase' && z.textContent === currentChallenge.answer.split(' ')[0] && word === currentChallenge.answer.split(' ')[1]) isCorrect = true;
-                if (type === 'phrase' && z.textContent === currentChallenge.answer.split(' ').slice(0, 2).join(' ') && word === currentChallenge.answer.split(' ')[2]) isCorrect = true;
+            draggables.forEach(d => {
+                // Desktop
+                d.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text', e.target.textContent);
+                });
 
-                if (isCorrect) {
-                    z.textContent = type === 'phrase' ? `${z.textContent} ${word}`.trim() : word;
-                    z.classList.add('correct');
-                    z.style.animation = 'bounce 0.5s';
-                    feedback.style.display = 'block';
-                    feedback.style.color = '#33691e';
-                    feedback.textContent = 'Super !';
-                    document.getElementById('successSound').play();
-                    showConfetti();
-                } else {
-                    feedback.style.display = 'block';
-                    feedback.style.color = '#d32f2f';
-                    feedback.textContent = 'Réessaie !';
-                }
+                // Mobile
+                let touchStartX = 0, touchStartY = 0;
+                d.addEventListener('touchstart', (e) => {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                    d.style.position = 'absolute';
+                    d.style.zIndex = 1000;
+                });
+                d.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    d.style.left = `${touch.clientX - touchStartX}px`;
+                    d.style.top = `${touch.clientY - touchStartY}px`;
+                });
+                d.addEventListener('touchend', (e) => {
+                    const touch = e.changedTouches[0];
+                    const dropZone = Array.from(dropZones).find(zone => {
+                        const rect = zone.getBoundingClientRect();
+                        return touch.clientX >= rect.left && touch.clientX <= rect.right &&
+                               touch.clientY >= rect.top && touch.clientY <= rect.bottom;
+                    });
+                    if (dropZone) handleDrop(d, dropZone);
+                    d.style.position = '';
+                    d.style.left = '';
+                    d.style.top = '';
+                });
             });
-        });
+
+            dropZones.forEach(z => {
+                z.addEventListener('dragover', (e) => e.preventDefault());
+                z.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const word = e.dataTransfer.getData('text');
+                    const draggable = Array.from(draggables).find(d => d.textContent === word);
+                    handleDrop(draggable, z);
+                });
+            });
+        }
+
+        function handleDrop(draggable, dropZone) {
+            const activity = dropZone.closest('.activity');
+            const feedback = activity.querySelector('.feedback');
+            const type = dropZone.dataset.type || 'phrase';
+            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+            let isCorrect = false;
+
+            if (type === 'determinant' && draggable.textContent === currentChallenge.answers.determinant) isCorrect = true;
+            if (type === 'nom' && draggable.textContent === currentChallenge.answers.nom) isCorrect = true;
+            if (type === 'verbe' && draggable.textContent === currentChallenge.answers.verbe) isCorrect = true;
+            if (type === 'phrase' && dropZone.textContent === '' && draggable.textContent === currentChallenge.answer.split(' ')[0]) isCorrect = true;
+            if (type === 'phrase' && dropZone.textContent === currentChallenge.answer.split(' ')[0] && draggable.textContent === currentChallenge.answer.split(' ')[1]) isCorrect = true;
+            if (type === 'phrase' && dropZone.textContent === currentChallenge.answer.split(' ').slice(0, 2).join(' ') && draggable.textContent === currentChallenge.answer.split(' ')[2]) isCorrect = true;
+
+            if (isCorrect) {
+                dropZone.textContent = type === 'phrase' ? `${dropZone.textContent} ${draggable.textContent}`.trim() : draggable.textContent;
+                dropZone.classList.add('correct');
+                dropZone.style.animation = 'bounce 0.5s';
+                feedback.style.display = 'block';
+                feedback.style.color = '#33691e';
+                feedback.textContent = 'Super !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = 'Réessaie !';
+            }
+        }
 
         const options = document.querySelectorAll('.option');
         options.forEach(o => {
@@ -463,46 +513,39 @@
                     span.draggable = true;
                     span.textContent = word;
                     span.addEventListener('dragstart', (e) => e.dataTransfer.setData('text', e.target.textContent));
+                    let touchStartX = 0, touchStartY = 0;
+                    span.addEventListener('touchstart', (e) => {
+                        touchStartX = e.touches[0].clientX;
+                        touchStartY = e.touches[0].clientY;
+                        span.style.position = 'absolute';
+                        span.style.zIndex = 1000;
+                    });
+                    span.addEventListener('touchmove', (e) => {
+                        e.preventDefault();
+                        const touch = e.touches[0];
+                        span.style.left = `${touch.clientX - touchStartX}px`;
+                        span.style.top = `${touch.clientY - touchStartY}px`;
+                    });
+                    span.addEventListener('touchend', (e) => {
+                        const touch = e.changedTouches[0];
+                        const dropZone = Array.from(document.querySelectorAll('.drop-zone')).find(zone => {
+                            const rect = zone.getBoundingClientRect();
+                            return touch.clientX >= rect.left && touch.clientX <= rect.right &&
+                                   touch.clientY >= rect.top && touch.clientY <= rect.bottom;
+                        });
+                        if (dropZone) handleDrop(span, dropZone);
+                        span.style.position = '';
+                        span.style.left = '';
+                        span.style.top = '';
+                    });
                     taskDiv.appendChild(span);
                 });
                 if (actId === 'act1') {
                     taskDiv.nextElementSibling.innerHTML = '<div class="drop-zone" data-type="determinant">Déterminant</div><div class="drop-zone" data-type="nom">Nom</div><div class="drop-zone" data-type="verbe">Verbe</div>';
                 } else {
-                    taskDiv.nextElementSibling.innerHTML = '<div class="drop-zone" style="width: 200px;"></div>';
+                    taskDiv.nextElementSibling.innerHTML = '<div class="drop-zone" style="width: 20rem;"></div>';
                 }
-                const newZones = taskDiv.nextElementSibling.querySelectorAll('.drop-zone');
-                newZones.forEach(z => {
-                    z.addEventListener('dragover', (e) => e.preventDefault());
-                    z.addEventListener('drop', (e) => {
-                        e.preventDefault();
-                        const word = e.dataTransfer.getData('text');
-                        const type = z.dataset.type || 'phrase';
-                        const feedback = activity.querySelector('.feedback');
-                        let isCorrect = false;
-
-                        if (type === 'determinant' && word === challenge.answers.determinant) isCorrect = true;
-                        if (type === 'nom' && word === challenge.answers.nom) isCorrect = true;
-                        if (type === 'verbe' && word === challenge.answers.verbe) isCorrect = true;
-                        if (type === 'phrase' && z.textContent === '' && word === challenge.answer.split(' ')[0]) isCorrect = true;
-                        if (type === 'phrase' && z.textContent === challenge.answer.split(' ')[0] && word === challenge.answer.split(' ')[1]) isCorrect = true;
-                        if (type === 'phrase' && z.textContent === challenge.answer.split(' ').slice(0, 2).join(' ') && word === challenge.answer.split(' ')[2]) isCorrect = true;
-
-                        if (isCorrect) {
-                            z.textContent = type === 'phrase' ? `${z.textContent} ${word}`.trim() : word;
-                            z.classList.add('correct');
-                            z.style.animation = 'bounce 0.5s';
-                            feedback.style.display = 'block';
-                            feedback.style.color = '#33691e';
-                            feedback.textContent = 'Super !';
-                            document.getElementById('successSound').play();
-                            showConfetti();
-                        } else {
-                            feedback.style.display = 'block';
-                            feedback.style.color = '#d32f2f';
-                            feedback.textContent = 'Réessaie !';
-                        }
-                    });
-                });
+                setupDragAndDrop();
             } else if (actId === 'act2' || actId === 'act4' || actId === 'act5' || actId === 'act7') {
                 p.textContent = challenge.task;
                 const span1 = document.createElement('span');
@@ -555,6 +598,8 @@
                 taskDiv.appendChild(button);
             }
         }
+
+        setupDragAndDrop();
     </script>
 </body>
 </html>

@@ -8,57 +8,69 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: #f5f7fa; /* Gris-bleu très doux */
+            background: #f5f7fa;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            color: #34495e; /* Bleu-gris élégant */
+            color: #34495e;
+            overflow-x: hidden;
         }
         h1 {
-            font-size: 3.5em;
-            margin: 20px 0;
-            color: #3498db; /* Bleu doux et professionnel */
+            font-size: 6vw; /* Adaptatif */
+            margin: 2rem 0;
+            color: #3498db;
             font-weight: bold;
+            text-align: center;
         }
         .levels {
             display: flex;
-            gap: 40px;
-            margin: 40px 0;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+            justify-content: center;
+            padding: 0 1rem;
         }
         .level-btn {
-            padding: 20px 50px;
-            font-size: 1.8em;
+            padding: 1.5rem 3rem;
+            font-size: 3vw; /* Adaptatif */
             color: #ffffff;
-            background: #a3bffa; /* Violet pâle */
+            background: #a3bffa;
             border: none;
-            border-radius: 10px;
+            border-radius: 1rem;
             cursor: pointer;
             transition: background 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
+            min-width: 10rem;
         }
         .level-btn:hover {
-            background: #8caceb; /* Légère variation au survol */
-            transform: translateY(-3px);
+            background: #8caceb;
+            transform: translateY(-0.3rem);
         }
         .motivation {
-            font-size: 1.3em;
-            color: #7f8c8d; /* Gris doux */
+            font-size: 2.5vw; /* Adaptatif */
+            color: #7f8c8d;
             text-align: center;
-            padding: 20px;
+            padding: 1rem;
             font-style: italic;
         }
         .footer {
             width: 100%;
-            background: #ebedf0; /* Gris très clair */
-            padding: 10px 0;
+            background: #ebedf0;
+            padding: 1rem 0;
             text-align: center;
         }
         .footer p {
             margin: 0;
-            font-size: 0.9em;
-            color: #7f8c8d; /* Gris doux assorti au message */
+            font-size: 2vw; /* Adaptatif */
+            color: #7f8c8d;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 8vw; }
+            .level-btn { font-size: 4vw; padding: 1rem 2rem; }
+            .motivation { font-size: 3.5vw; }
+            .footer p { font-size: 2.5vw; }
         }
     </style>
 </head>
@@ -70,6 +82,6 @@
         <button class="level-btn" onclick="window.location.href='lycee.html'">Lycée</button>
     </div>
     <div class="motivation">"Chaque mot compte, chaque pas te rapproche de la maîtrise !"</div>
-    <div class="footer"><p>GramScoR © 2025 - Tous droits réservés</p></div>
+    <div class="footer"><p>GramaScoR © 2025 - Tous droits réservés</p></div>
 </body>
 </html>
