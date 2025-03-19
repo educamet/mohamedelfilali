@@ -2,283 +2,559 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>GramSR - Mode Primaire</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GramaScoR - Primaire</title>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e0eafc, #cfdef3) url('https://www.transparenttextures.com/patterns/cute-animals.png');
             margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #f1f8e9;
+            min-height: 100vh;
             padding: 20px;
-            transition: background 0.5s ease;
+            color: #33691e;
         }
         h1 {
-            color: #2d3436;
             text-align: center;
             font-size: 2.8em;
             margin-bottom: 30px;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            -webkit-background-clip: text;
-            color: transparent;
         }
-        .container {
+        .activity-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .card {
+        .activity {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .card-header {
             padding: 15px;
-            font-size: 1.3em;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-        }
-        .liste {
-            display: none;
-            padding: 15px;
-            background: #f9f9f9;
-            transition: all 0.3s ease;
-        }
-        .item {
-            padding: 10px;
-            color: white;
-            cursor: pointer;
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            border-radius: 15px;
-            margin: 5px 0;
-            transition: background 0.3s ease;
-        }
-        .item:hover {
-            background: linear-gradient(45deg, #0984e3, #00cec9);
-        }
-        .item span.icon {
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-        .item:hover span.icon {
-            transform: scale(1.2);
-        }
-        .details {
-            display: none;
-            padding: 15px;
-            background: #fff;
-            border-left: 5px solid #ffeaa7;
-            margin-top: 10px;
             border-radius: 10px;
-            animation: slideIn 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid #dcedc8;
         }
-        .example-btn, .return-btn, .astuce-btn {
-            background: linear-gradient(45deg, #55efc4, #00b894);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin: 5px 5px 0 0;
-            transition: transform 0.2s ease;
+        .activity:hover { transform: translateY(-5px); }
+        h2 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+            color: #558b2f;
+        }
+        p {
+            margin: 0 0 15px;
             font-size: 1.1em;
         }
-        .astuce-btn {
-            background: linear-gradient(45deg, #ff7675, #d63031);
-        }
-        .example-btn:hover, .return-btn:hover, .astuce-btn:hover {
-            transform: scale(1.05);
-        }
-        .quiz {
-            margin-top: 10px;
+        .draggable, .option, textarea, input {
             padding: 10px;
-            background: #fab1a0;
-            border-radius: 10px;
-            color: #2d3436;
-        }
-        .quiz select {
-            padding: 5px;
             margin: 5px;
+            background: #aed581;
             border-radius: 5px;
+            border: none;
+            font-size: 1em;
         }
-        .dark-mode body {
-            background: linear-gradient(135deg, #2d3436, #636e72);
+        .draggable { cursor: grab; }
+        .drop-zone {
+            width: 80px;
+            height: 40px;
+            border: 2px dashed #33691e;
+            margin: 5px;
+            text-align: center;
+            line-height: 40px;
+            display: inline-block;
         }
-        .dark-mode .card {
-            background: #dfe6e9;
-        }
-        .dark-mode .liste {
-            background: #b2bec3;
-        }
-        .dark-mode .details {
-            background: #dfe6e9;
-        }
-        .dark-mode h1 {
-            color: #dfe6e9;
-        }
-        .dark-mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+        .drop-zone.correct { background: #a5d6a7; }
+        .option { cursor: pointer; }
+        .option:hover { background: #9ccc65; }
+        button {
             padding: 10px 20px;
-            background: #6b48ff;
+            background: #689f38;
             color: white;
             border: none;
-            border-radius: 20px;
+            border-radius: 5px;
             cursor: pointer;
+            margin: 5px;
         }
-        footer {
+        button:hover { background: #558b2f; }
+        .feedback {
+            margin-top: 10px;
+            font-size: 1.1em;
             text-align: center;
-            margin-top: 40px;
-            color: #636e72;
-            font-size: 0.9em;
+            display: none;
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+        .recall {
+            display: none;
+            padding: 10px;
+            background: #dcedc8;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh); }
         }
     </style>
 </head>
 <body>
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Mode Sombre</button>
-    <h1>GramSR - Primaire</h1>
-    <div class="container">
-        <div class="card">
-            <div class="card-header" onclick="toggleListe('classes')">Classes grammaticales</div>
-            <div id="classes" class="liste">
-                <div class="item" onclick="toggleDetails('nom')"><span class="icon">✏️</span> Nom</div>
-                <div id="nom" class="details">
-                    <strong>Définition :</strong> Mot qui nomme une personne, un animal, un lieu ou une chose.<br>
-                    <strong>Exemple :</strong> "<span style='color: #3498db'>Le chat</span> <span style='color: #e74c3c'>dort</span>."<br>
-                    <strong>Types :</strong> Commun (chat), propre (Léo).<br>
-                    <button class="example-btn" onclick="randomExample('nom')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : Mets \'le\' ou \'la\' devant !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('nom')">Retour</button>
-                    <div class="quiz">Quel est le nom ? <select onchange="checkAnswer(this, 'Le chat')"><option value="">Choisis</option><option>Le chat</option><option>dort</option></select></div>
-                </div>
-                <div class="item" onclick="toggleDetails('verbe')"><span class="icon">➡️</span> Verbe</div>
-                <div id="verbe" class="details">
-                    <strong>Définition :</strong> Mot qui montre une action ou un état.<br>
-                    <strong>Exemple :</strong> "<span style='color: #3498db'>Il</span> <span style='color: #e74c3c'>joue</span> dehors."<br>
-                    <strong>Types :</strong> Action (joue), état (est).<br>
-                    <button class="example-btn" onclick="randomExample('verbe')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : C’est ce que tu fais ou es !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('verbe')">Retour</button>
-                    <div class="quiz">Quel est le verbe ? <select onchange="checkAnswer(this, 'joue')"><option value="">Choisis</option><option>Il</option><option>joue</option></select></div>
-                </div>
-                <div class="item" onclick="toggleDetails('adjectif')"><span class="icon">⭐</span> Adjectif</div>
-                <div id="adjectif" class="details">
-                    <strong>Définition :</strong> Mot qui décrit un nom.<br>
-                    <strong>Exemple :</strong> "Le chien est <span style='color: #f1c40f'>gentil</span>."<br>
-                    <strong>Rôle :</strong> Dit comment est le nom (grand, petit).<br>
-                    <button class="example-btn" onclick="randomExample('adjectif')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : Ça répond à \'Comment est-il ?\'')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('adjectif')">Retour</button>
-                </div>
-                <div class="item" onclick="toggleDetails('article')"><span class="icon">🔍</span> Article</div>
-                <div id="article" class="details">
-                    <strong>Définition :</strong> Petit mot avant un nom.<br>
-                    <strong>Exemple :</strong> "<span style='color: #3498db'>Le</span> chien aboie."<br>
-                    <strong>Types :</strong> Défini (le, la), indéfini (un, une).<br>
-                    <button class="example-btn" onclick="randomExample('article')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : C’est souvent \'le\' ou \'un\' !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('article')">Retour</button>
-                </div>
-                <div class="item" onclick="toggleDetails('preposition')"><span class="icon">↔️</span> Préposition</div>
-                <div id="preposition" class="details">
-                    <strong>Définition :</strong> Mot qui relie des choses.<br>
-                    <strong>Exemple :</strong> "Le chat est <span style='color: #e74c3c'>sur</span> la table."<br>
-                    <strong>Exemples courants :</strong> à, sur, dans.<br>
-                    <button class="example-btn" onclick="randomExample('preposition')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : C’est un petit mot qui place !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('preposition')">Retour</button>
-                </div>
-                <div class="item" onclick="toggleDetails('pronom')"><span class="icon">👀</span> Pronom</div>
-                <div id="pronom" class="details">
-                    <strong>Définition :</strong> Mot qui remplace un nom.<br>
-                    <strong>Exemple :</strong> "<span style='color: #3498db'>Je</span> mange une pomme."<br>
-                    <strong>Types :</strong> Personnel (je, tu).<br>
-                    <button class="example-btn" onclick="randomExample('pronom')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : Remplace un nom comme \'Léo\' !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('pronom')">Retour</button>
-                </div>
-                <div class="item" onclick="toggleDetails('adverbe')"><span class="icon">⏩</span> Adverbe</div>
-                <div id="adverbe" class="details">
-                    <strong>Définition :</strong> Mot qui change le verbe.<br>
-                    <strong>Exemple :</strong> "Il joue <span style='color: #f1c40f'>bien</span>."<br>
-                    <strong>Exemples :</strong> bien, mal, vite.<br>
-                    <button class="example-btn" onclick="randomExample('adverbe')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : Dit comment ça se passe !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('adverbe')">Retour</button>
-                </div>
+    <a href="index.html" style="position: absolute; top: 20px; left: 20px; color: #33691e; font-size: 1.2em; text-decoration: none;">← Retour</a>
+    <h1>GramaScoR - Niveau Primaire</h1>
+    <audio id="successSound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
+    <div class="activity-container">
+        <div class="activity" id="act1">
+            <h2>Chasse aux mots</h2>
+            <p>Glisse les mots dans les bonnes boîtes :</p>
+            <div class="task">
+                <span class="draggable" draggable="true">Une</span>
+                <span class="draggable" draggable="true">fleur</span>
+                <span class="draggable" draggable="true">pousse</span>
             </div>
+            <div>
+                <div class="drop-zone" data-type="determinant">Déterminant</div>
+                <div class="drop-zone" data-type="nom">Nom</div>
+                <div class="drop-zone" data-type="verbe">Verbe</div>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act1')">Nouveau défi</button>
+            <div class="recall">Un <strong>déterminant</strong> introduit le nom (ex. : une, le). Un <strong>nom</strong> désigne une chose ou une personne (ex. : fleur). Un <strong>verbe</strong> indique une action (ex. : pousse).</div>
         </div>
-        <div class="card">
-            <div class="card-header" onclick="toggleListe('fonctions')">Fonctions grammaticales</div>
-            <div id="fonctions" class="liste">
-                <div class="item" onclick="toggleDetails('sujet')"><span class="icon">👤</span> Sujet</div>
-                <div id="sujet" class="details">
-                    <strong>Définition :</strong> Qui fait l’action.<br>
-                    <strong>Exemple :</strong> "<span style='color: #3498db'>Le chien</span> <span style='color: #e74c3c'>aboie</span>."<br>
-                    <strong>Rôle :</strong> Lié au verbe.<br>
-                    <button class="example-btn" onclick="randomExample('sujet')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : Cherche qui agit !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('sujet')">Retour</button>
-                    <div class="quiz">Quel est le sujet ? <select onchange="checkAnswer(this, 'Le chien')"><option value="">Choisis</option><option>Le chien</option><option>aboie</option></select></div>
-                </div>
-                <div class="item" onclick="toggleDetails('cod')"><span class="icon">🎯</span> Complément d’objet direct</div>
-                <div id="cod" class="details">
-                    <strong>Définition :</strong> Ce qui reçoit l’action.<br>
-                    <strong>Exemple :</strong> "Il <span style='color: #e74c3c'>mange</span> <span style='color: #3498db'>une pomme</span>."<br>
-                    <strong>Rôle :</strong> Complète le verbe.<br>
-                    <button class="example-btn" onclick="randomExample('cod')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : Demande \'quoi ?\' après le verbe !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('cod')">Retour</button>
-                </div>
-                <div class="item" onclick="toggleDetails('attribut')"><span class="icon">🌟</span> Attribut</div>
-                <div id="attribut" class="details">
-                    <strong>Définition :</strong> Décrit le sujet.<br>
-                    <strong>Exemple :</strong> "Le chien <span style='color: #e74c3c'>est</span> <span style='color: #f1c40f'>gentil</span>."<br>
-                    <strong>Rôle :</strong> Dit comment est le sujet.<br>
-                    <button class="example-btn" onclick="randomExample('attribut')">Exemple aléatoire</button>
-                    <button class="astuce-btn" onclick="alert('Astuce : Suit souvent \'est\' !')">Astuce</button>
-                    <button class="return-btn" onclick="toggleDetails('attribut')">Retour</button>
-                </div>
+
+        <div class="activity" id="act2">
+            <h2>Complète la phrase</h2>
+            <p>Choisis la bonne forme : Les ___ jouent.</p>
+            <div class="task">
+                <span class="option" data-answer="chats">chats</span>
+                <span class="option" data-answer="chat">chat</span>
             </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act2')">Nouveau défi</button>
+            <div class="recall">Le <strong>verbe</strong> s’accorde avec le sujet en nombre : "Les chats jouent" (pluriel).</div>
+        </div>
+
+        <div class="activity" id="act3">
+            <h2>Remets dans l’ordre</h2>
+            <p>Reforme la phrase :</p>
+            <div class="task">
+                <span class="draggable" draggable="true">Le</span>
+                <span class="draggable" draggable="true">chien</span>
+                <span class="draggable" draggable="true">aboie</span>
+            </div>
+            <div class="drop-zone" style="width: 200px;"></div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act3')">Nouveau défi</button>
+            <div class="recall">Une phrase simple a un <strong>sujet</strong> (qui fait l’action) et un <strong>verbe</strong> (l’action).</div>
+        </div>
+
+        <div class="activity" id="act4">
+            <h2>Roue du temps</h2>
+            <p>"Je mange" est au :</p>
+            <div class="task">
+                <span class="option" data-answer="présent">présent</span>
+                <span class="option" data-answer="passé">passé</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act4')">Nouveau défi</button>
+            <div class="recall">Le <strong>présent</strong> décrit ce qui se passe maintenant (ex. : je mange).</div>
+        </div>
+
+        <div class="activity" id="act5">
+            <h2>Trouve le nom</h2>
+            <p>Quel mot est un nom ?</p>
+            <div class="task">
+                <span class="option" data-answer="livre">livre</span>
+                <span class="option" data-answer="lit">lit (verbe)</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act5')">Nouveau défi</button>
+            <div class="recall">Un <strong>nom</strong> désigne une chose ou une personne (ex. : livre).</div>
+        </div>
+
+        <div class="activity" id="act6">
+            <h2>Accorde l’adjectif</h2>
+            <p>Complète : Une fleur ___</p>
+            <div class="task">
+                <input type="text" placeholder="Tape ici">
+                <button onclick="checkInput(this, 'jolie')">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act6')">Nouveau défi</button>
+            <div class="recall">L’<strong>adjectif</strong> s’accorde en genre et en nombre avec le nom (ex. : une fleur jolie).</div>
+        </div>
+
+        <div class="activity" id="act7">
+            <h2>Phrase ou pas ?</h2>
+            <p>Est-ce une phrase ? "Le soleil."</p>
+            <div class="task">
+                <span class="option" data-answer="non">Non</span>
+                <span class="option" data-answer="oui">Oui</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act7')">Nouveau défi</button>
+            <div class="recall">Une <strong>phrase</strong> a un sujet et un verbe (ex. : Le soleil brille).</div>
+        </div>
+
+        <div class="activity" id="act8">
+            <h2>Verbe mystère</h2>
+            <p>Quel est le verbe ? "Les oiseaux chantent."</p>
+            <div class="task">
+                <input type="text" placeholder="Tape ici">
+                <button onclick="checkInput(this, 'chantent')">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act8')">Nouveau défi</button>
+            <div class="recall">Le <strong>verbe</strong> exprime l’action (ex. : chantent).</div>
+        </div>
+
+        <div class="activity" id="act9">
+            <h2>Mot magique</h2>
+            <p>Ajoute "pas" : "Je mange."</p>
+            <div class="task">
+                <input type="text" placeholder="Tape ici">
+                <button onclick="checkInput(this, 'je ne mange pas')">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act9')">Nouveau défi</button>
+            <div class="recall">Pour nier, on ajoute <strong>ne…pas</strong> autour du verbe.</div>
+        </div>
+
+        <div class="activity" id="act10">
+            <h2>Dessine ta phrase</h2>
+            <p>Écris une phrase avec "chat" :</p>
+            <div class="task">
+                <textarea placeholder="Tape ici"></textarea>
+                <button onclick="checkSentence(this)">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act10')">Nouveau défi</button>
+            <div class="recall">Une phrase a un <strong>sujet</strong> et un <strong>verbe</strong> (ex. : Le chat dort).</div>
         </div>
     </div>
-    <footer>GSR@ 2025 - Tous droits réservés</footer>
+
     <script>
-        const examples = {
-            'nom': ['Le chat dort.', 'Une fille rit.', 'Mon copain joue.'],
-            'verbe': ['Il joue dehors.', 'Elle dessine bien.', 'Tu manges vite.'],
-            'adjectif': ['Le chien est gentil.', 'La fleur est jolie.', 'Mon sac est lourd.'],
-            'article': ['Le chien aboie.', 'Une pomme tombe.', 'La maison brille.'],
-            'preposition': ['Le chat est sur la table.', 'Je vais à l’école.', 'Il joue dans le parc.'],
-            'pronom': ['Je mange une pomme.', 'Tu ris fort.', 'Il dort bien.'],
-            'adverbe': ['Il joue bien.', 'Elle court vite.', 'Tu parles mal.'],
-            'sujet': ['Le chien aboie.', 'Moi je mange.', 'La fille rit.'],
-            'cod': ['Il mange une pomme.', 'Elle voit un oiseau.', 'Tu lis un livre.'],
-            'attribut': ['Le chien est gentil.', 'La fleur est jolie.', 'Moi je suis fatigué.']
+        const challenges = {
+            act1: [
+                { task: ['Une', 'fleur', 'pousse'], answers: { determinant: 'Une', nom: 'fleur', verbe: 'pousse' } },
+                { task: ['Le', 'soleil', 'brille'], answers: { determinant: 'Le', nom: 'soleil', verbe: 'brille' } },
+                { task: ['Un', 'oiseau', 'chante'], answers: { determinant: 'Un', nom: 'oiseau', verbe: 'chante' } },
+                { task: ['La', 'lune', 'luit'], answers: { determinant: 'La', nom: 'lune', verbe: 'luit' } },
+                { task: ['Des', 'enfants', 'rient'], answers: { determinant: 'Des', nom: 'enfants', verbe: 'rient' } }
+            ],
+            act2: [
+                { task: 'Les ___ jouent.', answers: { correct: 'chats', wrong: 'chat' } },
+                { task: 'Les ___ volent.', answers: { correct: 'oiseaux', wrong: 'oiseau' } },
+                { task: 'Les ___ dansent.', answers: { correct: 'enfants', wrong: 'enfant' } },
+                { task: 'Les ___ nagent.', answers: { correct: 'poissons', wrong: 'poisson' } },
+                { task: 'Les ___ sautent.', answers: { correct: 'lapins', wrong: 'lapin' } }
+            ],
+            act3: [
+                { task: ['Le', 'chien', 'aboie'], answer: 'Le chien aboie' },
+                { task: ['La', 'chatte', 'dort'], answer: 'La chatte dort' },
+                { task: ['Un', 'oiseau', 'vole'], answer: 'Un oiseau vole' },
+                { task: ['Les', 'fleurs', 'poussent'], answer: 'Les fleurs poussent' },
+                { task: ['Une', 'étoile', 'brille'], answer: 'Une étoile brille' }
+            ],
+            act4: [
+                { task: '"Je mange" est au :', answers: { correct: 'présent', wrong: 'passé' } },
+                { task: '"Il court" est au :', answers: { correct: 'présent', wrong: 'futur' } },
+                { task: '"Nous jouons" est au :', answers: { correct: 'présent', wrong: 'passé' } },
+                { task: '"Elle danse" est au :', answers: { correct: 'présent', wrong: 'futur' } },
+                { task: '"Tu ris" est au :', answers: { correct: 'présent', wrong: 'passé' } }
+            ],
+            act5: [
+                { task: 'Quel mot est un nom ?', answers: { correct: 'livre', wrong: 'lit' } },
+                { task: 'Quel mot est un nom ?', answers: { correct: 'chat', wrong: 'dort' } },
+                { task: 'Quel mot est un nom ?', answers: { correct: 'fleur', wrong: 'pousse' } },
+                { task: 'Quel mot est un nom ?', answers: { correct: 'soleil', wrong: 'brille' } },
+                { task: 'Quel mot est un nom ?', answers: { correct: 'étoile', wrong: 'luit' } }
+            ],
+            act6: [
+                { task: 'Une fleur ___', answer: 'jolie' },
+                { task: 'Un chien ___', answer: 'gentil' },
+                { task: 'Une maison ___', answer: 'grande' },
+                { task: 'Un oiseau ___', answer: 'coloré' },
+                { task: 'Une étoile ___', answer: 'brillante' }
+            ],
+            act7: [
+                { task: 'Est-ce une phrase ? "Le soleil."', answers: { correct: 'non', wrong: 'oui' } },
+                { task: 'Est-ce une phrase ? "La lune brille."', answers: { correct: 'oui', wrong: 'non' } },
+                { task: 'Est-ce une phrase ? "Un chat."', answers: { correct: 'non', wrong: 'oui' } },
+                { task: 'Est-ce une phrase ? "Les enfants jouent."', answers: { correct: 'oui', wrong: 'non' } },
+                { task: 'Est-ce une phrase ? "Une fleur rouge."', answers: { correct: 'non', wrong: 'oui' } }
+            ],
+            act8: [
+                { task: 'Quel est le verbe ? "Les oiseaux chantent."', answer: 'chantent' },
+                { task: 'Quel est le verbe ? "Le chien aboie."', answer: 'aboie' },
+                { task: 'Quel est le verbe ? "La fleur pousse."', answer: 'pousse' },
+                { task: 'Quel est le verbe ? "Un enfant rit."', answer: 'rit' },
+                { task: 'Quel est le verbe ? "Le soleil brille."', answer: 'brille' }
+            ],
+            act9: [
+                { task: 'Ajoute "pas" : "Je mange."', answer: 'je ne mange pas' },
+                { task: 'Ajoute "pas" : "Il court."', answer: 'il ne court pas' },
+                { task: 'Ajoute "pas" : "Nous jouons."', answer: 'nous ne jouons pas' },
+                { task: 'Ajoute "pas" : "Elle dort."', answer: 'elle ne dort pas' },
+                { task: 'Ajoute "pas" : "Tu ris."', answer: 'tu ne ris pas' }
+            ],
+            act10: [
+                { task: 'Écris une phrase avec "chat" :', keyword: 'chat' },
+                { task: 'Écris une phrase avec "soleil" :', keyword: 'soleil' },
+                { task: 'Écris une phrase avec "fleur" :', keyword: 'fleur' },
+                { task: 'Écris une phrase avec "oiseau" :', keyword: 'oiseau' },
+                { task: 'Écris une phrase avec "étoile" :', keyword: 'étoile' }
+            ]
         };
-        function randomExample(category) {
-            const ex = examples[category][Math.floor(Math.random() * examples[category].length)];
-            alert(ex);
+
+        function showConfetti() {
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-10px';
+                confetti.style.background = ['#ff0', '#f00', '#0f0'][Math.floor(Math.random() * 3)];
+                confetti.style.animation = 'fall 2s linear';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
         }
-        function checkAnswer(select, correct) {
-            if (select.value === correct) alert('Bravo, c’est correct !');
-            else if (select.value) alert(`Non, la réponse était "${correct}" !`);
+
+        const draggables = document.querySelectorAll('.draggable');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        draggables.forEach(d => {
+            d.addEventListener('dragstart', (e) => e.dataTransfer.setData('text', e.target.textContent));
+        });
+        dropZones.forEach(z => {
+            z.addEventListener('dragover', (e) => e.preventDefault());
+            z.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const word = e.dataTransfer.getData('text');
+                const type = z.dataset.type || 'phrase';
+                const activity = z.closest('.activity');
+                const feedback = activity.querySelector('.feedback');
+                const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+                let isCorrect = false;
+
+                if (type === 'determinant' && word === currentChallenge.answers.determinant) isCorrect = true;
+                if (type === 'nom' && word === currentChallenge.answers.nom) isCorrect = true;
+                if (type === 'verbe' && word === currentChallenge.answers.verbe) isCorrect = true;
+                if (type === 'phrase' && z.textContent === '' && word === currentChallenge.answer.split(' ')[0]) isCorrect = true;
+                if (type === 'phrase' && z.textContent === currentChallenge.answer.split(' ')[0] && word === currentChallenge.answer.split(' ')[1]) isCorrect = true;
+                if (type === 'phrase' && z.textContent === currentChallenge.answer.split(' ').slice(0, 2).join(' ') && word === currentChallenge.answer.split(' ')[2]) isCorrect = true;
+
+                if (isCorrect) {
+                    z.textContent = type === 'phrase' ? `${z.textContent} ${word}`.trim() : word;
+                    z.classList.add('correct');
+                    z.style.animation = 'bounce 0.5s';
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#33691e';
+                    feedback.textContent = 'Super !';
+                    document.getElementById('successSound').play();
+                    showConfetti();
+                } else {
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#d32f2f';
+                    feedback.textContent = 'Réessaie !';
+                }
+            });
+        });
+
+        const options = document.querySelectorAll('.option');
+        options.forEach(o => {
+            o.addEventListener('click', () => {
+                const activity = o.closest('.activity');
+                const feedback = activity.querySelector('.feedback');
+                const answer = o.dataset.answer;
+                const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+                const isCorrect = answer === currentChallenge.answers.correct;
+
+                if (isCorrect) {
+                    o.style.background = '#a5d6a7';
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#33691e';
+                    feedback.textContent = 'Bravo !';
+                    document.getElementById('successSound').play();
+                    showConfetti();
+                } else {
+                    o.style.background = '#ef9a9a';
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#d32f2f';
+                    feedback.textContent = 'Non, réessaie !';
+                }
+            });
+        });
+
+        function checkInput(btn, correct) {
+            const activity = btn.closest('.activity');
+            const input = btn.previousElementSibling;
+            const feedback = activity.querySelector('.feedback');
+            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+            if (input.value.toLowerCase().trim() === currentChallenge.answer) {
+                input.style.background = '#a5d6a7';
+                feedback.style.display = 'block';
+                feedback.style.color = '#33691e';
+                feedback.textContent = 'Parfait !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                input.style.background = '#ef9a9a';
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = `Non, c’est "${currentChallenge.answer}".`;
+            }
         }
-        function toggleListe(id) { let element = document.getElementById(id); element.style.display = element.style.display === "block" ? "none" : "block"; }
-        function toggleDetails(id) { let element = document.getElementById(id); element.style.display = element.style.display === "block" ? "none" : "block"; }
-        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
+
+        function checkSentence(btn) {
+            const activity = btn.closest('.activity');
+            const textarea = btn.previousElementSibling;
+            const feedback = activity.querySelector('.feedback');
+            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+            const text = textarea.value.toLowerCase().trim();
+            if (text.includes(currentChallenge.keyword) && text.split(' ').length > 1) {
+                textarea.style.background = '#a5d6a7';
+                feedback.style.display = 'block';
+                feedback.style.color = '#33691e';
+                feedback.textContent = 'Joli travail !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                textarea.style.background = '#ef9a9a';
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = `Ajoute "${currentChallenge.keyword}" et un verbe !`;
+            }
+        }
+
+        function showRecall(btn) {
+            const recall = btn.nextElementSibling.nextElementSibling;
+            recall.style.display = recall.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function newChallenge(btn, actId) {
+            const activity = document.getElementById(actId);
+            const currentIndex = parseInt(activity.dataset.challenge || 0);
+            const newIndex = (currentIndex + 1) % 5;
+            activity.dataset.challenge = newIndex;
+            const challenge = challenges[actId][newIndex];
+            const p = activity.querySelector('p');
+            const taskDiv = activity.querySelector('.task');
+            taskDiv.innerHTML = '';
+            activity.querySelector('.feedback').style.display = 'none';
+
+            if (actId === 'act1' || actId === 'act3') {
+                p.textContent = actId === 'act1' ? 'Glisse les mots dans les bonnes boîtes :' : 'Reforme la phrase :';
+                challenge.task.forEach(word => {
+                    const span = document.createElement('span');
+                    span.className = 'draggable';
+                    span.draggable = true;
+                    span.textContent = word;
+                    span.addEventListener('dragstart', (e) => e.dataTransfer.setData('text', e.target.textContent));
+                    taskDiv.appendChild(span);
+                });
+                if (actId === 'act1') {
+                    taskDiv.nextElementSibling.innerHTML = '<div class="drop-zone" data-type="determinant">Déterminant</div><div class="drop-zone" data-type="nom">Nom</div><div class="drop-zone" data-type="verbe">Verbe</div>';
+                } else {
+                    taskDiv.nextElementSibling.innerHTML = '<div class="drop-zone" style="width: 200px;"></div>';
+                }
+                const newZones = taskDiv.nextElementSibling.querySelectorAll('.drop-zone');
+                newZones.forEach(z => {
+                    z.addEventListener('dragover', (e) => e.preventDefault());
+                    z.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        const word = e.dataTransfer.getData('text');
+                        const type = z.dataset.type || 'phrase';
+                        const feedback = activity.querySelector('.feedback');
+                        let isCorrect = false;
+
+                        if (type === 'determinant' && word === challenge.answers.determinant) isCorrect = true;
+                        if (type === 'nom' && word === challenge.answers.nom) isCorrect = true;
+                        if (type === 'verbe' && word === challenge.answers.verbe) isCorrect = true;
+                        if (type === 'phrase' && z.textContent === '' && word === challenge.answer.split(' ')[0]) isCorrect = true;
+                        if (type === 'phrase' && z.textContent === challenge.answer.split(' ')[0] && word === challenge.answer.split(' ')[1]) isCorrect = true;
+                        if (type === 'phrase' && z.textContent === challenge.answer.split(' ').slice(0, 2).join(' ') && word === challenge.answer.split(' ')[2]) isCorrect = true;
+
+                        if (isCorrect) {
+                            z.textContent = type === 'phrase' ? `${z.textContent} ${word}`.trim() : word;
+                            z.classList.add('correct');
+                            z.style.animation = 'bounce 0.5s';
+                            feedback.style.display = 'block';
+                            feedback.style.color = '#33691e';
+                            feedback.textContent = 'Super !';
+                            document.getElementById('successSound').play();
+                            showConfetti();
+                        } else {
+                            feedback.style.display = 'block';
+                            feedback.style.color = '#d32f2f';
+                            feedback.textContent = 'Réessaie !';
+                        }
+                    });
+                });
+            } else if (actId === 'act2' || actId === 'act4' || actId === 'act5' || actId === 'act7') {
+                p.textContent = challenge.task;
+                const span1 = document.createElement('span');
+                span1.className = 'option';
+                span1.dataset.answer = challenge.answers.correct;
+                span1.textContent = challenge.answers.correct;
+                const span2 = document.createElement('span');
+                span2.className = 'option';
+                span2.dataset.answer = challenge.answers.wrong;
+                span2.textContent = challenge.answers.wrong;
+                taskDiv.appendChild(span1);
+                taskDiv.appendChild(span2);
+                [span1, span2].forEach(o => {
+                    o.addEventListener('click', () => {
+                        const feedback = activity.querySelector('.feedback');
+                        const isCorrect = o.dataset.answer === challenge.answers.correct;
+                        if (isCorrect) {
+                            o.style.background = '#a5d6a7';
+                            feedback.style.display = 'block';
+                            feedback.style.color = '#33691e';
+                            feedback.textContent = 'Bravo !';
+                            document.getElementById('successSound').play();
+                            showConfetti();
+                        } else {
+                            o.style.background = '#ef9a9a';
+                            feedback.style.display = 'block';
+                            feedback.style.color = '#d32f2f';
+                            feedback.textContent = 'Non, réessaie !';
+                        }
+                    });
+                });
+            } else if (actId === 'act6' || actId === 'act8' || actId === 'act9') {
+                p.textContent = challenge.task;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Tape ici';
+                const button = document.createElement('button');
+                button.textContent = 'Vérifier';
+                button.onclick = () => checkInput(button, challenge.answer);
+                taskDiv.appendChild(input);
+                taskDiv.appendChild(button);
+            } else if (actId === 'act10') {
+                p.textContent = challenge.task;
+                const textarea = document.createElement('textarea');
+                textarea.placeholder = 'Tape ici';
+                const button = document.createElement('button');
+                button.textContent = 'Vérifier';
+                button.onclick = () => checkSentence(button);
+                taskDiv.appendChild(textarea);
+                taskDiv.appendChild(button);
+            }
+        }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </body>
 </html>

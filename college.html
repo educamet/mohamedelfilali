@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GramaScoR - Collège</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #e0f7fa;
+            min-height: 100vh;
+            padding: 20px;
+            color: #0277bd;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+        }
+        .activity-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .activity {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid #b2ebf2;
+        }
+        .activity:hover { transform: translateY(-5px); }
+        h2 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+            color: #0288d1;
+        }
+        p {
+            margin: 0 0 15px;
+            font-size: 1.1em;
+        }
+        .option, textarea, input {
+            padding: 10px;
+            margin: 5px;
+            background: #81d4fa;
+            border-radius: 5px;
+            border: none;
+            font-size: 1em;
+        }
+        .option { cursor: pointer; }
+        .option:hover { background: #4fc3f7; }
+        button {
+            padding: 10px 20px;
+            background: #0288d1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0277bd; }
+        .feedback {
+            margin-top: 10px;
+            font-size: 1.1em;
+            text-align: center;
+            display: none;
+        }
+        .recall {
+            display: none;
+            padding: 10px;
+            background: #b2ebf2;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" style="position: absolute; top: 20px; left: 20px; color: #0277bd; font-size: 1.2em; text-decoration: none;">← Retour</a>
+    <h1>GramaScoR - Niveau Collège</h1>
+    <audio id="successSound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
+    <div class="activity-container">
+        <div class="activity" id="act1">
+            <h2>Détective des fonctions</h2>
+            <p>Quelle est la fonction de "le trésor" dans "Le pirate cache le trésor" ?</p>
+            <div class="task">
+                <span class="option" data-answer="sujet">Sujet</span>
+                <span class="option" data-answer="cod">COD</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act1')">Nouveau défi</button>
+            <div class="recall">Le <strong>COD</strong> (complément d’objet direct) reçoit l’action du verbe (ex. : le trésor).</div>
+        </div>
+
+        <div class="activity" id="act2">
+            <h2>Dictée rapide</h2>
+            <p>Écris : "Les chevaliers combattent."</p>
+            <div class="task">
+                <input type="text" placeholder="Tape ici">
+                <button onclick="checkInput(this, 'les chevaliers combattent')">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act2')">Nouveau défi</button>
+            <div class="recall">Le <strong>pluriel</strong> s’écrit avec un "s" au nom et au verbe (ex. : combattent).</div>
+        </div>
+
+        <div class="activity" id="act3">
+            <h2>Puzzle de propositions</h2>
+            <p>Relie "Il dort" et "il est fatigué" :</p>
+            <div class="task">
+                <span class="option" data-answer="parce que">parce que</span>
+                <span class="option" data-answer="ou">ou</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act3')">Nouveau défi</button>
+            <div class="recall">Une <strong>subordonnée</strong> explique avec "parce que" (ex. : Il dort parce qu’il est fatigué).</div>
+        </div>
+
+        <div class="activity" id="act4">
+            <h2>Temps juste</h2>
+            <p>"Il a mangé" est au :</p>
+            <div class="task">
+                <span class="option" data-answer="passé composé">passé composé</span>
+                <span class="option" data-answer="présent">présent</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act4')">Nouveau défi</button>
+            <div class="recall">Le <strong>passé composé</strong> utilise "avoir" ou "être" + participe passé (ex. : a mangé).</div>
+        </div>
+
+        <div class="activity" id="act5">
+            <h2>Homophones</h2>
+            <p>Complète : "Il ___ à l’école."</p>
+            <div class="task">
+                <span class="option" data-answer="va">va</span>
+                <span class="option" data-answer="vas">vas</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act5')">Nouveau défi</button>
+            <div class="recall"><strong>va</strong> (verbe aller) ≠ <strong>vas</strong> (2e personne).</div>
+        </div>
+
+        <div class="activity" id="act6">
+            <h2>Phrase passive</h2>
+            <p>Transforme : "Le chat chasse la souris."</p>
+            <div class="task">
+                <input type="text" placeholder="Tape ici">
+                <button onclick="checkInput(this, 'la souris est chassée par le chat')">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act6')">Nouveau défi</button>
+            <div class="recall">La <strong>voix passive</strong> inverse sujet et COD avec "être" (ex. : est chassée).</div>
+        </div>
+
+        <div class="activity" id="act7">
+            <h2>Complément ou pas</h2>
+            <p>"dans la forêt" dans "Il marche dans la forêt" est :</p>
+            <div class="task">
+                <span class="option" data-answer="complément">complément</span>
+                <span class="option" data-answer="sujet">sujet</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act7')">Nouveau défi</button>
+            <div class="recall">Un <strong>complément</strong> donne des précisions (lieu, temps).</div>
+        </div>
+
+        <div class="activity" id="act8">
+            <h2>Subjonctif ou pas</h2>
+            <p>Complète : "Il faut que tu ___."</p>
+            <div class="task">
+                <input type="text" placeholder="Tape ici">
+                <button onclick="checkInput(this, 'viennes')">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act8')">Nouveau défi</button>
+            <div class="recall">Le <strong>subjonctif</strong> suit "il faut que" (ex. : tu viennes).</div>
+        </div>
+
+        <div class="activity" id="act9">
+            <h2>Relie les mots</h2>
+            <p>Ajoute un mot : "Il court ___ vite."</p>
+            <div class="task">
+                <span class="option" data-answer="très">très</span>
+                <span class="option" data-answer="le">le</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act9')">Nouveau défi</button>
+            <div class="recall">Un <strong>adverbe</strong> modifie un verbe (ex. : très vite).</div>
+        </div>
+
+        <div class="activity" id="act10">
+            <h2>Raconte</h2>
+            <p>Écris une phrase avec une subordonnée :</p>
+            <div class="task">
+                <textarea placeholder="Tape ici"></textarea>
+                <button onclick="checkSentence(this)">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act10')">Nouveau défi</button>
+            <div class="recall">Une <strong>subordonnée</strong> commence par "que", "parce que" (ex. : Je lis parce que j’aime).</div>
+        </div>
+    </div>
+
+    <script>
+        const challenges = {
+            act1: [
+                { task: 'Quelle est la fonction de "le trésor" dans "Le pirate cache le trésor" ?', answers: { correct: 'cod', wrong: 'sujet' } },
+                { task: 'Quelle est la fonction de "la balle" dans "L’enfant lance la balle" ?', answers: { correct: 'cod', wrong: 'sujet' } },
+                { task: 'Quelle est la fonction de "un livre" dans "Elle lit un livre" ?', answers: { correct: 'cod', wrong: 'sujet' } },
+                { task: 'Quelle est la fonction de "le chien" dans "Le garçon appelle le chien" ?', answers: { correct: 'cod', wrong: 'sujet' } },
+                { task: 'Quelle est la fonction de "la fleur" dans "Il cueille la fleur" ?', answers: { correct: 'cod', wrong: 'sujet' } }
+            ],
+            act2: [
+                { task: 'Écris : "Les chevaliers combattent."', answer: 'les chevaliers combattent' },
+                { task: 'Écris : "Les oiseaux volent haut."', answer: 'les oiseaux volent haut' },
+                { task: 'Écris : "Nous jouons ensemble."', answer: 'nous jouons ensemble' },
+                { task: 'Écris : "Elles dansent bien."', answer: 'elles dansent bien' },
+                { task: 'Écris : "Ils nagent vite."', answer: 'ils nagent vite' }
+            ],
+            act3: [
+                { task: 'Relie "Il dort" et "il est fatigué" :', answers: { correct: 'parce que', wrong: 'ou' } },
+                { task: 'Relie "Elle lit" et "elle aime les livres" :', answers: { correct: 'parce que', wrong: 'et' } },
+                { task: 'Relie "Il court" et "il veut gagner" :', answers: { correct: 'parce que', wrong: 'mais' } },
+                { task: 'Relie "Nous mangeons" et "nous avons faim" :', answers: { correct: 'parce que', wrong: 'ou' } },
+                { task: 'Relie "Elle chante" et "elle est heureuse" :', answers: { correct: 'parce que', wrong: 'et' } }
+            ],
+            act4: [
+                { task: '"Il a mangé" est au :', answers: { correct: 'passé composé', wrong: 'présent' } },
+                { task: '"Elle est partie" est au :', answers: { correct: 'passé composé', wrong: 'futur' } },
+                { task: '"Nous avons ri" est au :', answers: { correct: 'passé composé', wrong: 'présent' } },
+                { task: '"Ils ont joué" est au :', answers: { correct: 'passé composé', wrong: 'passé simple' } },
+                { task: '"Tu as dansé" est au :', answers: { correct: 'passé composé', wrong: 'futur' } }
+            ],
+            act5: [
+                { task: 'Complète : "Il ___ à l’école."', answers: { correct: 'va', wrong: 'vas' } },
+                { task: 'Complète : "Elle ___ ses devoirs."', answers: { correct: 'fait', wrong: 'fais' } },
+                { task: 'Complète : "Nous ___ au parc."', answers: { correct: 'allons', wrong: 'allez' } },
+                { task: 'Complète : "Tu ___ un livre."', answers: { correct: 'lis', wrong: 'lit' } },
+                { task: 'Complète : "Ils ___ contents."', answers: { correct: 'sont', wrong: 'son' } }
+            ],
+            act6: [
+                { task: 'Transforme : "Le chat chasse la souris."', answer: 'la souris est chassée par le chat' },
+                { task: 'Transforme : "L’enfant dessine un arbre."', answer: 'un arbre est dessiné par l’enfant' },
+                { task: 'Transforme : "Le professeur explique la leçon."', answer: 'la leçon est expliquée par le professeur' },
+                { task: 'Transforme : "Nous lisons un livre."', answer: 'un livre est lu par nous' },
+                { task: 'Transforme : "Elle cuisine un gâteau."', answer: 'un gâteau est cuisiné par elle' }
+            ],
+            act7: [
+                { task: '"dans la forêt" dans "Il marche dans la forêt" est :', answers: { correct: 'complément', wrong: 'sujet' } },
+                { task: '"hier" dans "Elle a joué hier" est :', answers: { correct: 'complément', wrong: 'sujet' } },
+                { task: '"avec joie" dans "Il chante avec joie" est :', answers: { correct: 'complément', wrong: 'cod' } },
+                { task: '"à l’école" dans "Nous apprenons à l’école" est :', answers: { correct: 'complément', wrong: 'sujet' } },
+                { task: '"vite" dans "Ils courent vite" est :', answers: { correct: 'complément', wrong: 'cod' } }
+            ],
+            act8: [
+                { task: 'Complète : "Il faut que tu ___."', answer: 'viennes' },
+                { task: 'Complète : "Il faut qu’elle ___."', answer: 'parle' },
+                { task: 'Complète : "Il faut que nous ___."', answer: 'mangions' },
+                { task: 'Complète : "Il faut qu’ils ___."', answer: 'finissent' },
+                { task: 'Complète : "Il faut que je ___."', answer: 'dorme' }
+            ],
+            act9: [
+                { task: 'Ajoute un mot : "Il court ___ vite."', answers: { correct: 'très', wrong: 'le' } },
+                { task: 'Ajoute un mot : "Elle chante ___ bien."', answers: { correct: 'très', wrong: 'la' } },
+                { task: 'Ajoute un mot : "Nous jouons ___ souvent."', answers: { correct: 'très', wrong: 'les' } },
+                { task: 'Ajoute un mot : "Ils dansent ___ mal."', answers: { correct: 'très', wrong: 'un' } },
+                { task: 'Ajoute un mot : "Tu lis ___ lentement."', answers: { correct: 'très', wrong: 'le' } }
+            ],
+            act10: [
+                { task: 'Écris une phrase avec une subordonnée :' },
+                { task: 'Écris une phrase avec "parce que" :' },
+                { task: 'Écris une phrase avec "quand" :' },
+                { task: 'Écris une phrase avec "si" :' },
+                { task: 'Écris une phrase avec "que" :' }
+            ]
+        };
+
+        function showConfetti() {
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-10px';
+                confetti.style.background = ['#ff0', '#f00', '#0f0'][Math.floor(Math.random() * 3)];
+                confetti.style.animation = 'fall 2s linear';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+
+        const options = document.querySelectorAll('.option');
+        options.forEach(o => {
+            o.addEventListener('click', () => {
+                const activity = o.closest('.activity');
+                const feedback = activity.querySelector('.feedback');
+                const answer = o.dataset.answer;
+                const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+                const isCorrect = answer === currentChallenge.answers.correct;
+
+                if (isCorrect) {
+                    o.style.background = '#a5d6a7';
+                    o.style.animation = 'pulse 0.5s';
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#0277bd';
+                    feedback.textContent = 'Correct !';
+                    document.getElementById('successSound').play();
+                    showConfetti();
+                } else {
+                    o.style.background = '#ef9a9a';
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#d32f2f';
+                    feedback.textContent = 'Non, réessaie !';
+                }
+            });
+        });
+
+        function checkInput(btn, correct) {
+            const activity = btn.closest('.activity');
+            const input = btn.previousElementSibling;
+            const feedback = activity.querySelector('.feedback');
+            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+            if (input.value.toLowerCase().trim() === currentChallenge.answer) {
+                input.style.background = '#a5d6a7';
+                feedback.style.display = 'block';
+                feedback.style.color = '#0277bd';
+                feedback.textContent = 'Parfait !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                input.style.background = '#ef9a9a';
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = `Non, c’est "${currentChallenge.answer}".`;
+            }
+        }
+
+        function checkSentence(btn) {
+            const activity = btn.closest('.activity');
+            const textarea = btn.previousElementSibling;
+            const feedback = activity.querySelector('.feedback');
+            const text = textarea.value.toLowerCase().trim();
+            if (text.includes('que') || text.includes('parce que') || text.includes('quand') || text.includes('si')) {
+                textarea.style.background = '#a5d6a7';
+                feedback.style.display = 'block';
+                feedback.style.color = '#0277bd';
+                feedback.textContent = 'Superbe !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                textarea.style.background = '#ef9a9a';
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = 'Ajoute une subordonnée (ex. : parce que) !';
+            }
+        }
+
+        function showRecall(btn) {
+            const recall = btn.nextElementSibling.nextElementSibling;
+            recall.style.display = recall.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function newChallenge(btn, actId) {
+            const activity = document.getElementById(actId);
+            const currentIndex = parseInt(activity.dataset.challenge || 0);
+            const newIndex = (currentIndex + 1) % 5;
+            activity.dataset.challenge = newIndex;
+            const challenge = challenges[actId][newIndex];
+            const p = activity.querySelector('p');
+            const taskDiv = activity.querySelector('.task');
+            taskDiv.innerHTML = '';
+            activity.querySelector('.feedback').style.display = 'none';
+
+            p.textContent = challenge.task;
+            if (actId === 'act1' || actId === 'act3' || actId === 'act4' || actId === 'act5' || actId === 'act7' || actId === 'act9') {
+                const span1 = document.createElement('span');
+                span1.className = 'option';
+                span1.dataset.answer = challenge.answers.correct;
+                span1.textContent = challenge.answers.correct;
+                const span2 = document.createElement('span');
+                span2.className = 'option';
+                span2.dataset.answer = challenge.answers.wrong;
+                span2.textContent = challenge.answers.wrong;
+                taskDiv.appendChild(span1);
+                taskDiv.appendChild(span2);
+                [span1, span2].forEach(o => {
+                    o.addEventListener('click', () => {
+                        const feedback = activity.querySelector('.feedback');
+                        const isCorrect = o.dataset.answer === challenge.answers.correct;
+                        if (isCorrect) {
+                            o.style.background = '#a5d6a7';
+                            o.style.animation = 'pulse 0.5s';
+                            feedback.style.display = 'block';
+                            feedback.style.color = '#0277bd';
+                            feedback.textContent = 'Correct !';
+                            document.getElementById('successSound').play();
+                            showConfetti();
+                        } else {
+                            o.style.background = '#ef9a9a';
+                            feedback.style.display = 'block';
+                            feedback.style.color = '#d32f2f';
+                            feedback.textContent = 'Non, réessaie !';
+                        }
+                    });
+                });
+            } else if (actId === 'act2' || actId === 'act6' || actId === 'act8') {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Tape ici';
+                const button = document.createElement('button');
+                button.textContent = 'Vérifier';
+                button.onclick = () => checkInput(button, challenge.answer);
+                taskDiv.appendChild(input);
+                taskDiv.appendChild(button);
+            } else if (actId === 'act10') {
+                const textarea = document.createElement('textarea');
+                textarea.placeholder = 'Tape ici';
+                const button = document.createElement('button');
+                button.textContent = 'Vérifier';
+                button.onclick = () => checkSentence(button);
+                taskDiv.appendChild(textarea);
+                taskDiv.appendChild(button);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GramaScoR - Lycée</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #ede7f6;
+            min-height: 100vh;
+            padding: 20px;
+            color: #6a1b9a;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+        }
+        .activity-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .activity {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid #d1c4e9;
+        }
+        .activity:hover { transform: translateY(-5px); }
+        h2 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+            color: #9c27b0;
+        }
+        p {
+            margin: 0 0 15px;
+            font-size: 1.1em;
+        }
+        .option, textarea, input {
+            padding: 10px;
+            margin: 5px;
+            background: #ce93d8;
+            border-radius: 5px;
+            border: none;
+            font-size: 1em;
+        }
+        .option { cursor: pointer; }
+        .option:hover { background: #ba68c8; }
+        button {
+            padding: 10px 20px;
+            background: #ab47bc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #9c27b0; }
+        .feedback {
+            margin-top: 10px;
+            font-size: 1.1em;
+            text-align: center;
+            display: none;
+        }
+        .recall {
+            display: none;
+            padding: 10px;
+            background: #d1c4e9;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" style="position: absolute; top: 20px; left: 20px; color: #6a1b9a; font-size: 1.2em; text-decoration: none;">← Retour</a>
+    <h1>GramaScoR - Niveau Lycée</h1>
+    <audio id="successSound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
+    <div class="activity-container">
+        <div class="activity" id="act1">
+            <h2>Architecte de phrases</h2>
+            <p>Transforme "Il chante. Il est heureux" en phrase complexe :</p>
+            <div class="task">
+                <textarea placeholder="Tape ici"></textarea>
+                <button onclick="checkComplex(this)">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act1')">Nouveau défi</button>
+            <div class="recall">Une <strong>phrase complexe</strong> relie deux idées avec une subordonnée (ex. : Il chante parce qu’il est heureux).</div>
+        </div>
+
+        <div class="activity" id="act2">
+            <h2>Corrige-moi</h2>
+            <p>Corrige : "Il a manger hier."</p>
+            <div class="task">
+                <input type="text" placeholder="Tape ici">
+                <button onclick="checkInput(this, 'il a mangé hier')">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act2')">Nouveau défi</button>
+            <div class="recall">Le <strong>participe passé</strong> avec "avoir" ne s’accorde pas (ex. : a mangé).</div>
+        </div>
+
+        <div class="activity" id="act3">
+            <h2>Connecteurs logiques</h2>
+            <p>Ajoute un mot : "Il étudie ___ il réussit."</p>
+            <div class="task">
+                <span class="option" data-answer="donc">donc</span>
+                <span class="option" data-answer="parce que">parce que</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act3')">Nouveau défi</button>
+            <div class="recall"><strong>donc</strong> indique une conséquence, <strong>parce que</strong> une cause.</div>
+        </div>
+
+        <div class="activity" id="act4">
+            <h2>Temps rare</h2>
+            <p>"S’il avait su, il serait venu" utilise :</p>
+            <div class="task">
+                <span class="option" data-answer="conditionnel passé">conditionnel passé</span>
+                <span class="option" data-answer="passé composé">passé composé</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act4')">Nouveau défi</button>
+            <div class="recall">Le <strong>conditionnel passé</strong> exprime une hypothèse passée (ex. : serait venu).</div>
+        </div>
+
+        <div class="activity" id="act5">
+            <h2>Registre de langue</h2>
+            <p>"T’es crevé" est :</p>
+            <div class="task">
+                <span class="option" data-answer="familier">familier</span>
+                <span class="option" data-answer="soutenu">soutenu</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act5')">Nouveau défi</button>
+            <div class="recall">Le <strong>registre familier</strong> utilise des mots simples ou abrégés (ex. : t’es).</div>
+        </div>
+
+        <div class="activity" id="act6">
+            <h2>Figure de style</h2>
+            <p>"Ses yeux sont des étoiles" est une :</p>
+            <div class="task">
+                <span class="option" data-answer="métaphore">métaphore</span>
+                <span class="option" data-answer="comparaison">comparaison</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act6')">Nouveau défi</button>
+            <div class="recall">Une <strong>métaphore</strong> rapproche sans "comme" (ex. : sont des étoiles).</div>
+        </div>
+
+        <div class="activity" id="act7">
+            <h2>Syntaxe avancée</h2>
+            <p>Complète : "Bien que ___ plût, il sortit."</p>
+            <div class="task">
+                <input type="text" placeholder="Tape ici">
+                <button onclick="checkInput(this, 'il')">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act7')">Nouveau défi</button>
+            <div class="recall">Une <strong>subordonnée concessive</strong> avec "bien que" utilise le subjonctif (ex. : il plût).</div>
+        </div>
+
+        <div class="activity" id="act8">
+            <h2>Reformulation</h2>
+            <p>Reformule : "Il est grand."</p>
+            <div class="task">
+                <textarea placeholder="Tape ici"></textarea>
+                <button onclick="checkReform(this)">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act8')">Nouveau défi</button>
+            <div class="recall">La <strong>reformulation</strong> varie les mots ou la structure (ex. : Sa taille est imposante).</div>
+        </div>
+
+        <div class="activity" id="act9">
+            <h2>Argumente</h2>
+            <p>Complète : "Lire est utile ___ cela enrichit."</p>
+            <div class="task">
+                <span class="option" data-answer="car">car</span>
+                <span class="option" data-answer="ou">ou</span>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act9')">Nouveau défi</button>
+            <div class="recall"><strong>car</strong> introduit une cause dans une argumentation.</div>
+        </div>
+
+        <div class="activity" id="act10">
+            <h2>Poète en herbe</h2>
+            <p>Écris une métaphore :</p>
+            <div class="task">
+                <textarea placeholder="Tape ici"></textarea>
+                <button onclick="checkMetaphor(this)">Vérifier</button>
+            </div>
+            <div class="feedback"></div>
+            <button onclick="showRecall(this)">Fiche de rappel</button>
+            <button onclick="newChallenge(this, 'act10')">Nouveau défi</button>
+            <div class="recall">Une <strong>métaphore</strong> est une image sans "comme" (ex. : La vie est un mystère).</div>
+        </div>
+    </div>
+
+    <script>
+        const challenges = {
+            act1: [
+                { task: 'Transforme "Il chante. Il est heureux" en phrase complexe :', keywords: ['chante', 'heureux'] },
+                { task: 'Transforme "Elle lit. Elle apprend" en phrase complexe :', keywords: ['lit', 'apprend'] },
+                { task: 'Transforme "Il court. Il gagne" en phrase complexe :', keywords: ['court', 'gagne'] },
+                { task: 'Transforme "Nous voyageons. Nous découvrons" en phrase complexe :', keywords: ['voyageons', 'découvrons'] },
+                { task: 'Transforme "Tu écris. Tu crées" en phrase complexe :', keywords: ['écris', 'crées'] }
+            ],
+            act2: [
+                { task: 'Corrige : "Il a manger hier."', answer: 'il a mangé hier' },
+                { task: 'Corrige : "Elle a parler fort."', answer: 'elle a parlé fort' },
+                { task: 'Corrige : "Nous avons jouer dehors."', answer: 'nous avons joué dehors' },
+                { task: 'Corrige : "Ils ont fini tard."', answer: 'ils ont fini tard' }, // Correcte mais testée
+                { task: 'Corrige : "Tu as oublier ton livre."', answer: 'tu as oublié ton livre' }
+            ],
+            act3: [
+                { task: 'Ajoute un mot : "Il étudie ___ il réussit."', answers: { correct: 'donc', wrong: 'parce que' } },
+                { task: 'Ajoute un mot : "Elle travaille ___ elle progresse."', answers: { correct: 'donc', wrong: 'quand' } },
+                { task: 'Ajoute un mot : "Nous lisons ___ nous apprenons."', answers: { correct: 'donc', wrong: 'si' } },
+                { task: 'Ajoute un mot : "Il pleut ___ je reste."', answers: { correct: 'donc', wrong: 'parce que' } },
+                { task: 'Ajoute un mot : "Tu révises ___ tu réussis."', answers: { correct: 'donc', wrong: 'ou' } }
+            ],
+            act4: [
+                { task: '"S’il avait su, il serait venu" utilise :', answers: { correct: 'conditionnel passé', wrong: 'passé composé' } },
+                { task: '"S’il avait plu, nous serions restés" utilise :', answers: { correct: 'conditionnel passé', wrong: 'plus-que-parfait' } },
+                { task: '"S’il avait étudié, il aurait réussi" utilise :', answers: { correct: 'conditionnel passé', wrong: 'passé simple' } },
+                { task: '"S’il avait dormi, il serait reposé" utilise :', answers: { correct: 'conditionnel passé', wrong: 'passé composé' } },
+                { task: '"S’il avait voyagé, il aurait vu" utilise :', answers: { correct: 'conditionnel passé', wrong: 'futur antérieur' } }
+            ],
+            act5: [
+                { task: '"T’es crevé" est :', answers: { correct: 'familier', wrong: 'soutenu' } },
+                { task: '"Vous êtes exténué" est :', answers: { correct: 'soutenu', wrong: 'familier' } },
+                { task: '"J’suis fatigué" est :', answers: { correct: 'familier', wrong: 'soutenu' } },
+                { task: '"Il repose en paix" est :', answers: { correct: 'soutenu', wrong: 'familier' } },
+                { task: '"T’as la flemme" est :', answers: { correct: 'familier', wrong: 'soutenu' } }
+            ],
+            act6: [
+                { task: '"Ses yeux sont des étoiles" est une :', answers: { correct: 'métaphore', wrong: 'comparaison' } },
+                { task: '"La vie est comme un fleuve" est une :', answers: { correct: 'comparaison', wrong: 'métaphore' } },
+                { task: '"Son sourire est un soleil" est une :', answers: { correct: 'métaphore', wrong: 'comparaison' } },
+                { task: '"Il court comme un lièvre" est une :', answers: { correct: 'comparaison', wrong: 'métaphore' } },
+                { task: '"La nuit est un voile" est une :', answers: { correct: 'métaphore', wrong: 'comparaison' } }
+            ],
+            act7: [
+                { task: 'Complète : "Bien que ___ plût, il sortit."', answer: 'il' },
+                { task: 'Complète : "Bien que ___ fît froid, elle marcha."', answer: 'il' },
+                { task: 'Complète : "Bien que ___ voulût, il resta."', answer: 'il' },
+                { task: 'Complète : "Bien que ___ chantât, personne n’écouta."', answer: 'elle' },
+                { task: 'Complète : "Bien que ___ pleurât, il continua."', answer: 'elle' }
+            ],
+            act8: [
+                { task: 'Reformule : "Il est grand."', keywords: ['grand', 'taille', 'haut'] },
+                { task: 'Reformule : "Elle est belle."', keywords: ['belle', 'jolie', 'charmante'] },
+                { task: 'Reformule : "Il pleut beaucoup."', keywords: ['pleut', 'pluie', 'tombe'] },
+                { task: 'Reformule : "Nous sommes fatigués."', keywords: ['fatigués', 'épuisés', 'las'] },
+                { task: 'Reformule : "Tu parles fort."', keywords: ['parles', 'voix', 'haut'] }
+            ],
+            act9: [
+                { task: 'Complète : "Lire est utile ___ cela enrichit."', answers: { correct: 'car', wrong: 'ou' } },
+                { task: 'Complète : "Étudier est dur ___ cela aide."', answers: { correct: 'mais', wrong: 'et' } },
+                { task: 'Complète : "Il faut réviser ___ on réussit."', answers: { correct: 'pour que', wrong: 'ou' } },
+                { task: 'Complète : "Elle lit vite ___ elle comprend."', answers: { correct: 'et', wrong: 'parce que' } },
+                { task: 'Complète : "Nous voyageons ___ nous apprenons."', answers: { correct: 'donc', wrong: 'si' } }
+            ],
+            act10: [
+                { task: 'Écris une métaphore :' },
+                { task: 'Écris une métaphore sur la mer :' },
+                { task: 'Écris une métaphore sur la vie :' },
+                { task: 'Écris une métaphore sur l’amour :' },
+                { task: 'Écris une métaphore sur le temps :' }
+            ]
+        };
+
+        function showConfetti() {
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-10px';
+                confetti.style.background = ['#ff0', '#f00', '#0f0'][Math.floor(Math.random() * 3)];
+                confetti.style.animation = 'fall 2s linear';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+
+        const options = document.querySelectorAll('.option');
+        options.forEach(o => {
+            o.addEventListener('click', () => {
+                const activity = o.closest('.activity');
+                const feedback = activity.querySelector('.feedback');
+                const answer = o.dataset.answer;
+                const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+                const isCorrect = answer === currentChallenge.answers.correct;
+
+                if (isCorrect) {
+                    o.style.background = '#a5d6a7';
+                    o.style.animation = 'pulse 0.5s';
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#6a1b9a';
+                    feedback.textContent = 'Excellent !';
+                    document.getElementById('successSound').play();
+                    showConfetti();
+                } else {
+                    o.style.background = '#ef9a9a';
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#d32f2f';
+                    feedback.textContent = 'Non, réessaie !';
+                }
+            });
+        });
+
+        function checkInput(btn, correct) {
+            const activity = btn.closest('.activity');
+            const input = btn.previousElementSibling;
+            const feedback = activity.querySelector('.feedback');
+            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+            if (input.value.toLowerCase().trim() === currentChallenge.answer) {
+                input.style.background = '#a5d6a7';
+                feedback.style.display = 'block';
+                feedback.style.color = '#6a1b9a';
+                feedback.textContent = 'Parfait !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                input.style.background = '#ef9a9a';
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = `Non, c’est "${currentChallenge.answer}".`;
+            }
+        }
+
+        function checkComplex(btn) {
+            const activity = btn.closest('.activity');
+            const textarea = btn.previousElementSibling;
+            const feedback = activity.querySelector('.feedback');
+            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+            const text = textarea.value.toLowerCase().trim();
+            const connectors = ['parce que', 'puisque', 'quand', 'si'];
+            if (connectors.some(c => text.includes(c)) && currentChallenge.keywords.every(k => text.includes(k))) {
+                textarea.style.background = '#a5d6a7';
+                feedback.style.display = 'block';
+                feedback.style.color = '#6a1b9a';
+                feedback.textContent = 'Superbe !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                textarea.style.background = '#ef9a9a';
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = 'Utilise une subordonnée (ex. : parce que) et les mots clés !';
+            }
+        }
+
+        function checkReform(btn) {
+            const activity = btn.closest('.activity');
+            const textarea = btn.previousElementSibling;
+            const feedback = activity.querySelector('.feedback');
+            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
+            const text = textarea.value.toLowerCase().trim();
+            if (text !== currentChallenge.task.split(': ')[1].toLowerCase() && currentChallenge.keywords.some(k => text.includes(k))) {
+                textarea.style.background = '#a5d6a7';
+                feedback.style.display = 'block';
+                feedback.style.color = '#6a1b9a';
+                feedback.textContent = 'Bien reformulé !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                textarea.style.background = '#ef9a9a';
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = 'Varie les mots et garde le sens !';
+            }
+        }
+
+        function checkMetaphor(btn) {
+            const activity = btn.closest('.activity');
+            const textarea = btn.previousElementSibling;
+            const feedback = activity.querySelector('.feedback');
+            const text = textarea.value.toLowerCase().trim();
+            if (!text.includes('comme') && text.split(' ').length > 2) {
+                textarea.style.background = '#a5d6a7';
+                feedback.style.display = 'block';
+                feedback.style.color = '#6a1b9a';
+                feedback.textContent = 'Magnifique métaphore !';
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                textarea.style.background = '#ef9a9a';
+                feedback.style.display = 'block';
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = 'Évite "comme" et fais une phrase complète !';
+            }
+        }
+
+        function showRecall(btn) {
+            const recall = btn.nextElementSibling.nextElementSibling;
+            recall.style.display = recall.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function newChallenge(btn, actId) {
+            const activity = document.getElementById(actId);
+            const currentIndex = parseInt(activity.dataset.challenge || 0);
+            const newIndex = (currentIndex + 1) % 5;
+            activity.dataset.challenge = newIndex;
+            const challenge = challenges[actId][newIndex];
+            const p = activity.querySelector('p');
+            const taskDiv = activity.querySelector('.task');
+            taskDiv.innerHTML = '';
+            activity.querySelector('.feedback').style.display = 'none';
+
+            p.textContent = challenge.task;
+            if (actId === 'act3' || actId === 'act4' || actId === 'act5' || actId === 'act6' || actId === 'act9') {
+                const span1 = document.createElement('span');
+                span1.className = 'option';
+                span1.dataset.answer = challenge.answers.correct;
+                span1.textContent = challenge.answers.correct;
+                const span2 = document.createElement('span');
+                span2.className = 'option';
+                span2.dataset.answer = challenge.answers.wrong;
+                span2.textContent = challenge.answers.wrong;
+                taskDiv.appendChild(span1);
+                taskDiv.appendChild(span2);
+                [span1, span2].forEach(o => {
+                    o.addEventListener('click', () => {
+                        const feedback = activity.querySelector('.feedback');
+                        const isCorrect = o.dataset.answer === challenge.answers.correct;
+                        if (isCorrect) {
+                            o.style.background = '#a5d6a7';
+                            o.style.animation = 'pulse 0.5s';
+                            feedback.style.display = 'block';
+                            feedback.style.color = '#6a1b9a';
+                            feedback.textContent = 'Excellent !';
+                            document.getElementById('successSound').play();
+                            showConfetti();
+                        } else {
+                            o.style.background = '#ef9a9a';
+                            feedback.style.display = 'block';
+                            feedback.style.color = '#d32f2f';
+                            feedback.textContent = 'Non, réessaie !';
+                        }
+                    });
+                });
+            } else if (actId === 'act2' || actId === 'act7') {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Tape ici';
+                const button = document.createElement('button');
+                button.textContent = 'Vérifier';
+                button.onclick = () => checkInput(button, challenge.answer);
+                taskDiv.appendChild(input);
+                taskDiv.appendChild(button);
+            } else if (actId === 'act1' || actId === 'act8' || actId === 'act10') {
+                const textarea = document.createElement('textarea');
+                textarea.placeholder = 'Tape ici';
+                const button = document.createElement('button');
+                button.textContent = 'Vérifier';
+                button.onclick = actId === 'act1' ? () => checkComplex(button) : actId === 'act8' ? () => checkReform(button) : () => checkMetaphor(button);
+                taskDiv.appendChild(textarea);
+                taskDiv.appendChild(button);
+            }
+        }
+    </script>
+</body>
+</html>
