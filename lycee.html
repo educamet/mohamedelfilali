@@ -3,310 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GramaScoR - Lycée</title>
+    <title>GramaScoR - Niveau Lycée</title>
     <style>
         body {
-            margin: 0;
             font-family: 'Arial', sans-serif;
-            background: #ede7f6;
-            min-height: 100vh;
-            padding: 1rem;
-            color: #6a1b9a;
+            background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+            margin: 0;
+            padding: 2rem;
+            color: #1b4965;
             overflow-x: hidden;
+        }
+        .container {
+            max-width: 95rem;
+            margin: 0 auto;
+            background: #fff;
+            padding: 4rem;
+            border-radius: 2rem;
+            box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.15);
+            border: 0.3rem solid #48cae4;
         }
         h1 {
             text-align: center;
-            font-size: 6vw;
-            margin-bottom: 2rem;
-        }
-        .activity-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-            gap: 2rem;
-            max-width: 120rem;
-            margin: 0 auto;
+            color: #48cae4;
+            font-size: 2.8em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            text-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #48cae4, #0077b6);
+            -webkit-background-clip: text;
+            color: transparent;
         }
         .activity {
-            background: white;
-            padding: 1.5rem;
+            background: #f9fbfc;
+            padding: 2rem;
+            margin: 2rem 0;
             border-radius: 1rem;
-            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
-            border: 0.1rem solid #d1c4e9;
+            border-left: 0.6rem solid #0077b6;
+            transition: all 0.3s ease;
         }
-        h2 {
-            margin: 0 0 1rem;
-            font-size: 3vw;
-            color: #9c27b0;
+        .activity:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
         }
-        p {
-            margin: 0 0 1.5rem;
-            font-size: 2.5vw;
+        .question {
+            font-size: 1.8em;
+            color: #023e8a;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+        .dictation-text {
+            font-size: 1.5em;
+            color: #0077b6;
+            margin-bottom: 1rem;
+            background: #e5f6fd;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            border: 0.2rem solid #90e0ef;
+        }
+        .task {
+            background: #e5f6fd;
+            padding: 1.5rem;
+            border-radius: 0.8rem;
+            border: 0.2rem solid #90e0ef;
         }
         .option, textarea, input {
+            width: 100%;
             padding: 1rem;
-            margin: 0.5rem;
-            background: #ce93d8;
-            border-radius: 0.5rem;
-            border: none;
-            font-size: 2vw;
+            margin: 0.8rem 0;
+            border: 0.2rem solid #90e0ef;
+            border-radius: 0.8rem;
+            font-size: 1.2em;
+            box-sizing: border-box;
         }
-        .option { cursor: pointer; }
-        .option:hover { background: #ba68c8; }
+        .option {
+            display: inline-block;
+            background: #caf0f8;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-right: 1rem;
+        }
+        .option:hover {
+            background: #ade8f4;
+        }
         button {
-            padding: 1rem 2rem;
-            background: #ab47bc;
+            background: #0077b6;
             color: white;
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 0.8rem;
             cursor: pointer;
             margin: 0.5rem;
-            font-size: 2vw;
+            font-size: 1.2em;
+            box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease, transform 0.2s ease;
         }
-        button:hover { background: #9c27b0; }
+        button:hover {
+            background: #48cae4;
+            transform: scale(1.05);
+        }
         .feedback {
             margin-top: 1rem;
-            font-size: 2.5vw;
+            font-size: 1.5em;
             text-align: center;
             display: none;
         }
         .recall {
             display: none;
             padding: 1rem;
-            background: #d1c4e9;
-            border-radius: 0.5rem;
+            background: #caf0f8;
+            border-radius: 0.8rem;
             margin-top: 1rem;
-            font-size: 2vw;
+            font-size: 1.1em;
+            color: #023e8a;
         }
-        .confetti {
-            position: absolute;
-            width: 1rem;
-            height: 1rem;
-            pointer-events: none;
+        .score {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+            font-size: 1.8em;
+            color: #0077b6;
         }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-0.5rem); }
-            75% { transform: translateX(0.5rem); }
-        }
-        @keyframes fall {
-            to { transform: translateY(100vh); }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         @media (max-width: 600px) {
-            h1 { font-size: 8vw; }
-            .activity-container { grid-template-columns: 1fr; }
-            h2 { font-size: 5vw; }
-            p, .feedback { font-size: 4vw; }
-            .option, textarea, input, button, .recall { font-size: 3.5vw; }
+            .container { padding: 2rem; }
+            h1 { font-size: 2em; }
+            .question { font-size: 1.5em; }
+            .dictation-text { font-size: 1.2em; }
+            .option, textarea, input, button { font-size: 1em; }
+            .feedback { font-size: 1.2em; }
+            .recall { font-size: 0.9em; }
+            .score { font-size: 1.5em; }
         }
     </style>
 </head>
 <body>
-    <a href="index.html" style="position: absolute; top: 1rem; left: 1rem; color: #6a1b9a; font-size: 2.5vw; text-decoration: none;">← Retour</a>
-    <h1>GramaScoR - Niveau Lycée</h1>
-    <audio id="successSound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
-    <div class="activity-container">
+    <div class="container">
+        <h1>GramaScoR - Niveau Lycée</h1>
+
         <div class="activity" id="act1">
-            <h2>Architecte de phrases</h2>
-            <p>Transforme "Il chante. Il est heureux" en phrase complexe :</p>
-            <div class="task">
-                <textarea placeholder="Tape ici"></textarea>
-                <button onclick="checkComplex(this)">Vérifier</button>
+            <div class="question">Quelle est la fonction syntaxique de « dont » dans « Le livre dont il parle est célèbre » ?</div>
+            <div class="task" id="task1">
+                <span class="option" data-answer="COI">COI</span>
+                <span class="option" data-answer="sujet">sujet</span>
             </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act1')">Nouveau défi</button>
-            <div class="recall">Une <strong>phrase complexe</strong> relie deux idées avec une subordonnée (ex. : Il chante parce qu’il est heureux).</div>
+            <div class="feedback" id="feedback1"></div>
+            <button onclick="showRecall('act1')">Fiche de rappel</button>
+            <button onclick="newChallenge('act1')">Nouveau défi</button>
+            <div class="recall" id="recall1">La fonction syntaxique de « dont » dépend du verbe : ici, <strong>COI</strong> de « parle » (il parle de quelque chose).</div>
         </div>
 
         <div class="activity" id="act2">
-            <h2>Corrige-moi</h2>
-            <p>Corrige : "Il a manger hier."</p>
-            <div class="task">
-                <input type="text" placeholder="Tape ici">
-                <button onclick="checkInput(this, 'il a mangé hier')">Vérifier</button>
+            <div class="question">Écris la phrase affichée pendant 5 secondes :</div>
+            <div class="dictation-text" id="dictation2">Bien que la pluie tombât sans cesse, il poursuivit son chemin avec détermination.</div>
+            <div class="task" id="task2">
+                <input type="text" id="input2" placeholder="Tape ici">
+                <button onclick="checkInput('act2')">Vérifier</button>
             </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act2')">Nouveau défi</button>
-            <div class="recall">Le <strong>participe passé</strong> avec "avoir" ne s’accorde pas (ex. : a mangé).</div>
+            <div class="feedback" id="feedback2"></div>
+            <button onclick="showRecall('act2')">Fiche de rappel</button>
+            <button onclick="newChallenge('act2')">Nouveau défi</button>
+            <div class="recall" id="recall2">Une phrase complexe utilise le <strong>subjonctif</strong> après « bien que » (ex. : tombât).</div>
         </div>
 
         <div class="activity" id="act3">
-            <h2>Connecteurs logiques</h2>
-            <p>Ajoute un mot : "Il étudie ___ il réussit."</p>
-            <div class="task">
-                <span class="option" data-answer="donc">donc</span>
-                <span class="option" data-answer="parce que">parce que</span>
+            <div class="question">Relève le temps du verbe souligné : « S’il <u>avait su</u>, il serait parti. »</div>
+            <div class="task" id="task3">
+                <span class="option" data-answer="plus-que-parfait">plus-que-parfait</span>
+                <span class="option" data-answer="conditionnel passé">conditionnel passé</span>
             </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act3')">Nouveau défi</button>
-            <div class="recall"><strong>donc</strong> indique une conséquence, <strong>parce que</strong> une cause.</div>
+            <div class="feedback" id="feedback3"></div>
+            <button onclick="showRecall('act3')">Fiche de rappel</button>
+            <button onclick="newChallenge('act3')">Nouveau défi</button>
+            <div class="recall" id="recall3">Le <strong>plus-que-parfait</strong> (avait su) indique une action antérieure dans une hypothèse.</div>
         </div>
 
         <div class="activity" id="act4">
-            <h2>Temps rare</h2>
-            <p>"S’il avait su, il serait venu" utilise :</p>
-            <div class="task">
-                <span class="option" data-answer="conditionnel passé">conditionnel passé</span>
-                <span class="option" data-answer="passé composé">passé composé</span>
-            </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act4')">Nouveau défi</button>
-            <div class="recall">Le <strong>conditionnel passé</strong> exprime une hypothèse passée (ex. : serait venu).</div>
-        </div>
-
-        <div class="activity" id="act5">
-            <h2>Registre de langue</h2>
-            <p>"T’es crevé" est :</p>
-            <div class="task">
-                <span class="option" data-answer="familier">familier</span>
-                <span class="option" data-answer="soutenu">soutenu</span>
-            </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act5')">Nouveau défi</button>
-            <div class="recall">Le <strong>registre familier</strong> utilise des mots simples ou abrégés (ex. : t’es).</div>
-        </div>
-
-        <div class="activity" id="act6">
-            <h2>Figure de style</h2>
-            <p>"Ses yeux sont des étoiles" est une :</p>
-            <div class="task">
+            <div class="question">Analyse : Quelle figure de style dans « La mer est un miroir d’argent » ?</div>
+            <div class="task" id="task4">
                 <span class="option" data-answer="métaphore">métaphore</span>
                 <span class="option" data-answer="comparaison">comparaison</span>
             </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act6')">Nouveau défi</button>
-            <div class="recall">Une <strong>métaphore</strong> rapproche sans "comme" (ex. : sont des étoiles).</div>
+            <div class="feedback" id="feedback4"></div>
+            <button onclick="showRecall('act4')">Fiche de rappel</button>
+            <button onclick="newChallenge('act4')">Nouveau défi</button>
+            <div class="recall" id="recall4">Une <strong>métaphore</strong> rapproche deux éléments sans « comme » (ex. : est un miroir).</div>
+        </div>
+
+        <div class="activity" id="act5">
+            <div class="question">Problématise : Pourquoi Harpagon dans *L’Avare* est-il un personnage tragique ?</div>
+            <div class="task" id="task5">
+                <textarea id="input5" placeholder="Tape ici"></textarea>
+                <button onclick="checkSentence('act5')">Vérifier</button>
+            </div>
+            <div class="feedback" id="feedback5"></div>
+            <button onclick="showRecall('act5')">Fiche de rappel</button>
+            <button onclick="newChallenge('act5')">Nouveau défi</button>
+            <div class="recall" id="recall5">Une <strong>problématique</strong> pose une question complexe (ex. : Son avarice le rend-il humain ou inhumain ?).</div>
+        </div>
+
+        <div class="activity" id="act6">
+            <div class="question">Transforme en voix passive : « Les critiques que le jury a formulées étaient sévères. »</div>
+            <div class="task" id="task6">
+                <input type="text" id="input6" placeholder="Tape ici">
+                <button onclick="checkInput('act6')">Vérifier</button>
+            </div>
+            <div class="feedback" id="feedback6"></div>
+            <button onclick="showRecall('act6')">Fiche de rappel</button>
+            <button onclick="newChallenge('act6')">Nouveau défi</button>
+            <div class="recall" id="recall6">La <strong>voix passive</strong> inverse sujet et complément (ex. : ont été formulées).</div>
         </div>
 
         <div class="activity" id="act7">
-            <h2>Syntaxe avancée</h2>
-            <p>Complète : "Bien que ___ plût, il sortit."</p>
-            <div class="task">
-                <input type="text" placeholder="Tape ici">
-                <button onclick="checkInput(this, 'il')">Vérifier</button>
+            <div class="question">Repère la subordonnée dans « Il faut que nous travaillions dur. »</div>
+            <div class="task" id="task7">
+                <span class="option" data-answer="que nous travaillions dur">que nous travaillions dur</span>
+                <span class="option" data-answer="il faut">il faut</span>
             </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act7')">Nouveau défi</button>
-            <div class="recall">Une <strong>subordonnée concessive</strong> avec "bien que" utilise le subjonctif (ex. : il plût).</div>
+            <div class="feedback" id="feedback7"></div>
+            <button onclick="showRecall('act7')">Fiche de rappel</button>
+            <button onclick="newChallenge('act7')">Nouveau défi</button>
+            <div class="recall" id="recall7">Une <strong>subordonnée</strong> dépend d’une autre proposition (ex. : que nous travaillions).</div>
         </div>
 
         <div class="activity" id="act8">
-            <h2>Reformulation</h2>
-            <p>Reformule : "Il est grand."</p>
-            <div class="task">
-                <textarea placeholder="Tape ici"></textarea>
-                <button onclick="checkReform(this)">Vérifier</button>
+            <div class="question">Analyse : Quel registre dans « Ô rage ! Ô désespoir ! » (*Le Cid*) ?</div>
+            <div class="task" id="task8">
+                <span class="option" data-answer="tragique">tragique</span>
+                <span class="option" data-answer="comique">comique</span>
             </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act8')">Nouveau défi</button>
-            <div class="recall">La <strong>reformulation</strong> varie les mots ou la structure (ex. : Sa taille est imposante).</div>
+            <div class="feedback" id="feedback8"></div>
+            <button onclick="showRecall('act8')">Fiche de rappel</button>
+            <button onclick="newChallenge('act8')">Nouveau défi</button>
+            <div class="recall" id="recall8">Le <strong>registre tragique</strong> exprime douleur et désespoir (ex. : Ô rage !).</div>
         </div>
 
         <div class="activity" id="act9">
-            <h2>Argumente</h2>
-            <p>Complète : "Lire est utile ___ cela enrichit."</p>
-            <div class="task">
-                <span class="option" data-answer="car">car</span>
-                <span class="option" data-answer="ou">ou</span>
+            <div class="question">Commentaire : Explique l’effet de « La vie est un mystère qu’il faut vivre » (Hugo).</div>
+            <div class="task" id="task9">
+                <textarea id="input9" placeholder="Tape ici"></textarea>
+                <button onclick="checkSentence('act9')">Vérifier</button>
             </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act9')">Nouveau défi</button>
-            <div class="recall"><strong>car</strong> introduit une cause dans une argumentation.</div>
+            <div class="feedback" id="feedback9"></div>
+            <button onclick="showRecall('act9')">Fiche de rappel</button>
+            <button onclick="newChallenge('act9')">Nouveau défi</button>
+            <div class="recall" id="recall9">Un <strong>commentaire</strong> analyse l’effet littéraire (ex. : mystère invite à la réflexion).</div>
         </div>
 
         <div class="activity" id="act10">
-            <h2>Poète en herbe</h2>
-            <p>Écris une métaphore :</p>
-            <div class="task">
-                <textarea placeholder="Tape ici"></textarea>
-                <button onclick="checkMetaphor(this)">Vérifier</button>
+            <div class="question">Problématise : Comment l’ironie dans *Candide* critique-t-elle la société ?</div>
+            <div class="task" id="task10">
+                <textarea id="input10" placeholder="Tape ici"></textarea>
+                <button onclick="checkSentence('act10')">Vérifier</button>
             </div>
-            <div class="feedback"></div>
-            <button onclick="showRecall(this)">Fiche de rappel</button>
-            <button onclick="newChallenge(this, 'act10')">Nouveau défi</button>
-            <div class="recall">Une <strong>métaphore</strong> est une image sans "comme" (ex. : La vie est un mystère).</div>
+            <div class="feedback" id="feedback10"></div>
+            <button onclick="showRecall('act10')">Fiche de rappel</button>
+            <button onclick="newChallenge('act10')">Nouveau défi</button>
+            <div class="recall" id="recall10">Une <strong>problématique</strong> explore un enjeu (ex. : L’ironie révèle-t-elle l’absurde ?).</div>
         </div>
     </div>
+    <div class="score">Score : <span id="score">0</span>/10</div>
 
     <script>
+        let score = 0;
+
         const challenges = {
             act1: [
-                { task: 'Transforme "Il chante. Il est heureux" en phrase complexe :', keywords: ['chante', 'heureux'] },
-                { task: 'Transforme "Elle lit. Elle apprend" en phrase complexe :', keywords: ['lit', 'apprend'] },
-                { task: 'Transforme "Il court. Il gagne" en phrase complexe :', keywords: ['court', 'gagne'] },
-                { task: 'Transforme "Nous voyageons. Nous découvrons" en phrase complexe :', keywords: ['voyageons', 'découvrons'] },
-                { task: 'Transforme "Tu écris. Tu crées" en phrase complexe :', keywords: ['écris', 'crées'] }
+                { question: 'Quelle est la fonction syntaxique de « dont » dans « Le livre dont il parle est célèbre » ?', answers: { correct: 'COI', wrong: 'sujet' } },
+                { question: 'Quelle est la fonction syntaxique de « que » dans « Le film que nous avons vu est émouvant » ?', answers: { correct: 'COD', wrong: 'sujet' } },
+                { question: 'Quelle est la fonction syntaxique de « où » dans « La ville où je vis est belle » ?', answers: { correct: 'complément circonstanciel', wrong: 'sujet' } },
+                { question: 'Quelle est la fonction syntaxique de « qui » dans « L’homme qui chante est heureux » ?', answers: { correct: 'sujet', wrong: 'COD' } },
+                { question: 'Quelle est la fonction syntaxique de « dont » dans « La maison dont les fenêtres brillent est belle » ?', answers: { correct: 'attribut', wrong: 'sujet' } }
             ],
             act2: [
-                { task: 'Corrige : "Il a manger hier."', answer: 'il a mangé hier' },
-                { task: 'Corrige : "Elle a parler fort."', answer: 'elle a parlé fort' },
-                { task: 'Corrige : "Nous avons jouer dehors."', answer: 'nous avons joué dehors' },
-                { task: 'Corrige : "Ils ont fini tard."', answer: 'ils ont fini tard' },
-                { task: 'Corrige : "Tu as oublier ton livre."', answer: 'tu as oublié ton livre' }
+                { question: 'Écris la phrase affichée pendant 5 secondes :', dictation: 'Bien que la pluie tombât sans cesse, il poursuivit son chemin avec détermination.', answer: 'bien que la pluie tombât sans cesse il poursuivit son chemin avec détermination' },
+                { question: 'Écris la phrase affichée pendant 5 secondes :', dictation: 'Puisqu’il avait étudié toute la nuit, il réussit brillamment son examen.', answer: 'puisquil avait étudié toute la nuit il réussit brillamment son examen' },
+                { question: 'Écris la phrase affichée pendant 5 secondes :', dictation: 'Quand les étoiles scintillaient, elle rêvait d’un avenir meilleur.', answer: 'quand les étoiles scintillaient elle rêvait dun avenir meilleur' },
+                { question: 'Écris la phrase affichée pendant 5 secondes :', dictation: 'Si le vent soufflait fort, les arbres dansaient dans la tempête.', answer: 'si le vent soufflait fort les arbres dansaient dans la tempête' },
+                { question: 'Écris la phrase affichée pendant 5 secondes :', dictation: 'Parce que l’espoir guidait ses pas, il surmonta chaque obstacle.', answer: 'parce que lespoir guidait ses pas il surmonta chaque obstacle' }
             ],
             act3: [
-                { task: 'Ajoute un mot : "Il étudie ___ il réussit."', answers: { correct: 'donc', wrong: 'parce que' } },
-                { task: 'Ajoute un mot : "Elle travaille ___ elle progresse."', answers: { correct: 'donc', wrong: 'quand' } },
-                { task: 'Ajoute un mot : "Nous lisons ___ nous apprenons."', answers: { correct: 'donc', wrong: 'si' } },
-                { task: 'Ajoute un mot : "Il pleut ___ je reste."', answers: { correct: 'donc', wrong: 'parce que' } },
-                { task: 'Ajoute un mot : "Tu révises ___ tu réussis."', answers: { correct: 'donc', wrong: 'ou' } }
+                { question: 'Relève le temps du verbe souligné : « S’il <u>avait su</u>, il serait parti. »', answers: { correct: 'plus-que-parfait', wrong: 'conditionnel passé' } },
+                { question: 'Relève le temps du verbe souligné : « Quand il <u>eut fini</u>, il se reposa. »', answers: { correct: 'plus-que-parfait', wrong: 'passé simple' } },
+                { question: 'Relève le temps du verbe souligné : « S’ils <u>furent</u> surpris, ils ne le montrèrent pas. »', answers: { correct: 'passé simple', wrong: 'imparfait' } },
+                { question: 'Relève le temps du verbe souligné : « Bien qu’il <u>soit</u> tard, il continua. »', answers: { correct: 'subjonctif présent', wrong: 'présent' } },
+                { question: 'Relève le temps du verbe souligné : « S’il <u>avait pu</u>, il serait resté. »', answers: { correct: 'plus-que-parfait', wrong: 'conditionnel présent' } }
             ],
             act4: [
-                { task: '"S’il avait su, il serait venu" utilise :', answers: { correct: 'conditionnel passé', wrong: 'passé composé' } },
-                { task: '"S’il avait plu, nous serions restés" utilise :', answers: { correct: 'conditionnel passé', wrong: 'plus-que-parfait' } },
-                { task: '"S’il avait étudié, il aurait réussi" utilise :', answers: { correct: 'conditionnel passé', wrong: 'passé simple' } },
-                { task: '"S’il avait dormi, il serait reposé" utilise :', answers: { correct: 'conditionnel passé', wrong: 'passé composé' } },
-                { task: '"S’il avait voyagé, il aurait vu" utilise :', answers: { correct: 'conditionnel passé', wrong: 'futur antérieur' } }
+                { question: 'Analyse : Quelle figure de style dans « La mer est un miroir d’argent » ?', answers: { correct: 'métaphore', wrong: 'comparaison' } },
+                { question: 'Analyse : Quelle figure de style dans « Ses yeux brillent comme des étoiles » ?', answers: { correct: 'comparaison', wrong: 'métaphore' } },
+                { question: 'Analyse : Quelle figure de style dans « Le vent hurle sa rage » ?', answers: { correct: 'personnification', wrong: 'hyperbole' } },
+                { question: 'Analyse : Quelle figure de style dans « Il pleut des cordes » ?', answers: { correct: 'hyperbole', wrong: 'métaphore' } },
+                { question: 'Analyse : Quelle figure de style dans « La vie est un long fleuve tranquille » ?', answers: { correct: 'métaphore', wrong: 'comparaison' } }
             ],
             act5: [
-                { task: '"T’es crevé" est :', answers: { correct: 'familier', wrong: 'soutenu' } },
-                { task: '"Vous êtes exténué" est :', answers: { correct: 'soutenu', wrong: 'familier' } },
-                { task: '"J’suis fatigué" est :', answers: { correct: 'familier', wrong: 'soutenu' } },
-                { task: '"Il repose en paix" est :', answers: { correct: 'soutenu', wrong: 'familier' } },
-                { task: '"T’as la flemme" est :', answers: { correct: 'familier', wrong: 'soutenu' } }
+                { question: 'Problématise : Pourquoi Harpagon dans *L’Avare* est-il un personnage tragique ?', answer: 'problématique impliquant avarice et solitude' },
+                { question: 'Problématise : Comment Candide dans *Candide* incarne-t-il l’optimisme naïf ?', answer: 'problématique impliquant optimisme et critique' },
+                { question: 'Problématise : En quoi Phèdre dans *Phèdre* est-elle une héroïne tragique ?', answer: 'problématique impliquant passion et destin' },
+                { question: 'Problématise : Pourquoi le narrateur dans *La Recherche* explore-t-il le temps ?', answer: 'problématique impliquant mémoire et temps' },
+                { question: 'Problématise : Comment Dom Juan défie-t-il les normes morales ?', answer: 'problématique impliquant liberté et morale' }
             ],
             act6: [
-                { task: '"Ses yeux sont des étoiles" est une :', answers: { correct: 'métaphore', wrong: 'comparaison' } },
-                { task: '"La vie est comme un fleuve" est une :', answers: { correct: 'comparaison', wrong: 'métaphore' } },
-                { task: '"Son sourire est un soleil" est une :', answers: { correct: 'métaphore', wrong: 'comparaison' } },
-                { task: '"Il court comme un lièvre" est une :', answers: { correct: 'comparaison', wrong: 'métaphore' } },
-                { task: '"La nuit est un voile" est une :', answers: { correct: 'métaphore', wrong: 'comparaison' } }
+                { question: 'Transforme en voix passive : « Les critiques que le jury a formulées étaient sévères. »', answer: 'les critiques ont été formulées par le jury et étaient sévères' },
+                { question: 'Transforme en voix passive : « Le poème que l’auteur a écrit est célèbre. »', answer: 'le poème a été écrit par l’auteur et est célèbre' },
+                { question: 'Transforme en voix passive : « Les idées que nous avons discutées étaient riches. »', answer: 'les idées ont été discutées par nous et étaient riches' },
+                { question: 'Transforme en voix passive : « La pièce que le metteur en scène a montée fut un succès. »', answer: 'la pièce a été montée par le metteur en scène et fut un succès' },
+                { question: 'Transforme en voix passive : « Les lois que le roi a établies sont strictes. »', answer: 'les lois ont été établies par le roi et sont strictes' }
             ],
             act7: [
-                { task: 'Complète : "Bien que ___ plût, il sortit."', answer: 'il' },
-                { task: 'Complète : "Bien que ___ fît froid, elle marcha."', answer: 'il' },
-                { task: 'Complète : "Bien que ___ voulût, il resta."', answer: 'il' },
-                { task: 'Complète : "Bien que ___ chantât, personne n’écouta."', answer: 'elle' },
-                { task: 'Complète : "Bien que ___ pleurât, il continua."', answer: 'elle' }
+                { question: 'Repère la subordonnée dans « Il faut que nous travaillions dur. »', answers: { correct: 'que nous travaillions dur', wrong: 'il faut' } },
+                { question: 'Repère la subordonnée dans « Bien qu’il pleuve, nous sortons. »', answers: { correct: 'bien qu’il pleuve', wrong: 'nous sortons' } },
+                { question: 'Repère la subordonnée dans « Il sait que tu es là. »', answers: { correct: 'que tu es là', wrong: 'il sait' } },
+                { question: 'Repère la subordonnée dans « Quand il arrive, tout change. »', answers: { correct: 'quand il arrive', wrong: 'tout change' } },
+                { question: 'Repère la subordonnée dans « Il doute que ce soit vrai. »', answers: { correct: 'que ce soit vrai', wrong: 'il doute' } }
             ],
             act8: [
-                { task: 'Reformule : "Il est grand."', keywords: ['grand', 'taille', 'haut'] },
-                { task: 'Reformule : "Elle est belle."', keywords: ['belle', 'jolie', 'charmante'] },
-                { task: 'Reformule : "Il pleut beaucoup."', keywords: ['pleut', 'pluie', 'tombe'] },
-                { task: 'Reformule : "Nous sommes fatigués."', keywords: ['fatigués', 'épuisés', 'las'] },
-                { task: 'Reformule : "Tu parles fort."', keywords: ['parles', 'voix', 'haut'] }
+                { question: 'Analyse : Quel registre dans « Ô rage ! Ô désespoir ! » (*Le Cid*) ?', answers: { correct: 'tragique', wrong: 'comique' } },
+                { question: 'Analyse : Quel registre dans « Il riait à gorge déployée » ?', answers: { correct: 'comique', wrong: 'pathétique' } },
+                { question: 'Analyse : Quel registre dans « Hélas, tout est perdu ! » ?', answers: { correct: 'tragique', wrong: 'lyrique' } },
+                { question: 'Analyse : Quel registre dans « Que la nature est belle ! » ?', answers: { correct: 'lyrique', wrong: 'épique' } },
+                { question: 'Analyse : Quel registre dans « Il vainquit mille ennemis » ?', answers: { correct: 'épique', wrong: 'tragique' } }
             ],
             act9: [
-                { task: 'Complète : "Lire est utile ___ cela enrichit."', answers: { correct: 'car', wrong: 'ou' } },
-                { task: 'Complète : "Étudier est dur ___ cela aide."', answers: { correct: 'mais', wrong: 'et' } },
-                { task: 'Complète : "Il faut réviser ___ on réussit."', answers: { correct: 'pour que', wrong: 'ou' } },
-                { task: 'Complète : "Elle lit vite ___ elle comprend."', answers: { correct: 'et', wrong: 'parce que' } },
-                { task: 'Complète : "Nous voyageons ___ nous apprenons."', answers: { correct: 'donc', wrong: 'si' } }
+                { question: 'Commentaire : Explique l’effet de « La vie est un mystère qu’il faut vivre » (Hugo).', answer: 'analyse impliquant mystère et réflexion' },
+                { question: 'Commentaire : Explique l’effet de « Le silence est d’or » (proverbe).', answer: 'analyse impliquant valeur du silence' },
+                { question: 'Commentaire : Explique l’effet de « Son rire éclate comme un feu d’artifice » (roman).', answer: 'analyse impliquant joie et image' },
+                { question: 'Commentaire : Explique l’effet de « Les étoiles pleurent dans la nuit » (poème).', answer: 'analyse impliquant mélancolie et personnification' },
+                { question: 'Commentaire : Explique l’effet de « Il court plus vite que le vent » (texte).', answer: 'analyse impliquant vitesse et hyperbole' }
             ],
             act10: [
-                { task: 'Écris une métaphore :' },
-                { task: 'Écris une métaphore sur la mer :' },
-                { task: 'Écris une métaphore sur la vie :' },
-                { task: 'Écris une métaphore sur l’amour :' },
-                { task: 'Écris une métaphore sur le temps :' }
+                { question: 'Problématise : Comment l’ironie dans *Candide* critique-t-elle la société ?', answer: 'problématique impliquant ironie et société' },
+                { question: 'Problématise : En quoi la passion dans *Phèdre* mène-t-elle à la tragédie ?', answer: 'problématique impliquant passion et tragédie' },
+                { question: 'Problématise : Pourquoi le temps est-il central dans *La Recherche* ?', answer: 'problématique impliquant temps et mémoire' },
+                { question: 'Problématise : Comment l’avarice d’Harpagon reflète-t-elle la société ?', answer: 'problématique impliquant avarice et société' },
+                { question: 'Problématise : En quoi Dom Juan est-il un défi aux conventions ?', answer: 'problématique impliquant défi et conventions' }
             ]
         };
 
@@ -323,182 +361,191 @@
             }
         }
 
-        const options = document.querySelectorAll('.option');
-        options.forEach(o => {
-            o.addEventListener('click', () => {
-                const activity = o.closest('.activity');
-                const feedback = activity.querySelector('.feedback');
-                const answer = o.dataset.answer;
-                const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
-                const isCorrect = answer === currentChallenge.answers.correct;
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
 
-                if (isCorrect) {
-                    o.style.background = '#a5d6a7';
-                    o.style.animation = 'pulse 0.5s';
+        function checkOption(activityId, selectedAnswer) {
+            const activity = document.getElementById(activityId);
+            const feedback = activity.querySelector('.feedback');
+            const currentChallenge = challenges[activityId][activity.dataset.challenge || 0];
+            const isCorrect = selectedAnswer === currentChallenge.answers.correct;
+
+            feedback.style.display = 'block';
+            if (isCorrect) {
+                feedback.style.color = '#0077b6';
+                feedback.textContent = 'Correct ! +1 point';
+                if (!activity.dataset.scored) {
+                    score++;
+                    activity.dataset.scored = true;
+                    updateScore();
+                }
+                document.getElementById('successSound').play();
+                showConfetti();
+            } else {
+                feedback.style.color = '#d32f2f';
+                feedback.textContent = 'Non, réessaie !';
+            }
+        }
+
+        function checkInput(activityId) {
+            const activity = document.getElementById(activityId);
+            const input = activity.querySelector('input');
+            const feedback = activity.querySelector('.feedback');
+            const currentChallenge = challenges[activityId][activity.dataset.challenge || 0];
+            const userAnswer = input.value.toLowerCase().trim().replace(/\.$/, '');
+
+            if (activityId === 'act2' || activityId === 'act6') {
+                const expectedAnswer = currentChallenge.answer.toLowerCase().trim();
+                if (userAnswer === expectedAnswer) {
+                    input.style.background = '#a5d6a7';
                     feedback.style.display = 'block';
-                    feedback.style.color = '#6a1b9a';
-                    feedback.textContent = 'Excellent !';
+                    feedback.style.color = '#0077b6';
+                    feedback.textContent = 'Parfait ! +1 point';
+                    if (!activity.dataset.scored) {
+                        score++;
+                        activity.dataset.scored = true;
+                        updateScore();
+                    }
                     document.getElementById('successSound').play();
                     showConfetti();
                 } else {
-                    o.style.background = '#ef9a9a';
+                    input.style.background = '#ef9a9a';
                     feedback.style.display = 'block';
                     feedback.style.color = '#d32f2f';
-                    feedback.textContent = 'Non, réessaie !';
+                    feedback.textContent = `Non, c’est "${currentChallenge.answer}".`;
                 }
-            });
-        });
-
-        function checkInput(btn, correct) {
-            const activity = btn.closest('.activity');
-            const input = btn.previousElementSibling;
-            const feedback = activity.querySelector('.feedback');
-            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
-            if (input.value.toLowerCase().trim() === currentChallenge.answer) {
-                input.style.background = '#a5d6a7';
-                feedback.style.display = 'block';
-                feedback.style.color = '#6a1b9a';
-                feedback.textContent = 'Parfait !';
-                document.getElementById('successSound').play();
-                showConfetti();
-            } else {
-                input.style.background = '#ef9a9a';
-                feedback.style.display = 'block';
-                feedback.style.color = '#d32f2f';
-                feedback.textContent = `Non, c’est "${currentChallenge.answer}".`;
             }
         }
 
-        function checkComplex(btn) {
-            const activity = btn.closest('.activity');
-            const textarea = btn.previousElementSibling;
+        function checkSentence(activityId) {
+            const activity = document.getElementById(activityId);
+            const textarea = activity.querySelector('textarea');
             const feedback = activity.querySelector('.feedback');
-            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
             const text = textarea.value.toLowerCase().trim();
-            const connectors = ['parce que', 'puisque', 'quand', 'si'];
-            if (connectors.some(c => text.includes(c)) && currentChallenge.keywords.every(k => text.includes(k))) {
+            const currentChallenge = challenges[activityId][activity.dataset.challenge || 0];
+            const requiredWords = currentChallenge.answer ? currentChallenge.answer.split(' ') : currentChallenge.question.match(/"([^"]+)"/g)?.map(w => w.replace(/"/g, '')) || [];
+
+            if (text.split(' ').length > 10 && requiredWords.some(word => text.includes(word))) {
                 textarea.style.background = '#a5d6a7';
                 feedback.style.display = 'block';
-                feedback.style.color = '#6a1b9a';
-                feedback.textContent = 'Superbe !';
+                feedback.style.color = '#0077b6';
+                feedback.textContent = 'Superbe ! +1 point';
+                if (!activity.dataset.scored) {
+                    score++;
+                    activity.dataset.scored = true;
+                    updateScore();
+                }
                 document.getElementById('successSound').play();
                 showConfetti();
             } else {
                 textarea.style.background = '#ef9a9a';
                 feedback.style.display = 'block';
                 feedback.style.color = '#d32f2f';
-                feedback.textContent = 'Utilise une subordonnée (ex. : parce que) et les mots clés !';
+                feedback.textContent = `Développe une réponse complexe avec ${requiredWords.join(' ou ')} !`;
             }
         }
 
-        function checkReform(btn) {
-            const activity = btn.closest('.activity');
-            const textarea = btn.previousElementSibling;
-            const feedback = activity.querySelector('.feedback');
-            const currentChallenge = challenges[activity.id][activity.dataset.challenge || 0];
-            const text = textarea.value.toLowerCase().trim();
-            if (text !== currentChallenge.task.split(': ')[1].toLowerCase() && currentChallenge.keywords.some(k => text.includes(k))) {
-                textarea.style.background = '#a5d6a7';
-                feedback.style.display = 'block';
-                feedback.style.color = '#6a1b9a';
-                feedback.textContent = 'Bien reformulé !';
-                document.getElementById('successSound').play();
-                showConfetti();
-            } else {
-                textarea.style.background = '#ef9a9a';
-                feedback.style.display = 'block';
-                feedback.style.color = '#d32f2f';
-                feedback.textContent = 'Varie les mots et garde le sens !';
-            }
-        }
-
-        function checkMetaphor(btn) {
-            const activity = btn.closest('.activity');
-            const textarea = btn.previousElementSibling;
-            const feedback = activity.querySelector('.feedback');
-            const text = textarea.value.toLowerCase().trim();
-            if (!text.includes('comme') && text.split(' ').length > 2) {
-                textarea.style.background = '#a5d6a7';
-                feedback.style.display = 'block';
-                feedback.style.color = '#6a1b9a';
-                feedback.textContent = 'Magnifique métaphore !';
-                document.getElementById('successSound').play();
-                showConfetti();
-            } else {
-                textarea.style.background = '#ef9a9a';
-                feedback.style.display = 'block';
-                feedback.style.color = '#d32f2f';
-                feedback.textContent = 'Évite "comme" et fais une phrase complète !';
-            }
-        }
-
-        function showRecall(btn) {
-            const recall = btn.nextElementSibling.nextElementSibling;
+        function showRecall(activityId) {
+            const recall = document.getElementById(`recall${activityId.slice(-1)}`);
             recall.style.display = recall.style.display === 'block' ? 'none' : 'block';
         }
 
-        function newChallenge(btn, actId) {
-            const activity = document.getElementById(actId);
+        function newChallenge(activityId) {
+            const activity = document.getElementById(activityId);
             const currentIndex = parseInt(activity.dataset.challenge || 0);
             const newIndex = (currentIndex + 1) % 5;
             activity.dataset.challenge = newIndex;
-            const challenge = challenges[actId][newIndex];
-            const p = activity.querySelector('p');
+            activity.dataset.scored = false;
+            const challenge = challenges[activityId][newIndex];
+            const question = activity.querySelector('.question');
             const taskDiv = activity.querySelector('.task');
-            taskDiv.innerHTML = '';
-            activity.querySelector('.feedback').style.display = 'none';
+            const feedback = activity.querySelector('.feedback');
 
-            p.textContent = challenge.task;
-            if (actId === 'act3' || actId === 'act4' || actId === 'act5' || actId === 'act6' || actId === 'act9') {
+            question.textContent = challenge.question;
+            taskDiv.innerHTML = '';
+            feedback.style.display = 'none';
+
+            if (activityId === 'act2') {
+                const dictation = document.createElement('div');
+                dictation.className = 'dictation-text';
+                dictation.id = `dictation${activityId.slice(-1)}`;
+                dictation.textContent = challenge.dictation;
+                activity.insertBefore(dictation, taskDiv);
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = `input${activityId.slice(-1)}`;
+                input.placeholder = 'Tape ici';
+                const button = document.createElement('button');
+                button.textContent = 'Vérifier';
+                button.onclick = () => checkInput(activityId);
+                taskDiv.appendChild(input);
+                taskDiv.appendChild(button);
+
+                setTimeout(() => {
+                    dictation.style.display = 'none';
+                }, 5000);
+            } else if (activityId === 'act1' || activityId === 'act3' || activityId === 'act4' || activityId === 'act7' || activityId === 'act8') {
                 const span1 = document.createElement('span');
                 span1.className = 'option';
                 span1.dataset.answer = challenge.answers.correct;
                 span1.textContent = challenge.answers.correct;
+                span1.onclick = () => checkOption(activityId, challenge.answers.correct);
+
                 const span2 = document.createElement('span');
                 span2.className = 'option';
                 span2.dataset.answer = challenge.answers.wrong;
                 span2.textContent = challenge.answers.wrong;
+                span2.onclick = () => checkOption(activityId, challenge.answers.wrong);
+
                 taskDiv.appendChild(span1);
                 taskDiv.appendChild(span2);
-                [span1, span2].forEach(o => {
-                    o.addEventListener('click', () => {
-                        const feedback = activity.querySelector('.feedback');
-                        const isCorrect = o.dataset.answer === challenge.answers.correct;
-                        if (isCorrect) {
-                            o.style.background = '#a5d6a7';
-                            o.style.animation = 'pulse 0.5s';
-                            feedback.style.display = 'block';
-                            feedback.style.color = '#6a1b9a';
-                            feedback.textContent = 'Excellent !';
-                            document.getElementById('successSound').play();
-                            showConfetti();
-                        } else {
-                            o.style.background = '#ef9a9a';
-                            feedback.style.display = 'block';
-                            feedback.style.color = '#d32f2f';
-                            feedback.textContent = 'Non, réessaie !';
-                        }
-                    });
-                });
-            } else if (actId === 'act2' || actId === 'act7') {
+            } else if (activityId === 'act6') {
                 const input = document.createElement('input');
                 input.type = 'text';
+                input.id = `input${activityId.slice(-1)}`;
                 input.placeholder = 'Tape ici';
                 const button = document.createElement('button');
                 button.textContent = 'Vérifier';
-                button.onclick = () => checkInput(button, challenge.answer);
+                button.onclick = () => checkInput(activityId);
                 taskDiv.appendChild(input);
                 taskDiv.appendChild(button);
-            } else if (actId === 'act1' || actId === 'act8' || actId === 'act10') {
+            } else if (activityId === 'act5' || activityId === 'act9' || activityId === 'act10') {
                 const textarea = document.createElement('textarea');
+                textarea.id = `input${activityId.slice(-1)}`;
                 textarea.placeholder = 'Tape ici';
                 const button = document.createElement('button');
                 button.textContent = 'Vérifier';
-                button.onclick = actId === 'act1' ? () => checkComplex(button) : actId === 'act8' ? () => checkReform(button) : () => checkMetaphor(button);
+                button.onclick = () => checkSentence(activityId);
                 taskDiv.appendChild(textarea);
                 taskDiv.appendChild(button);
             }
         }
+
+        // Initialisation pour act2 avec disparition du texte
+        setTimeout(() => {
+            document.getElementById('dictation2').style.display = 'none';
+        }, 5000);
+
+        // Initialisation des événements pour les boutons existants
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', () => {
+                const activityId = option.closest('.activity').id;
+                checkOption(activityId, option.dataset.answer);
+            });
+        });
+
+        document.querySelectorAll('.task button').forEach(button => {
+            button.addEventListener('click', () => {
+                const activityId = button.closest('.activity').id;
+                if (activityId === 'act2' || activityId === 'act6') {
+                    checkInput(activityId);
+                } else if (activityId === 'act5' || activityId === 'act9' || activityId === 'act10') {
+                    checkSentence(activityId);
+                }
+            });
+        });
     </script>
 </body>
 </html>

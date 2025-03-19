@@ -6,82 +6,99 @@
     <title>GramaScoR - Accueil</title>
     <style>
         body {
-            margin: 0;
             font-family: 'Arial', sans-serif;
-            background: #f5f7fa;
+            background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+            margin: 0;
+            padding: 2rem;
+            color: #1b4965;
+            overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            color: #34495e;
-            overflow-x: hidden;
+        }
+        .container {
+            max-width: 95rem;
+            margin: 0 auto;
+            background: #fff;
+            padding: 4rem;
+            border-radius: 2rem;
+            box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.15);
+            border: 0.3rem solid #48cae4;
+            text-align: center;
         }
         h1 {
-            font-size: 6vw; /* Adaptatif */
-            margin: 2rem 0;
-            color: #3498db;
-            font-weight: bold;
-            text-align: center;
+            font-size: 2.8em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            text-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #48cae4, #0077b6);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        /* Style pour les lettres G, S, R */
+        .highlight {
+            color: #ff0000; /* Rouge vif pour attirer l'attention */
+            background: none; /* Supprime le dégradé pour ces lettres */
+            -webkit-background-clip: initial; /* Annule l'effet de clip pour une couleur unie */
         }
         .levels {
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
-            margin: 2rem 0;
             justify-content: center;
-            padding: 0 1rem;
         }
         .level-btn {
             padding: 1.5rem 3rem;
-            font-size: 3vw; /* Adaptatif */
-            color: #ffffff;
-            background: #a3bffa;
+            font-size: 1.8em;
+            color: #fff;
+            background: #0077b6;
             border: none;
-            border-radius: 1rem;
+            border-radius: 0.8rem;
             cursor: pointer;
             transition: background 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
-            min-width: 10rem;
+            box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
         }
         .level-btn:hover {
-            background: #8caceb;
-            transform: translateY(-0.3rem);
+            background: #48cae4;
+            transform: scale(1.05);
         }
         .motivation {
-            font-size: 2.5vw; /* Adaptatif */
-            color: #7f8c8d;
-            text-align: center;
-            padding: 1rem;
+            font-size: 1.5em;
+            color: #023e8a;
             font-style: italic;
+            margin-top: 2rem;
         }
         .footer {
             width: 100%;
-            background: #ebedf0;
+            background: #e5f6fd;
             padding: 1rem 0;
             text-align: center;
-        }
-        .footer p {
-            margin: 0;
-            font-size: 2vw; /* Adaptatif */
-            color: #7f8c8d;
+            font-size: 1.2em;
+            color: #0077b6;
         }
         @media (max-width: 600px) {
-            h1 { font-size: 8vw; }
-            .level-btn { font-size: 4vw; padding: 1rem 2rem; }
-            .motivation { font-size: 3.5vw; }
-            .footer p { font-size: 2.5vw; }
+            .container { padding: 2rem; }
+            h1 { font-size: 2em; }
+            .level-btn { font-size: 1.5em; padding: 1rem 2rem; }
+            .motivation { font-size: 1.2em; }
+            .footer { font-size: 1em; }
         }
     </style>
 </head>
 <body>
-    <h1>GramaScoR</h1>
-    <div class="levels">
-        <button class="level-btn" onclick="window.location.href='primaire.html'">Primaire</button>
-        <button class="level-btn" onclick="window.location.href='college.html'">Collège</button>
-        <button class="level-btn" onclick="window.location.href='lycee.html'">Lycée</button>
+    <div class="container">
+        <h1>
+            <span class="highlight">G</span>rama<span class="highlight">S</span>co<span class="highlight">R</span>
+        </h1>
+        <div class="levels">
+            <button class="level-btn" onclick="window.location.href='primaire.html'">Primaire</button>
+            <button class="level-btn" onclick="window.location.href='college.html'">Collège</button>
+            <button class="level-btn" onclick="window.location.href='lycee.html'">Lycée</button>
+        </div>
+        <div class="motivation">"Chaque mot compte, chaque pas te rapproche de la maîtrise !"</div>
     </div>
-    <div class="motivation">"Chaque mot compte, chaque pas te rapproche de la maîtrise !"</div>
-    <div class="footer"><p>GramaScoR © 2025 - Tous droits réservés</p></div>
+    <div class="footer">GramaScoR © 2025 - Tous droits réservés</div>
 </body>
 </html>
