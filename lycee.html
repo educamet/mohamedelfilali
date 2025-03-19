@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GramScoR - Niveau Lycée</title>
+    <title>GraScoR - Niveau Lycée</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -32,6 +32,11 @@
             background: linear-gradient(45deg, #48cae4, #0077b6);
             -webkit-background-clip: text;
             color: transparent;
+        }
+        .highlight {
+            color: #ff0000;
+            background: none;
+            -webkit-background-clip: initial;
         }
         .activity {
             background: #f9fbfc;
@@ -128,6 +133,14 @@
             font-size: 1.8em;
             color: #0077b6;
         }
+        .footer {
+            width: 100%;
+            background: #e5f6fd;
+            padding: 1rem 0;
+            text-align: center;
+            font-size: 1.2em;
+            color: #0077b6;
+        }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -142,12 +155,13 @@
             .feedback { font-size: 1.2em; }
             .recall { font-size: 0.9em; }
             .score { font-size: 1.5em; }
+            .footer { font-size: 1em; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>GramScoR - Niveau Lycée</h1>
+        <h1><span class="highlight">G</span>ra<span class="highlight">S</span>co<span class="highlight">R</span> - Niveau Lycée</h1>
 
         <div class="activity" id="act1">
             <div class="question">Quelle est la fonction syntaxique de « dont » dans « Le livre dont il parle est célèbre » ?</div>
@@ -271,6 +285,7 @@
         </div>
     </div>
     <div class="score">Score : <span id="score">0</span>/10</div>
+    <div class="footer">GraScoR © 2025 - Tous droits réservés</div>
 
     <script>
         let score = 0;
@@ -380,7 +395,7 @@
                     activity.dataset.scored = true;
                     updateScore();
                 }
-                document.getElementById('successSound').play();
+                document.getElementById('successSound')?.play();
                 showConfetti();
             } else {
                 feedback.style.color = '#d32f2f';
@@ -407,7 +422,7 @@
                         activity.dataset.scored = true;
                         updateScore();
                     }
-                    document.getElementById('successSound').play();
+                    document.getElementById('successSound')?.play();
                     showConfetti();
                 } else {
                     input.style.background = '#ef9a9a';
@@ -436,7 +451,7 @@
                     activity.dataset.scored = true;
                     updateScore();
                 }
-                document.getElementById('successSound').play();
+                document.getElementById('successSound')?.play();
                 showConfetti();
             } else {
                 textarea.style.background = '#ef9a9a';
@@ -523,12 +538,10 @@
             }
         }
 
-        // Initialisation pour act2 avec disparition du texte
         setTimeout(() => {
             document.getElementById('dictation2').style.display = 'none';
         }, 5000);
 
-        // Initialisation des événements pour les boutons existants
         document.querySelectorAll('.option').forEach(option => {
             option.addEventListener('click', () => {
                 const activityId = option.closest('.activity').id;
