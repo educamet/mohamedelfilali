@@ -105,6 +105,25 @@
         ol li:hover {
             color: #d4a017;
         }
+        .qr-code {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            border: 3px solid #d4a017;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .qr-code img:hover {
+            transform: scale(1.1);
+        }
+        .qr-code p {
+            color: #1a2b49;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
         .signature {
             text-align: center;
             font-style: italic;
@@ -127,6 +146,10 @@
             }
             .accordion-header {
                 padding: 10px 15px;
+            }
+            .qr-code img {
+                width: 120px;
+                height: 120px;
             }
         }
     </style>
@@ -260,6 +283,11 @@
                     <li><strong>Les limites de la communauté</strong> : Le concept de communauté est-il toujours pertinent face à la fragmentation des liens sociaux ?</li>
                 </ol>
             </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://el5filali.github.io/mohamedelfilali/" alt="QR Code">
+            <p>Scannez pour accéder au cours</p>
         </div>
 
         <div class="signature">
