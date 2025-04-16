@@ -1,0 +1,266 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thème : Individu et Communauté</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #e6f3fa, #ffffff);
+            color: #1a202c;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .header {
+            background-color: #2b6cb0;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin: 1.5rem 0 1rem;
+            border-bottom: 3px solid #68d391;
+            padding-bottom: 0.5rem;
+        }
+        .quote {
+            font-style: italic;
+            background-color: #f7fafc;
+            padding: 1.5rem;
+            border-left: 5px solid #68d391;
+            margin-bottom: 1.5rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .analysis, .problem, .plan {
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .analysis ul, .plan ul {
+            list-style-type: disc;
+            margin-left: 2rem;
+        }
+        .plan ul ul {
+            list-style-type: circle;
+            margin-left: 2rem;
+        }
+        .plan ul ul ul {
+            list-style-type: square;
+            margin-left: 2rem;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #2b6cb0;
+            color: white;
+            border-radius: 0.5rem;
+        }
+        .pdf-link {
+            color: #68d391;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .pdf-link:hover {
+            color: #38a169;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .header {
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .quote, .analysis, .problem, .plan {
+                padding: 1rem;
+            }
+        }
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .header, .footer {
+                background: none;
+                color: #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="text-3xl md:text-4xl font-bold">Thème : Individu et Communauté</h1>
+            <p class="text-lg mt-2">Proposition de corrigé: Sujets X-ENS MP/MPI</p>
+        </header>
+
+        <!-- Citation -->
+        <div class="section-title">Citation</div>
+        <div class="quote">
+            « Les bonnes institutions sociales sont celles qui savent le mieux dénaturer l'homme, lui ôter son existence absolue pour lui en donner une relative, et transporter le moi dans l'unité commune; en sorte que chaque particulier ne se croie plus un, mais partie de l'unité, et ne soit plus sensible que dans le tout. »<br>
+            <span class="text-sm">— Jean-Jacques Rousseau, <em>Émile ou De l'éducation</em> (1762)</span>
+        </div>
+
+        <!-- Analyse -->
+        <div class="section-title">Pistes d'analyse</div>
+        <div class="analysis">
+            <ul>
+                <li><strong>« Dénaturer l'homme »</strong>: Transformation de l'état naturel indépendant vers un état civil façonné pour la vie en société, non une corruption.</li>
+                <li><strong>« Existence absolue » à « existence relative »</strong>: Passage d'une autonomie complète à une identité définie par la relation au corps social.</li>
+                <li><strong>« Transporter le moi dans l'unité commune »</strong>: Intégration de l'individu dans le collectif, favorisant l'appartenance et la solidarité.</li>
+                <li><strong>« Ne se croie plus un, mais partie de l'unité »</strong>: Modification de la conscience individuelle pour privilégier l'interdépendance.</li>
+                <li><strong>« Sensible que dans le tout »</strong>: Alignement des affects et intérêts individuels sur le bien commun.</li>
+            </ul>
+        </div>
+
+        <!-- Problématique -->
+        <div class="section-title">Problématique</div>
+        <div class="problem">
+            <p>Comment concilier la transformation de l'individu par les institutions pour le bien commun avec le respect de sa singularité et de son autonomie ? Cette « dénaturation » ne risque-t-elle pas d'entraîner aliénation ou conformisme, au détriment de la diversité individuelle ?</p>
+        </div>
+
+        <!-- Plan Détaillé -->
+        <div class="section-title">Plan Détaillé</div>
+        <div class="plan">
+            <ul>
+                <li><strong>I. La primauté de l'unité commune : l'effacement de l'individu</strong>
+                    <ul>
+                        <li><strong>L'individu au service de la communauté</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em> (Eschyle): Étéocle mobilise les citoyens pour défendre Thèbes, soulignant leur devoir collectif.</li>
+                                <li><em>Les Suppliantes</em> (Eschyle): Pélasgos consulte le peuple argien, priorisant l'intérêt collectif.</li>
+                                <li><em>Spinoza</em>: L'obéissance au souverain sert le bien commun, bénéficiant à l'individu.</li>
+                                <li><em>Le Temps de l'innocence</em> (Wharton): Newland Archer se conforme aux normes pour préserver la cohésion sociale.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Les rôles sociaux et l'effacement de l'identité</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em>: Les défenseurs sont définis par leurs vertus civiques, leur individualité subsumée.</li>
+                                <li><em>Les Suppliantes</em>: Les Danaïdes forment une entité collective, leur identité individuelle effacée.</li>
+                                <li><em>Spinoza</em>: L'individu cède son droit naturel à la collectivité, défini par la volonté commune.</li>
+                                <li><em>Wharton</em>: Archer devient un « gendre », réduit à un rôle social.</li>
+                            </ul>
+                        </li>
+                        <li><strong>La menace à l'unité et la « dénaturation »</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em>: Polynice menace l'unité par ses ambitions personnelles.</li>
+                                <li><em>Les Suppliantes</em>: Danaos prône la modestie pour éviter de perturber Argos.</li>
+                                <li><em>Spinoza</em>: Les désirs individuels sont réfrénés pour la stabilité collective.</li>
+                                <li><em>Wharton</em>: Ellen Olenska, par son originalité, défie les normes sociales.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>II. Les limites de la dénaturation : persistance de l'individu</strong>
+                    <ul>
+                        <li><strong>La persistance des désirs individuels</strong>
+                            <ul>
+                                <li><em>Les Suppliantes</em>: Les Danaïdes refusent le mariage forcé, affirmant leur autonomie.</li>
+                                <li><em>Les Sept contre Thèbes</em>: Étéocle agit par fierté, défiant les conseils collectifs.</li>
+                                <li><em>Spinoza</em>: Les passions individuelles résistent au contrôle total.</li>
+                                <li><em>Wharton</em>: Archer et Ellen luttent pour leurs désirs contre les conventions.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Le conflit avec les normes sociales</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em>: Antigone défie la cité pour enterrer Polynice.</li>
+                                <li><em>Les Suppliantes</em>: Les Danaïdes contestent les normes par leur fuite.</li>
+                                <li><em>Spinoza</em>: La liberté de pensée est essentielle et inaliénable.</li>
+                                <li><em>Wharton</em>: Ellen dénonce l'hypocrisie, défiant l'unité imposée.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Les limites de l'unité imposée</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em>: La division du chœur montre l'échec de l'unité.</li>
+                                <li><em>Spinoza</em>: Une unité rigide engendre hypocrisie et instabilité.</li>
+                                <li><em>Wharton</em>: L'exclusion d'Ellen révèle la fragilité d'une société intolérante.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>III. Vers un équilibre individu-communauté</strong>
+                    <ul>
+                        <li><strong>La nécessité d'un compromis</strong>
+                            <ul>
+                                <li><em>Eschyle</em>: Ignorer les désirs individuels mène à la ruine.</li>
+                                <li><em>Spinoza</em>: L'unité repose sur la liberté individuelle et les lois communes.</li>
+                                <li><em>Wharton</em>: L'inflexibilité sociale cause souffrance et stagnation.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Les dynamiques de pouvoir</strong>
+                            <ul>
+                                <li><em>Eschyle</em>: Les individus façonnent le destin communautaire.</li>
+                                <li><em>Spinoza</em>: La liberté de pensée stimule le progrès.</li>
+                                <li><em>Wharton</em>: Ellen révèle les contradictions sociales.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Une communauté inclusive</strong>
+                            <ul>
+                                <li><em>Eschyle</em>: Une unité inclusive aurait évité la tragédie.</li>
+                                <li><em>Spinoza</em>: La tolérance favorise la coexistence pacifique.</li>
+                                <li><em>Wharton</em>: La diversité doit être valorisée pour une société moderne.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Lien vers le PDF -->
+        <div class="text-center mt-4">
+            <p>Pour une analyse plus approfondie, consultez le <a href="Citation-Rousseau.pdf" class="pdf-link">document complet</a>.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>EducaMet &copy; Tous droits réservés</p>
+    </footer>
+</body>
+</html>
