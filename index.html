@@ -1,294 +1,266 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Individu et Communauté</title>
+    <title>Thème : Individu et Communauté</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Georgia', serif;
-            background: #f9f7f3;
-            color: #1a2b49;
-            margin: 0;
-            padding: 30px;
-            user-select: none;
-            line-height: 1.7;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #e6f3fa, #ffffff);
+            color: #1a202c;
         }
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-top: 5px solid #d4a017;
+            padding: 2rem 1rem;
         }
-        h1 {
-            color: #1a2b49;
+        .header {
+            background-color: #2b6cb0;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
             text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #d4a017;
-            padding-bottom: 10px;
-            letter-spacing: 1px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .accordion {
-            margin-bottom: 20px;
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin: 1.5rem 0 1rem;
+            border-bottom: 3px solid #68d391;
+            padding-bottom: 0.5rem;
         }
-        .accordion-header {
-            background: #1a2b49;
-            color: #fff;
-            padding: 15px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .accordion-header:hover {
-            background: #2e4372;
-            transform: translateX(5px);
-        }
-        .accordion-header img {
-            width: 24px;
-            height: 24px;
-            margin-right: 15px;
-            filter: invert(100%);
-        }
-        .accordion-content {
-            display: none;
-            padding: 20px;
-            background: #f9f7f3;
-            border-radius: 0 0 8px 8px;
-            border-left: 3px solid #d4a017;
-            animation: slideDown 0.5s ease;
-        }
-        .accordion-content.active {
-            display: block;
-        }
-        h3 {
-            color: #2e4372;
-            font-size: 1.4em;
-            margin-top: 20px;
-            border-bottom: 1px dashed #d4a017;
-            padding-bottom: 5px;
-        }
-        p, li {
-            color: #1a2b49;
-        }
-        ul {
-            list-style-type: none;
-            padding-left: 20px;
-        }
-        ul li {
-            position: relative;
-            margin-bottom: 10px;
-        }
-        ul li:before {
-            content: "➤";
-            color: #d4a017;
-            position: absolute;
-            left: -20px;
-        }
-        ol {
-            padding-left: 20px;
-        }
-        ol li {
-            margin-bottom: 15px;
-            transition: color 0.3s ease;
-        }
-        ol li:hover {
-            color: #d4a017;
-        }
-        .qr-code {
-            text-align: center;
-            margin: 30px 0;
-        }
-        .qr-code img {
-            width: 150px;
-            height: 150px;
-            border: 3px solid #d4a017;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-        .qr-code img:hover {
-            transform: scale(1.1);
-        }
-        .qr-code p {
-            color: #1a2b49;
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
-        .signature {
-            text-align: center;
+        .quote {
             font-style: italic;
-            color: #1a2b49;
-            font-size: 1.5em;
-            margin-top: 40px;
-            border-top: 2px solid #d4a017;
-            padding-top: 20px;
+            background-color: #f7fafc;
+            padding: 1.5rem;
+            border-left: 5px solid #68d391;
+            margin-bottom: 1.5rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        @keyframes slideDown {
-            from { height: 0; opacity: 0; }
-            to { height: auto; opacity: 1; }
+        .analysis, .problem, .plan {
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .analysis ul, .plan ul {
+            list-style-type: disc;
+            margin-left: 2rem;
+        }
+        .plan ul ul {
+            list-style-type: circle;
+            margin-left: 2rem;
+        }
+        .plan ul ul ul {
+            list-style-type: square;
+            margin-left: 2rem;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #2b6cb0;
+            color: white;
+            border-radius: 0.5rem;
+        }
+        .pdf-link {
+            color: #68d391;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .pdf-link:hover {
+            color: #38a169;
         }
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 1rem;
             }
-            h1 {
-                font-size: 2em;
+            .header {
+                padding: 1rem;
             }
-            .accordion-header {
-                padding: 10px 15px;
+            .section-title {
+                font-size: 1.5rem;
             }
-            .qr-code img {
-                width: 120px;
-                height: 120px;
+            .quote, .analysis, .problem, .plan {
+                padding: 1rem;
+            }
+        }
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .header, .footer {
+                background: none;
+                color: #000;
             }
         }
     </style>
-    <script>
-        // Protection contre le copier-coller
-        document.addEventListener('contextmenu', e => {
-            e.preventDefault();
-            alert("Le copier-coller est désactivé pour protéger ce contenu.");
-        });
-        document.addEventListener('keydown', e => {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'x')) {
-                e.preventDefault();
-                alert("Le copier-coller est désactivé pour protéger ce contenu.");
-            }
-        });
-
-        // Gestion de l'accordéon
-        window.onload = function() {
-            const headers = document.querySelectorAll('.accordion-header');
-            headers.forEach(header => {
-                header.addEventListener('click', function() {
-                    const content = this.nextElementSibling;
-                    content.classList.toggle('active');
-                });
-            });
-        };
-    </script>
 </head>
 <body>
     <div class="container">
-        <h1>Thème:<br>Individu et Communauté</h1>
+        <header class="header">
+            <h1 class="text-3xl md:text-4xl font-bold">Thème : Individu et Communauté</h1>
+            <p class="text-lg mt-2">Proposition de corrigé: Sujets X-ENS MP/MPI</p>
+        </header>
 
-        <div class="accordion">
-            <div class="accordion-header">
-                <img src="https://img.icons8.com/ios-filled/24/ffffff/book.png" alt="Introduction">
-                Introduction au thème
-            </div>
-            <div class="accordion-content">
-                <p>La dialectique entre l’individu et la communauté constitue un axe fondamental de la réflexion humaine et se manifeste avec une acuité particulière dans les productions littéraires et philosophiques. Le questionnement sur la place de l’individu au sein du collectif, sur les tensions entre aspirations personnelles et impératifs sociaux, traverse les époques et les genres. Cette étude se propose d’analyser et de comparer la manière dont ce thème est abordé dans quatre œuvres majeures de notre programme : <em>Les Suppliantes</em> et <em>Les Sept contre Thèbes</em> d’Eschyle, tragédies grecques confrontant l’individu au destin de la cité, le <em>Traité théologico-politique</em> de Baruch Spinoza, texte philosophique examinant les fondements de l’État et la liberté individuelle, et <em>Le Temps de l’innocence</em> d’Edith Wharton, roman dépeignant les contraintes d’une société américaine codifiée. À travers une démarche analytique et comparative, nous explorerons comment ces œuvres mettent en scène la primauté de la communauté et la soumission de l’individu, l’émergence et la résistance de l’individu face à la communauté, ainsi que l’interaction dynamique et les tensions inhérentes à ce rapport.</p>
-            </div>
+        <!-- Citation -->
+        <div class="section-title">Citation</div>
+        <div class="quote">
+            « Les bonnes institutions sociales sont celles qui savent le mieux dénaturer l'homme, lui ôter son existence absolue pour lui en donner une relative, et transporter le moi dans l'unité commune; en sorte que chaque particulier ne se croie plus un, mais partie de l'unité, et ne soit plus sensible que dans le tout. »<br>
+            <span class="text-sm">— Jean-Jacques Rousseau, <em>Émile ou De l'éducation</em> (1762)</span>
         </div>
 
-        <div class="accordion">
-            <div class="accordion-header">
-                <img src="https://img.icons8.com/ios-filled/24/ffffff/crown.png" alt="Primauté">
-                I. La primauté de la communauté et la soumission de l’individu
-            </div>
-            <div class="accordion-content">
-                <p>La première perspective que nous examinerons est celle où la communauté apparaît comme une entité prédominante, exerçant une force contraignante sur l’individu, voire exigeant sa soumission pour assurer sa propre survie et sa cohésion.</p>
-                <h3>A. La nécessité de la cohésion communautaire face à la menace dans les tragédies d’Eschyle</h3>
-                <p>Dans <em>Les Sept contre Thèbes</em>, l’imminence de la guerre met en évidence l’impératif de l’unité civique. Étéocle, figure du chef dévoué, exhorte chaque citoyen à se « donnant au rôle qui convient à ses forces, porter secours à la cité », soulignant la subordination de l’individu à la sauvegarde de la communauté. La survie de Thèbes dépend de la capacité de ses membres à agir de concert face à l’agression. De même, dans <em>Les Suppliantes</em>, la décision du roi Pélasgos d’accorder asile aux Danaïdes engage la responsabilité de toute la cité. Le chœur rappelle que « C’est toi, la cité ; c’est toi, le Conseil ; chef sans contrôle, tu es le maître [...] Toi seul décides de tout », illustrant comment le destin de l’individu (Pélasgos) est inextricablement lié à celui de la communauté argienne face à une décision potentiellement lourde de conséquences.</p>
-                <h3>B. L’aliénation des droits individuels au profit de la sécurité collective chez Spinoza</h3>
-                <p>Spinoza, dans le <em>Traité théologico-politique</em>, théorise la fondation de l’État sur un transfert des droits individuels à la collectivité dans le but d’assurer la paix et la sécurité. Les hommes ont dû « aspirer à s’unir en un corps et ont fait par là que le droit que chacun avait de Nature sur toutes choses appartînt à la collectivité et fût déterminé non plus par la force et l’appétit de l’individu mais par la puissance et la volonté de tous ensemble ». Cette conception du contrat social implique une soumission de l’individu aux lois et aux décisions du souverain, perçu comme le garant du bien commun. Spinoza justifie cette primauté du collectif en affirmant que « nul particulier ne peut savoir ce qui est d’utilité publique ».</p>
-                <h3>C. Le poids des conventions sociales et la négation de l’individualité dans <em>Le Temps de l’innocence</em></h3>
-                <p>Le roman de Wharton dépeint une société new-yorkaise où les règles et les conventions sociales exercent une emprise considérable sur l’individu. Archer évolue dans un monde où le « ce qui se fait » et « ne se fait pas » constituent des impératifs plus puissants que les désirs personnels. L’individu est constamment ramené aux attentes de son milieu, comme en témoigne le malaise d’Archer à l’idée de faire « cavalier seul ». La communauté, ici représentée par les « clans » et les « blocs » sociaux, valorise avant tout la réputation familiale et le maintien de l’ordre établi, au détriment de l’épanouissement des singularités.</p>
-            </div>
+        <!-- Analyse -->
+        <div class="section-title">Pistes d'analyse</div>
+        <div class="analysis">
+            <ul>
+                <li><strong>« Dénaturer l'homme »</strong>: Transformation de l'état naturel indépendant vers un état civil façonné pour la vie en société, non une corruption.</li>
+                <li><strong>« Existence absolue » à « existence relative »</strong>: Passage d'une autonomie complète à une identité définie par la relation au corps social.</li>
+                <li><strong>« Transporter le moi dans l'unité commune »</strong>: Intégration de l'individu dans le collectif, favorisant l'appartenance et la solidarité.</li>
+                <li><strong>« Ne se croie plus un, mais partie de l'unité »</strong>: Modification de la conscience individuelle pour privilégier l'interdépendance.</li>
+                <li><strong>« Sensible que dans le tout »</strong>: Alignement des affects et intérêts individuels sur le bien commun.</li>
+            </ul>
         </div>
 
-        <div class="accordion">
-            <div class="accordion-header">
-                <img src="https://img.icons8.com/ios-filled/24/ffffff/rebellion.png" alt="Émergence">
-                II. L’émergence et la résistance de l’individu face à la communauté
-            </div>
-            <div class="accordion-content">
-                <p>Si la communauté exerce une forte pression, les œuvres au programme mettent également en scène des figures individuelles qui tentent d’affirmer leur singularité, voire de résister aux normes et aux contraintes collectives.</p>
-                <h3>A. L’affirmation de la volonté individuelle dans les conflits tragiques chez Eschyle</h3>
-                <p>Malgré le contexte de forte cohésion communautaire, les tragédies d’Eschyle offrent des exemples d’individus qui prennent des décisions engageant leur propre responsabilité et entrant potentiellement en conflit avec les attentes de la cité. Étéocle, dans <em>Les Sept contre Thèbes</em>, bien que chef dévoué à sa patrie, choisit d’affronter personnellement son frère Polynice, un acte qui relève d’une décision individuelle aux conséquences fatales. L’ajout concernant Antigone, bien que postérieur, illustre une conscience individuelle qui se dresse contre le décret de la cité au nom de principes moraux supérieurs. Dans <em>Les Suppliantes</em>, Pélasgos est confronté à un dilemme individuel complexe où il doit exercer son jugement personnel face à une situation inédite, prenant le risque d’une guerre pour défendre le droit d’asile.</p>
-                <h3>B. La défense de la liberté de pensée et d’expression chez Spinoza</h3>
-                <p>Bien qu’il prône la soumission à l’autorité souveraine pour garantir la stabilité de l’État, Spinoza défend ardemment la liberté de pensée et d’expression individuelle, à condition qu’elle ne subvertisse pas l’ordre public. Il critique la « crédulité » et les dogmes qui entravent l’usage de la raison individuelle. Pour Spinoza, une communauté éclairée et stable repose sur la capacité des individus à exercer leur jugement et à exprimer leurs opinions, même si elles divergent de la pensée dominante, tant que cela ne conduit pas à la sédition.</p>
-                <h3>C. La lutte pour l’authenticité individuelle dans <em>Le Temps de l’innocence</em></h3>
-                <p>Le roman de Wharton est centré sur le conflit intérieur d’Archer, tiraillé entre son désir profond pour Ellen Olenska et les impératifs de la société à laquelle il appartient. Il aspire à une relation fondée sur une véritable affinité individuelle avec Ellen (« aimer une femme qui pense par elle-même ») et souffre du caractère « attendu et conventionnel » de son interaction avec May. Ellen Olenska incarne une forme de résistance à la communauté par son refus des conventions et son désir de vivre selon ses propres termes, même si cela la conduit à l’isolement et à la marginalisation.</p>
-            </div>
+        <!-- Problématique -->
+        <div class="section-title">Problématique</div>
+        <div class="problem">
+            <p>Comment concilier la transformation de l'individu par les institutions pour le bien commun avec le respect de sa singularité et de son autonomie ? Cette « dénaturation » ne risque-t-elle pas d'entraîner aliénation ou conformisme, au détriment de la diversité individuelle ?</p>
         </div>
 
-        <div class="accordion">
-            <div class="accordion-header">
-                <img src="https://img.icons8.com/ios-filled/24/ffffff/handshake.png" alt="Interaction">
-                III. L’interaction dynamique et les tensions entre individu et communauté
-            </div>
-            <div class="accordion-content">
-                <p>Enfin, notre analyse portera sur la manière dont l’individu et la communauté interagissent de manière dynamique, générant inévitablement des tensions et des conflits qui sont au cœur des problématiques explorées par les œuvres.</p>
-                <h3>A. Les conséquences tragiques du déséquilibre entre individu et communauté chez Eschyle</h3>
-                <p>Les tragédies d’Eschyle explorent souvent les moments de crise où les aspirations individuelles se heurtent aux nécessités ou aux volontés de la communauté, entraînant des dénouements tragiques. Le destin d’Étéocle, consumé par sa détermination à défendre Thèbes contre son frère, illustre comment un dévouement individuel peut se confondre avec l’hybris et conduire à la destruction. Les conflits mis en scène dans les tragédies naissent souvent d’une rupture d’équilibre entre la volonté individuelle et les exigences communautaires, où le salut de l’un peut impliquer la perte de l’autre.</p>
-                <h3>B. La nécessaire articulation entre liberté individuelle et sécurité collective chez Spinoza</h3>
-                <p>La pensée politique de Spinoza est traversée par la nécessité de concilier la liberté individuelle avec la sécurité et la stabilité de la communauté politique. S’il insiste sur la soumission à l’autorité souveraine, c’est dans l’espoir de garantir un cadre où les individus peuvent exercer leur liberté de pensée sans craindre le chaos. Il y a donc une tension dialectique constante entre la puissance de l’État et les droits de l’individu, nécessitant un arbitrage constant entre les deux pour assurer la pérennité de la société et l’épanouissement (relatif) de l’individu.</p>
-                <h3>C. La force invisible de la communauté dans la formation et la contrainte de l’individu chez Wharton</h3>
-                <p><em>Le Temps de l’innocence</em> révèle la puissance insidieuse de la communauté dans la formation de l’identité individuelle. Les normes sociales, les traditions et les jugements collectifs sont intériorisés au point de façonner les désirs et les aspirations des individus. La tentative d’Archer de s’affranchir de ces contraintes se heurte à des mécanismes d’exclusion sociale implacables. Ainsi, le roman montre comment la communauté, même sans exercer une violence physique directe, peut contraindre l’individu à se conformer à ses attentes, rendant difficile l’émergence d’une véritable individualité affranchie des liens sociaux.</p>
-            </div>
+        <!-- Plan Détaillé -->
+        <div class="section-title">Plan Détaillé</div>
+        <div class="plan">
+            <ul>
+                <li><strong>I. La primauté de l'unité commune : l'effacement de l'individu</strong>
+                    <ul>
+                        <li><strong>L'individu au service de la communauté</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em> (Eschyle): Étéocle mobilise les citoyens pour défendre Thèbes, soulignant leur devoir collectif.</li>
+                                <li><em>Les Suppliantes</em> (Eschyle): Pélasgos consulte le peuple argien, priorisant l'intérêt collectif.</li>
+                                <li><em>Spinoza</em>: L'obéissance au souverain sert le bien commun, bénéficiant à l'individu.</li>
+                                <li><em>Le Temps de l'innocence</em> (Wharton): Newland Archer se conforme aux normes pour préserver la cohésion sociale.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Les rôles sociaux et l'effacement de l'identité</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em>: Les défenseurs sont définis par leurs vertus civiques, leur individualité subsumée.</li>
+                                <li><em>Les Suppliantes</em>: Les Danaïdes forment une entité collective, leur identité individuelle effacée.</li>
+                                <li><em>Spinoza</em>: L'individu cède son droit naturel à la collectivité, défini par la volonté commune.</li>
+                                <li><em>Wharton</em>: Archer devient un « gendre », réduit à un rôle social.</li>
+                            </ul>
+                        </li>
+                        <li><strong>La menace à l'unité et la « dénaturation »</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em>: Polynice menace l'unité par ses ambitions personnelles.</li>
+                                <li><em>Les Suppliantes</em>: Danaos prône la modestie pour éviter de perturber Argos.</li>
+                                <li><em>Spinoza</em>: Les désirs individuels sont réfrénés pour la stabilité collective.</li>
+                                <li><em>Wharton</em>: Ellen Olenska, par son originalité, défie les normes sociales.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>II. Les limites de la dénaturation : persistance de l'individu</strong>
+                    <ul>
+                        <li><strong>La persistance des désirs individuels</strong>
+                            <ul>
+                                <li><em>Les Suppliantes</em>: Les Danaïdes refusent le mariage forcé, affirmant leur autonomie.</li>
+                                <li><em>Les Sept contre Thèbes</em>: Étéocle agit par fierté, défiant les conseils collectifs.</li>
+                                <li><em>Spinoza</em>: Les passions individuelles résistent au contrôle total.</li>
+                                <li><em>Wharton</em>: Archer et Ellen luttent pour leurs désirs contre les conventions.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Le conflit avec les normes sociales</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em>: Antigone défie la cité pour enterrer Polynice.</li>
+                                <li><em>Les Suppliantes</em>: Les Danaïdes contestent les normes par leur fuite.</li>
+                                <li><em>Spinoza</em>: La liberté de pensée est essentielle et inaliénable.</li>
+                                <li><em>Wharton</em>: Ellen dénonce l'hypocrisie, défiant l'unité imposée.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Les limites de l'unité imposée</strong>
+                            <ul>
+                                <li><em>Les Sept contre Thèbes</em>: La division du chœur montre l'échec de l'unité.</li>
+                                <li><em>Spinoza</em>: Une unité rigide engendre hypocrisie et instabilité.</li>
+                                <li><em>Wharton</em>: L'exclusion d'Ellen révèle la fragilité d'une société intolérante.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>III. Vers un équilibre individu-communauté</strong>
+                    <ul>
+                        <li><strong>La nécessité d'un compromis</strong>
+                            <ul>
+                                <li><em>Eschyle</em>: Ignorer les désirs individuels mène à la ruine.</li>
+                                <li><em>Spinoza</em>: L'unité repose sur la liberté individuelle et les lois communes.</li>
+                                <li><em>Wharton</em>: L'inflexibilité sociale cause souffrance et stagnation.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Les dynamiques de pouvoir</strong>
+                            <ul>
+                                <li><em>Eschyle</em>: Les individus façonnent le destin communautaire.</li>
+                                <li><em>Spinoza</em>: La liberté de pensée stimule le progrès.</li>
+                                <li><em>Wharton</em>: Ellen révèle les contradictions sociales.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Une communauté inclusive</strong>
+                            <ul>
+                                <li><em>Eschyle</em>: Une unité inclusive aurait évité la tragédie.</li>
+                                <li><em>Spinoza</em>: La tolérance favorise la coexistence pacifique.</li>
+                                <li><em>Wharton</em>: La diversité doit être valorisée pour une société moderne.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
 
-        <div class="accordion">
-            <div class="accordion-header">
-                <img src="https://img.icons8.com/ios-filled/24/ffffff/books.png" alt="Œuvres">
-                Œuvres au programme
-            </div>
-            <div class="accordion-content">
-                <h3>1. Eschyle, <em>Les Suppliantes</em> et <em>Les Sept contre Thèbes</em></h3>
-                <ul>
-                    <li><strong><em>Les Suppliantes</em> (vers 463)</strong> : Les cinquante filles de Danaos (les Danaïdes) fuient des mariages forcés avec les fils d’Égyptos et cherchent refuge à Argos. Leur statut de suppliantes les place en relation directe avec la communauté argienne et son roi, Pélasgos. La décision de Pélasgos, prise après consultation du peuple, engage la cité dans un dilemme entre hospitalité et risque de guerre.</li>
-                    <li><strong><em>Les Sept contre Thèbes</em> (467)</strong> : Étéocle, fils d’Œdipe et roi de Thèbes, organise la défense de la cité contre l’attaque des sept chefs argiens. Il incarne le chef dévoué à la survie collective, exhortant les citoyens à se mobiliser face à la menace.</li>
-                </ul>
-                <h3>2. Edith Wharton, <em>Le Temps de l’innocence</em> (1920)</h3>
-                <p>Ce roman se déroule dans la haute société new-yorkaise de la fin du XIXe siècle. Newland Archer, cultivé et sensible, est prisonnier des conventions sociales. L’arrivée d’Ellen Olenska, femme divorcée, provoque un séisme dans cette communauté conservatrice, illustrant la tension entre désirs individuels et normes collectives.</p>
-                <h3>3. Baruch Spinoza, <em>Traité théologico-politique</em> (Préface et chapitres XVI à XX)</h3>
-                <p>Spinoza examine la relation entre religion, État et liberté de pensée. Il théorise un transfert des droits individuels à la collectivité pour la sécurité, tout en défendant la liberté de philosopher comme condition d’une communauté éclairée.</p>
-            </div>
-        </div>
-
-        <div class="accordion">
-            <div class="accordion-header">
-                <img src="https://img.icons8.com/ios-filled/24/ffffff/question-mark.png" alt="Problématiques">
-                Problématiques
-            </div>
-            <div class="accordion-content">
-                <ol>
-                    <li><strong>La priorité ontologique</strong> : L’individu existe-t-il antérieurement et indépendamment de toute communauté, ou est-il un produit de celle-ci ?</li>
-                    <li><strong>Le conflit individu-communauté</strong> : Le développement de l’individu et l’épanouissement de la communauté sont-ils intrinsèquement opposés, ou peuvent-ils être harmonisés ?</li>
-                    <li><strong>La nature de l’autorité</strong> : Comment les communautés exercent-elles leur pouvoir sur les individus, et quelles sont les limites légitimes de cette emprise ?</li>
-                    <li><strong>Le rôle du langage et de la culture</strong> : Dans quelle mesure le langage et les systèmes de valeurs partagés façonnent-ils la perception du soi et du monde ?</li>
-                    <li><strong>Les formes de communautés</strong> : Comment les appartenances multiples influencent-elles l’individu ?</li>
-                    <li><strong>Le sacrifice individuel</strong> : Dans quelles circonstances le sacrifice individuel est-il justifiable au nom de l’intérêt collectif ?</li>
-                    <li><strong>L’affirmation de l’individualité</strong> : Comment l’individu parvient-il à affirmer sa singularité au sein d’un groupe uniformisant ?</li>
-                    <li><strong>La responsabilité mutuelle</strong> : Quels sont les devoirs de l’individu envers la communauté et vice-versa ?</li>
-                    <li><strong>L’évolution historique</strong> : Comment les conceptions de l’individu et de la communauté ont-elles évolué au cours du temps ?</li>
-                    <li><strong>Les limites de la communauté</strong> : Le concept de communauté est-il toujours pertinent face à la fragmentation des liens sociaux ?</li>
-                </ol>
-            </div>
-        </div>
-
-        <div class="accordion">
-            <div class="accordion-header">
-                <img src="https://img.icons8.com/ios-filled/24/ffffff/check-circle.png" alt="Conclusion">
-                Conclusion
-            </div>
-            <div class="accordion-content">
-                <p>L'étude comparée des œuvres au programme à la lumière du thème Individu et Communauté révèle une complexité et une richesse de perspectives propres à chaque contexte historique et esthétique. Les tragédies d'Eschyle explorent les liens indissolubles entre le destin de l'individu et celui de la cité dans des moments de crise, où la survie de la communauté prime souvent sur les aspirations personnelles. Spinoza, dans sa réflexion philosophique, pose les fondements d'un État où l'individu cède une part de sa liberté pour la sécurité collective, tout en reconnaissant la nécessité d'une certaine liberté de pensée. <em>Le Temps de l’innocence</em> offre une analyse subtile des mécanismes sociaux qui, dans une société moderne, contraignent l'individu par des normes intériorisées, rendant difficile l'affirmation d'une singularité véritablement libre.</p>
-                <p>En définitive, ces œuvres, bien que distinctes par leur genre et leur époque, témoignent d’une interrogation constante sur la nature du lien social et la place de l’individu au sein du collectif. Elles mettent en lumière les tensions inhérentes à ce rapport, entre la nécessité de la cohésion communautaire et le désir d’autonomie individuelle. La pertinence de ce thème perdure, nous invitant à réfléchir sur les équilibres fragiles entre les droits de l’individu et les impératifs de la vie en société.</p>
-            </div>
-        </div>
-
-        <div class="qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://educamet.github.io/mohamedelfilali/" alt="QR Code">
-            <p>Scannez pour accéder au cours</p>
+        <!-- Lien vers le PDF -->
+        <div class="text-center mt-4">
+            <p>Pour une analyse plus approfondie, consultez le <a href="Citation-Rousseau.pdf" class="pdf-link">document complet</a>.</p>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>EducaMet &copy; Tous droits réservés</p>
+    </footer>
 </body>
 </html>
