@@ -44,28 +44,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohamed El Filali - Expérience</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #a7ffeb 0%, #84ffff 100%);
-            color: #1a202c;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #2d3748;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.1;
+            z-index: -1;
         }
         .nav-link {
+            position: relative;
             transition: color 0.3s ease, transform 0.3s ease;
         }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ff6f61;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
         .nav-link:hover {
-            color: #00695c;
+            color: #ff6f61;
             transform: scale(1.1);
         }
         .timeline-item {
             position: relative;
-            padding: 1rem;
+            padding: 1.5rem;
             margin-bottom: 1.5rem;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f0f4f8);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
             opacity: 0;
             animation: slideIn 0.5s ease-out forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .timeline-item:nth-child(1) { animation-delay: 0.1s; }
         .timeline-item:nth-child(2) { animation-delay: 0.2s; }
@@ -76,31 +105,46 @@
         .timeline-item:nth-child(7) { animation-delay: 0.7s; }
         .timeline-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
         .timeline-item::before {
-            content: '';
+            content: '\f058';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
             position: absolute;
-            left: -10px;
+            left: -15px;
             top: 20px;
-            width: 16px;
-            height: 16px;
-            background: #26a69a;
+            width: 24px;
+            height: 24px;
+            background: #ff6f61;
+            color: white;
             border-radius: 50%;
-            border: 3px solid #e0f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border: 3px solid #fad0c4;
         }
         @keyframes slideIn {
-            0% { opacity: 0; transform: translateX(-20px); }
+            0% { opacity: 0; transform: translateX(-30px); }
             100% { opacity: 1; transform: translateX(0); }
+        }
+        @media (max-width: 640px) {
+            .timeline-item {
+                padding: 1rem;
+            }
+            .nav-link {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
     <!-- Navigation -->
-    <nav class="bg-teal-700 text-white p-4 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">Mohamed El Filali</h1>
-            <div class="space-x-4">
+    <nav class="bg-gradient-to-r from-teal-600 to-teal-800 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-2xl font-bold mb-2 sm:mb-0">Mohamed El Filali</h1>
+            <div class="flex flex-wrap justify-center gap-4">
                 <a href="index.html" class="nav-link font-semibold">Accueil</a>
                 <a href="experience.html" class="nav-link font-semibold">Expérience</a>
                 <a href="education.html" class="nav-link font-semibold">Formation</a>
@@ -111,40 +155,40 @@
 
     <!-- Experience Section -->
     <section class="flex-grow container mx-auto p-6">
-        <div class="bg-white rounded-xl shadow-2xl p-8">
-            <h2 class="text-3xl font-bold text-teal-800 mb-6">Expérience Professionnelle</h2>
+        <div class="bg-white rounded-2xl shadow-2xl p-8 sm:p-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-teal-800 mb-6">Expérience Professionnelle</h2>
             <div class="timeline-item">
-                <h4 class="font-semibold text-teal-800">Enseignant de français-philosophie - Mohammed V, Casablanca</h4>
+                <h4 class="font-semibold text-teal-800 text-lg">Enseignant de français-philosophie - Mohammed V, Casablanca</h4>
                 <p class="text-gray-600">09/2019 - Actuel</p>
                 <p>Classes préparatoires aux grandes écoles</p>
             </div>
             <div class="timeline-item">
-                <h4 class="font-semibold text-teal-800">Enseignant de français-homologue - Casablanca</h4>
+                <h4 class="font-semibold text-teal-800 text-lg">Enseignant de français-homologue - Casablanca</h4>
                 <p class="text-gray-600">09/2017 - Actuel</p>
                 <p>Groupe scolaire de résidence</p>
             </div>
             <div class="timeline-item">
-                <h4 class="font-semibold text-teal-800">Enseignant de culture générale - Settat</h4>
+                <h4 class="font-semibold text-teal-800 text-lg">Enseignant de culture générale - Settat</h4>
                 <p class="text-gray-600">09/2017 - 07/2019</p>
                 <p>Classes préparatoires aux grandes écoles</p>
             </div>
             <div class="timeline-item">
-                <h4 class="font-semibold text-teal-800">Enseignant de français-philosophie - Errachidia</h4>
+                <h4 class="font-semibold text-teal-800 text-lg">Enseignant de français-philosophie - Errachidia</h4>
                 <p class="text-gray-600">09/2016 - 07/2017</p>
                 <p>Classes préparatoires aux grandes écoles</p>
             </div>
             <div class="timeline-item">
-                <h4 class="font-semibold text-teal-800">Enseignant des technologies de l’information et de la communication - Ouazzarate</h4>
+                <h4 class="font-semibold text-teal-800 text-lg">Enseignant des technologies de l’information et de la communication - Ouazzarate</h4>
                 <p class="text-gray-600">09/2013 - 07/2014</p>
                 <p>Faculté polytechnique</p>
             </div>
             <div class="timeline-item">
-                <h4 class="font-semibold text-teal-800">Enseignant de français - Ouazzarate</h4>
+                <h4 class="font-semibold text-teal-800 text-lg">Enseignant de français - Ouazzarate</h4>
                 <p class="text-gray-600">09/2011 - 07/2014</p>
                 <p>Lycée technique</p>
             </div>
             <div class="timeline-item">
-                <h4 class="font-semibold text-teal-800">Enseignant de français - Guelmim</h4>
+                <h4 class="font-semibold text-teal-800 text-lg">Enseignant de français - Guelmim</h4>
                 <p class="text-gray-600">09/2008 - 07/2011</p>
                 <p>Lycée qualifiant</p>
             </div>
