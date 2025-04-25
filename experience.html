@@ -1,0 +1,156 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed El Filali - Expérience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #a7ffeb 0%, #84ffff 100%);
+            color: #1a202c;
+        }
+        .nav-link {
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #00695c;
+            transform: scale(1.1);
+        }
+        .timeline-item {
+            position: relative;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(7) { animation-delay: 0.7s; }
+        .timeline-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: #26a69a;
+            border-radius: 50%;
+            border: 3px solid #e0f7fa;
+        }
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-teal-700 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">Mohamed El Filali</h1>
+            <div class="space-x-4">
+                <a href="index.html" class="nav-link font-semibold">Accueil</a>
+                <a href="experience.html" class="nav-link font-semibold">Expérience</a>
+                <a href="education.html" class="nav-link font-semibold">Formation</a>
+                <a href="skills-contact.html" class="nav-link font-semibold">Compétences & Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Experience Section -->
+    <section class="flex-grow container mx-auto p-6">
+        <div class="bg-white rounded-xl shadow-2xl p-8">
+            <h2 class="text-3xl font-bold text-teal-800 mb-6">Expérience Professionnelle</h2>
+            <div class="timeline-item">
+                <h4 class="font-semibold text-teal-800">Enseignant de français-philosophie - Mohammed V, Casablanca</h4>
+                <p class="text-gray-600">09/2019 - Actuel</p>
+                <p>Classes préparatoires aux grandes écoles</p>
+            </div>
+            <div class="timeline-item">
+                <h4 class="font-semibold text-teal-800">Enseignant de français-homologue - Casablanca</h4>
+                <p class="text-gray-600">09/2017 - Actuel</p>
+                <p>Groupe scolaire de résidence</p>
+            </div>
+            <div class="timeline-item">
+                <h4 class="font-semibold text-teal-800">Enseignant de culture générale - Settat</h4>
+                <p class="text-gray-600">09/2017 - 07/2019</p>
+                <p>Classes préparatoires aux grandes écoles</p>
+            </div>
+            <div class="timeline-item">
+                <h4 class="font-semibold text-teal-800">Enseignant de français-philosophie - Errachidia</h4>
+                <p class="text-gray-600">09/2016 - 07/2017</p>
+                <p>Classes préparatoires aux grandes écoles</p>
+            </div>
+            <div class="timeline-item">
+                <h4 class="font-semibold text-teal-800">Enseignant des technologies de l’information et de la communication - Ouazzarate</h4>
+                <p class="text-gray-600">09/2013 - 07/2014</p>
+                <p>Faculté polytechnique</p>
+            </div>
+            <div class="timeline-item">
+                <h4 class="font-semibold text-teal-800">Enseignant de français - Ouazzarate</h4>
+                <p class="text-gray-600">09/2011 - 07/2014</p>
+                <p>Lycée technique</p>
+            </div>
+            <div class="timeline-item">
+                <h4 class="font-semibold text-teal-800">Enseignant de français - Guelmim</h4>
+                <p class="text-gray-600">09/2008 - 07/2011</p>
+                <p>Lycée qualifiant</p>
+            </div>
+        </div>
+    </section>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</body>
+</html>
