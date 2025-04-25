@@ -1,266 +1,211 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row =>
-                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
-                );
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thème : Individu et Communauté</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Mohamed El Filali - CV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #e6f3fa, #ffffff);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #a7ffeb 0%, #84ffff 100%);
             color: #1a202c;
         }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        .header {
-            background-color: #2b6cb0;
-            color: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
         .section-title {
-            font-size: 1.75rem;
-            font-weight: bold;
-            color: #2b6cb0;
-            margin: 1.5rem 0 1rem;
-            border-bottom: 3px solid #68d391;
-            padding-bottom: 0.5rem;
-        }
-        .quote {
-            font-style: italic;
-            background-color: #f7fafc;
-            padding: 1.5rem;
-            border-left: 5px solid #68d391;
+            position: relative;
+            display: inline-block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00695c;
             margin-bottom: 1.5rem;
-            border-radius: 0.25rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        .analysis, .problem, .plan {
-            margin-bottom: 2rem;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(to right, #26a69a, #4db6ac);
+            border-radius: 2px;
         }
-        .analysis ul, .plan ul {
-            list-style-type: disc;
-            margin-left: 2rem;
-        }
-        .plan ul ul {
-            list-style-type: circle;
-            margin-left: 2rem;
-        }
-        .plan ul ul ul {
-            list-style-type: square;
-            margin-left: 2rem;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 2rem;
+        .timeline-item {
+            position: relative;
             padding: 1rem;
-            background-color: #2b6cb0;
-            color: white;
-            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .pdf-link {
-            color: #68d391;
-            text-decoration: underline;
-            font-weight: bold;
+        .timeline-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
-        .pdf-link:hover {
-            color: #38a169;
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: #26a69a;
+            border-radius: 50%;
+            border: 3px solid #e0f7fa;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+        .contact-item:hover {
+            background: #e0f7fa;
+        }
+        .skill-item {
+            background: #b2dfdb;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        .skill-item:hover {
+            transform: scale(1.05);
+        }
+        .header-animation {
+            animation: fadeInDown 1s ease-out;
+        }
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            .header {
-                padding: 1rem;
-            }
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.25rem;
             }
-            .quote, .analysis, .problem, .plan {
-                padding: 1rem;
-            }
-        }
-        @media print {
-            body {
-                background: white;
-            }
-            .container {
-                padding: 1rem;
-            }
-            .header, .footer {
-                background: none;
-                color: #000;
+            .timeline-item {
+                padding: 0.75rem;
             }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header class="header">
-            <h1 class="text-3xl md:text-4xl font-bold">Thème : Individu et Communauté</h1>
-            <p class="text-lg mt-2">Proposition de corrigé: Sujets X-ENS MP/MPI</p>
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8">
+    <div class="max-w-5xl w-full bg-white rounded-xl shadow-2xl p-6 md:p-10 transform transition-all duration-500 hover:shadow-3xl">
+        <!-- Header -->
+        <header class="text-center mb-10 header-animation">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-teal-800 tracking-tight">Mohamed El Filali</h1>
+            <h2 class="text-xl md:text-2xl text-teal-600 font-semibold mt-2">Agrégé de Lettres</h2>
         </header>
 
-        <!-- Citation -->
-        <div class="section-title">Citation</div>
-        <div class="quote">
-            « Les bonnes institutions sociales sont celles qui savent le mieux dénaturer l'homme, lui ôter son existence absolue pour lui en donner une relative, et transporter le moi dans l'unité commune; en sorte que chaque particulier ne se croie plus un, mais partie de l'unité, et ne soit plus sensible que dans le tout. »<br>
-            <span class="text-sm">— Jean-Jacques Rousseau, <em>Émile ou De l'éducation</em> (1762)</span>
-        </div>
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <section class="mb-8">
+                    <h3 class="section-title">Coordonnées</h3>
+                    <div class="contact-item">
+                        <span class="text-teal-600 text-lg">📍</span>
+                        <p class="text-gray-700">Jnane Californie Emeraude 23, Appr 2 Ain Chok, 20470, Casablanca</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="text-teal-600 text-lg">📞</span>
+                        <p class="text-gray-700">0675692942</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="text-teal-600 text-lg">✉️</span>
+                        <p class="text-gray-700">elfilalim2@gmail.com</p>
+                    </div>
+                </section>
 
-        <!-- Analyse -->
-        <div class="section-title">Pistes d'analyse</div>
-        <div class="analysis">
-            <ul>
-                <li><strong>« Dénaturer l'homme »</strong>: Transformation de l'état naturel indépendant vers un état civil façonné pour la vie en société, non une corruption.</li>
-                <li><strong>« Existence absolue » à « existence relative »</strong>: Passage d'une autonomie complète à une identité définie par la relation au corps social.</li>
-                <li><strong>« Transporter le moi dans l'unité commune »</strong>: Intégration de l'individu dans le collectif, favorisant l'appartenance et la solidarité.</li>
-                <li><strong>« Ne se croie plus un, mais partie de l'unité »</strong>: Modification de la conscience individuelle pour privilégier l'interdépendance.</li>
-                <li><strong>« Sensible que dans le tout »</strong>: Alignement des affects et intérêts individuels sur le bien commun.</li>
-            </ul>
-        </div>
+                <section>
+                    <h3 class="section-title">Compétences</h3>
+                    <div class="space-y-3">
+                        <div class="skill-item">Conception des projets didactiques</div>
+                        <div class="skill-item">Élaboration des progressions séquentielles et des scénarios pédagogiques</div>
+                        <div class="skill-item">Gestion des plateformes de l’enseignement à distance</div>
+                        <div class="skill-item">Création de e-cours</div>
+                    </div>
+                </section>
+            </div>
 
-        <!-- Problématique -->
-        <div class="section-title">Problématique</div>
-        <div class="problem">
-            <p>Comment concilier la transformation de l'individu par les institutions pour le bien commun avec le respect de sa singularité et de son autonomie ? Cette « dénaturation » ne risque-t-elle pas d'entraîner aliénation ou conformisme, au détriment de la diversité individuelle ?</p>
-        </div>
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <section class="mb-8">
+                    <h3 class="section-title">Profil</h3>
+                    <p class="text-gray-700 leading-relaxed bg-teal-50 p-4 rounded-lg shadow-sm">
+                        Consciencieux et créatif, j’assure les formations en favorisant les interactions et l’expression de chacun et je mobilise les moyens pédagogiques pertinents en fonction des objectifs recherchés.
+                    </p>
+                </section>
 
-        <!-- Plan Détaillé -->
-        <div class="section-title">Plan Détaillé</div>
-        <div class="plan">
-            <ul>
-                <li><strong>I. La primauté de l'unité commune : l'effacement de l'individu</strong>
-                    <ul>
-                        <li><strong>L'individu au service de la communauté</strong>
-                            <ul>
-                                <li><em>Les Sept contre Thèbes</em> (Eschyle): Étéocle mobilise les citoyens pour défendre Thèbes, soulignant leur devoir collectif.</li>
-                                <li><em>Les Suppliantes</em> (Eschyle): Pélasgos consulte le peuple argien, priorisant l'intérêt collectif.</li>
-                                <li><em>Spinoza</em>: L'obéissance au souverain sert le bien commun, bénéficiant à l'individu.</li>
-                                <li><em>Le Temps de l'innocence</em> (Wharton): Newland Archer se conforme aux normes pour préserver la cohésion sociale.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Les rôles sociaux et l'effacement de l'identité</strong>
-                            <ul>
-                                <li><em>Les Sept contre Thèbes</em>: Les défenseurs sont définis par leurs vertus civiques, leur individualité subsumée.</li>
-                                <li><em>Les Suppliantes</em>: Les Danaïdes forment une entité collective, leur identité individuelle effacée.</li>
-                                <li><em>Spinoza</em>: L'individu cède son droit naturel à la collectivité, défini par la volonté commune.</li>
-                                <li><em>Wharton</em>: Archer devient un « gendre », réduit à un rôle social.</li>
-                            </ul>
-                        </li>
-                        <li><strong>La menace à l'unité et la « dénaturation »</strong>
-                            <ul>
-                                <li><em>Les Sept contre Thèbes</em>: Polynice menace l'unité par ses ambitions personnelles.</li>
-                                <li><em>Les Suppliantes</em>: Danaos prône la modestie pour éviter de perturber Argos.</li>
-                                <li><em>Spinoza</em>: Les désirs individuels sont réfrénés pour la stabilité collective.</li>
-                                <li><em>Wharton</em>: Ellen Olenska, par son originalité, défie les normes sociales.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><strong>II. Les limites de la dénaturation : persistance de l'individu</strong>
-                    <ul>
-                        <li><strong>La persistance des désirs individuels</strong>
-                            <ul>
-                                <li><em>Les Suppliantes</em>: Les Danaïdes refusent le mariage forcé, affirmant leur autonomie.</li>
-                                <li><em>Les Sept contre Thèbes</em>: Étéocle agit par fierté, défiant les conseils collectifs.</li>
-                                <li><em>Spinoza</em>: Les passions individuelles résistent au contrôle total.</li>
-                                <li><em>Wharton</em>: Archer et Ellen luttent pour leurs désirs contre les conventions.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Le conflit avec les normes sociales</strong>
-                            <ul>
-                                <li><em>Les Sept contre Thèbes</em>: Antigone défie la cité pour enterrer Polynice.</li>
-                                <li><em>Les Suppliantes</em>: Les Danaïdes contestent les normes par leur fuite.</li>
-                                <li><em>Spinoza</em>: La liberté de pensée est essentielle et inaliénable.</li>
-                                <li><em>Wharton</em>: Ellen dénonce l'hypocrisie, défiant l'unité imposée.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Les limites de l'unité imposée</strong>
-                            <ul>
-                                <li><em>Les Sept contre Thèbes</em>: La division du chœur montre l'échec de l'unité.</li>
-                                <li><em>Spinoza</em>: Une unité rigide engendre hypocrisie et instabilité.</li>
-                                <li><em>Wharton</em>: L'exclusion d'Ellen révèle la fragilité d'une société intolérante.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><strong>III. Vers un équilibre individu-communauté</strong>
-                    <ul>
-                        <li><strong>La nécessité d'un compromis</strong>
-                            <ul>
-                                <li><em>Eschyle</em>: Ignorer les désirs individuels mène à la ruine.</li>
-                                <li><em>Spinoza</em>: L'unité repose sur la liberté individuelle et les lois communes.</li>
-                                <li><em>Wharton</em>: L'inflexibilité sociale cause souffrance et stagnation.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Les dynamiques de pouvoir</strong>
-                            <ul>
-                                <li><em>Eschyle</em>: Les individus façonnent le destin communautaire.</li>
-                                <li><em>Spinoza</em>: La liberté de pensée stimule le progrès.</li>
-                                <li><em>Wharton</em>: Ellen révèle les contradictions sociales.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Une communauté inclusive</strong>
-                            <ul>
-                                <li><em>Eschyle</em>: Une unité inclusive aurait évité la tragédie.</li>
-                                <li><em>Spinoza</em>: La tolérance favorise la coexistence pacifique.</li>
-                                <li><em>Wharton</em>: La diversité doit être valorisée pour une société moderne.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+                <section class="mb-8">
+                    <h3 class="section-title">Expérience</h3>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Enseignant de français-philosophie - Mohammed V, Casablanca</h4>
+                        <p class="text-gray-600">09/2019 - Actuel</p>
+                        <p>Classes préparatoires aux grandes écoles</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Enseignant de français-homologue - Casablanca</h4>
+                        <p class="text-gray-600">09/2017 - Actuel</p>
+                        <p>Groupe scolaire de résidence</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Enseignant de culture générale - Settat</h4>
+                        <p class="text-gray-600">09/2017 - 07/2019</p>
+                        <p>Classes préparatoires aux grandes écoles</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Enseignant de français-philosophie - Errachidia</h4>
+                        <p class="text-gray-600">09/2016 - 07/2017</p>
+                        <p>Classes préparatoires aux grandes écoles</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Enseignant des technologies de l’information et de la communication - Ouazzarate</h4>
+                        <p class="text-gray-600">09/2013 - 07/2014</p>
+                        <p>Faculté polytechnique</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Enseignant de français - Ouazzarate</h4>
+                        <p class="text-gray-600">09/2011 - 07/2014</p>
+                        <p>Lycée technique</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Enseignant de français - Guelmim</h4>
+                        <p class="text-gray-600">09/2008 - 07/2011</p>
+                        <p>Lycée qualifiant</p>
+                    </div>
+                </section>
 
-        <!-- Lien vers le PDF -->
-        <div class="text-center mt-4">
-            <p>Pour une analyse plus approfondie, consultez le <a href="Citation-Rousseau.pdf" class="pdf-link">document complet</a>.</p>
+                <section>
+                    <h3 class="section-title">Formation</h3>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Agrégation : Lettres - Fès</h4>
+                        <p class="text-gray-600">09/2014 - 07/2016</p>
+                        <p>Centre régional des métiers de l’éducation</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Aptitude professionnelle de l’enseignement : Éducation et enseignement - Rabat</h4>
+                        <p class="text-gray-600">09/2007 - 07/2008</p>
+                        <p>École normale supérieure</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold text-teal-800">Licence : Éducation, culture et communication - Rabat</h4>
+                        <p class="text-gray-600">09/2004 - 07/2007</p>
+                        <p>Faculté des sciences de l’éducation</p>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>EducaMet &copy; Tous droits réservés</p>
-    </footer>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </body>
 </html>
